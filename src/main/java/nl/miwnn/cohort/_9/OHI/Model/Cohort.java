@@ -7,8 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Author: Mees Drenth
- * Uitleg Hello World sjdhhfsd
+ * Author: INT-Developers
+ * Model about cohort and what type it is
  */
 
 @Entity
