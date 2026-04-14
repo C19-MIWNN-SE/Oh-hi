@@ -5,10 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<table class = personTable>
+<table>
 <tbody>
-<tr th:each="Person : ${people}">
-    <td th:text="${people.firstName}">First Name</td>
+<tr th:each="person : ${people}">
+    <td th:text="${person.firstName}">First Name</td>
 </tr>
 </tbody>
 </table>

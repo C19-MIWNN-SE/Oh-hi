@@ -21,22 +21,18 @@ public class PersonController {
     private static final Logger log = LoggerFactory.getLogger(PersonController.class);
     private final PersonRepository personRepository;
 
-
     public PersonController(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
+@GetMapping("/profiles")
+public String showPeople(Model model) {
+    List<Person> people = new ArrayList<>();
 
-@GetMapping({"/profiles"})
-public String showPeople(
-    @RequestParam(required = false)
-    Model model) {
-    List<Person> people = personRepository.findAll();
-
-    people.add(new Person("Mark"));
+    people.add(new Person(1L, "Mark", "Sestero"));
     log.debug("person overview requested");
     model.addAttribute("people", people);
 
-    return "people";
+    return "PersonenOverview";
 }
 }

@@ -29,11 +29,11 @@ public class Person {
 
     private String aboutMe;
 
-    @NotNull(message = "Moet een rol toegewezen krijgen")
-    private enum role{
+//    @NotNull(message = "Moet een rol toegewezen krijgen")
+    private enum role {
         STUDENT,
         TEACHER,
-    };
+    }
 
     public Person(Long id, String firstName, String infix, String lastName, Image image, String aboutMe) {
         this.id = id;
@@ -44,8 +44,10 @@ public class Person {
         this.aboutMe = aboutMe;
     }
 
-    public Person(String firstName){
+    public Person(Long id, String firstName, String lastName){
+        this.id = id;
         this.firstName = firstName;
+        this.lastName =lastName;
     }
 
     public Person(){

@@ -26,6 +26,7 @@ public class OHISecConfig {
                                 "/",
                                 "/profiles")
                         .permitAll());
+        log.info("Toestemming gegeven");
         return http.build();
     }
 }
