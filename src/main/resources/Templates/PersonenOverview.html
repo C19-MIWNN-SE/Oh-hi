@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head th:replace="~{Fragments/general :: head(${introText})}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<nav th:replace="~{fragments/general :: navbar}"></nav>
 <table>
 <tbody>
 <tr th:each="person : ${people}">
@@ -13,6 +14,7 @@
 </tr>
 </tbody>
 </table>
-
+<footer th:replace="~{Fragments/general :: footer}"></footer>
+<div th:replace="~{Fragments/general :: scripts}"></div>
 </body>
 </html>
