@@ -2,6 +2,7 @@ package nl.miwnn.cohort._9.OHI.Controller;
 
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,16 +21,18 @@ import java.util.List;
 public class PersonController {
     private static final Logger log = LoggerFactory.getLogger(PersonController.class);
     private final PersonRepository personRepository;
+    private final PersonService personService;
 
-    public PersonController(PersonRepository personRepository) {
+    public PersonController(PersonRepository personRepository, PersonService personService) {
         this.personRepository = personRepository;
+        this.personService = personService;
     }
 
 @GetMapping("/profiles")
 public String showPeople(Model model) {
-    List<Person> people = new ArrayList<>();
+    List<Person> people = personRepository.findAll();
 
-    people.add(new Person(1L, "Mark", "Sestero"));
+    //people.add(new Person(1L, "Mark", "Sestero"));
     log.debug("person overview requested");
     model.addAttribute("people", people);
 

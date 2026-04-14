@@ -1,8 +1,9 @@
 package nl.miwnn.cohort._9.OHI.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,21 +19,18 @@ public class Cohort {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Moet een cohort bevatten")
-    private String group;
+    //@NotNull(message = "Moet een cohort bevatten")
+    private String cohortNum;
 
-    @NotNull(message = "Cohort moet een vak behandelen")
+    //@NotNull(message = "Cohort moet een vak behandelen")
     private String discipline;
 
-    public Cohort(Long id, String group, String discipline) {
-        this.id = id;
-        this.group = group;
+    public Cohort(String cohortNum, String discipline) {
+        this.cohortNum = cohortNum;
         this.discipline = discipline;
     }
 
-    public Cohort(){
-
-    }
+    public Cohort(){}
 
     public Long getId() {
         return id;
@@ -42,12 +40,12 @@ public class Cohort {
         this.id = id;
     }
 
-    public String getGroup() {
-        return group;
+    public String getCohortNum() {
+        return cohortNum;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setCohortNum(String cohortNum) {
+        this.cohortNum = cohortNum;
     }
 
     public String getDiscipline() {
