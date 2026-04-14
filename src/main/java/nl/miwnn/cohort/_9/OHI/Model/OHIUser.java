@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @author Alexander Banic
- * INFO OVER PROJECT
+ * User class for users to login
  */
 
 @Entity
@@ -26,15 +26,20 @@ public class OHIUser implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    private String role;
+
 //    private enum role {
 //        STUDENT,
 //        TEACHER,
 //    }
 
-    public OHIUser(long id, String username, String password) {
-        this.id = id;
+    public OHIUser(String username, String password, String role) {
         this.username = username;
         this.password = password;
+        this.role = role;
+    }
+
+    public OHIUser() {
     }
 
     // Spring code die automatisch werd toegevoegd
@@ -45,12 +50,12 @@ public class OHIUser implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return this.username;
     }
 
     @Override
@@ -77,4 +82,30 @@ public class OHIUser implements UserDetails {
 //        STUDENT,
 //        TEACHER,
 //    }
+
+    // getters and setters
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

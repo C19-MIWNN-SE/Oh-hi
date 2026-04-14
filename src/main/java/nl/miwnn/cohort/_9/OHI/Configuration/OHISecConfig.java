@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * @author Sara Omlor
- * PURPOSE GOES HERE
+ * Configuration file for security
  */
 @Configuration
 @EnableWebSecurity
@@ -44,29 +44,25 @@ public class OHISecConfig {
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-//        String password = UUID.randomUUID().toString();
-//,→ log.info("==========================================================================");
-//        log.info("Generated password: {}", password);
-//,→ log.info("==========================================================================");
-        var student = User.builder()
-                .username("student")
-                .password(passwordEncoder.encode("student"))
-                .roles("STUDENT")
-                .build();
-        log.info("student aangemaakt");
-        var docent = User.builder()
-                .username("docent")
-                .password(passwordEncoder.encode("docent"))
-                .roles("TEACHER")
-                .build();
-        log.info("docent aangemaakt");
-        return new InMemoryUserDetailsManager(student, docent);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+//        var student = User.builder()
+//                .username("student")
+//                .password(passwordEncoder.encode("student"))
+//                .roles("STUDENT")
+//                .build();
+//        log.info("student aangemaakt");
+//        var docent = User.builder()
+//                .username("docent")
+//                .password(passwordEncoder.encode("docent"))
+//                .roles("TEACHER")
+//                .build();
+//        log.info("docent aangemaakt");
+//        return new InMemoryUserDetailsManager(student, docent);
+//    }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
