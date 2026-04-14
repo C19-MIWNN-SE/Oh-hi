@@ -24,7 +24,14 @@ public class OHISecConfig {
                 .authorizeHttpRequests( auth ->auth
                         .requestMatchers(
                                 "/",
-                                "/profiles")
+                                "/profiles/**",
+                                "/profiles",
+                                "/webjars/**")
+                        .permitAll().anyRequest().authenticated())
+                // custom form voor login
+                .formLogin((form) -> form
+                        .loginPage("/landing-page")
+                        .defaultSuccessUrl("/profiles", true)
                         .permitAll());
         log.info("Toestemming gegeven");
         return http.build();

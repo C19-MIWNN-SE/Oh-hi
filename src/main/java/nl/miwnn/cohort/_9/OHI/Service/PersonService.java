@@ -5,11 +5,12 @@ import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Sara Omlor
- * PURPOSE GOES HERE
+ * @author INT Developers
+ * Service layer for Person
  */
 @Service
 public class PersonService {private final PersonRepository personRepository;
