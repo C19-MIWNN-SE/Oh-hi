@@ -25,7 +25,13 @@ public class OHISecConfig {
                         .requestMatchers(
                                 "/",
                                 "/profiles")
+                        .permitAll())
+                // custom form voor login
+                .formLogin((form) -> form
+                        .loginPage("/landing-page")
+                        .defaultSuccessUrl("/profiles", true)
                         .permitAll());
+
         log.info("Toestemming gegeven");
         return http.build();
     }
