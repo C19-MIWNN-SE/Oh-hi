@@ -44,6 +44,10 @@ public class Person {
         this.aboutMe = aboutMe;
     }
 
+    public Person(String firstName){
+        this.firstName = firstName;
+    }
+
     public Person(){
 
     }
