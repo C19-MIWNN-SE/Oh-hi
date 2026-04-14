@@ -24,8 +24,8 @@ public class OHISecConfig {
                 .authorizeHttpRequests( auth ->auth
                         .requestMatchers(
                                 "/",
-                                "/profiles")
-                        .permitAll());
+                                "/profiles/**")
+                        .permitAll().anyRequest().authenticated());
         log.info("Toestemming gegeven");
         return http.build();
     }
