@@ -11,6 +11,12 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class Person {
 
+    //defaults
+    private static final String DEFAULT_INFIX = null;
+    private static final Image DEFAULT_IMAGE = null;
+    private static final String DEFAULT_ABOUTME = null;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,8 +41,7 @@ public class Person {
         TEACHER,
     }
 
-    public Person(Long id, String firstName, String infix, String lastName, Image image, String aboutMe) {
-        this.id = id;
+    public Person( String firstName, String infix, String lastName, Image image, String aboutMe) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
@@ -44,10 +49,10 @@ public class Person {
         this.aboutMe = aboutMe;
     }
 
-    public Person(Long id, String firstName, String lastName){
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName =lastName;
+    public Person(String firstName, String lastName){
+        //this.id = id;
+        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME);
+
     }
 
     public Person(){
@@ -101,4 +106,6 @@ public class Person {
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
     }
+
+
 }

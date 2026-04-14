@@ -33,9 +33,9 @@ public class PersonController {
 
 @GetMapping("")
 public String showPeople(Model model) {
-    List<Person> people = new ArrayList<>();
+    List<Person> people = personRepository.findAll();
 
-    people.add(new Person(1L, "Mark", null, "Sestero", null, null));
+    //people.add(new Person(1L, "Mark", "Sestero"));
     log.debug("person overview requested");
     model.addAttribute("people", people);
 
@@ -46,18 +46,26 @@ public String showPeople(Model model) {
 /* Oh hi Mees */
 
 
-@GetMapping("/1")
-public String showProfile(Model model, RedirectAttributes redirectAttributes){
-
-//    Person person = personRepository.findById(id)
-//            .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
-
-
-    model.addAttribute("introText", "Oh hi mark!");
-    log.info("De pagina wordt geladen");
-
-
-    return "PersonProfile";
-
-}
+//@GetMapping("/1")
+//public String showProfile(Model model, RedirectAttributes redirectAttributes){
+//
+////    Person person = personRepository.findById(id)
+////            .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
+//
+//    List<Person> people = new ArrayList<>();
+//    Person Mark = new Person(4L, "Mark", null, "Sestero", null,
+//            "I used to know a girl, she had a dozen guys. One of 'em found out about it..." +
+//                    "beat her up so bad she ended up in a hospital on Guerrero Street");
+//
+//    log.info("De pagina wordt geladen");
+//
+//    model.addAttribute("introText", "Oh hi " + Mark.getFirstName() + "!");
+//    model.addAttribute("aboutMe", Mark.getAboutMe());
+//
+//
+//
+//
+//    return "PersonProfile";
+//
+//}
 }
