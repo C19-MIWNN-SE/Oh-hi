@@ -25,7 +25,8 @@ public class OHISecConfig {
                         .requestMatchers(
                                 "/",
                                 "/profiles/**",
-                                "/profiles")
+                                "/profiles",
+                                "/webjars/**")
                         .permitAll().anyRequest().authenticated())
                 // custom form voor login
                 .formLogin((form) -> form
