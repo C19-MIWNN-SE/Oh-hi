@@ -7,9 +7,23 @@
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
 <table>
+    <thead>
+    <tr>
+        <th>Image</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+    </tr>
+    </thead>
 <tbody>
+
 <tr th:each="person : ${people}">
-    <td th:text="${person.firstName}">First Name</td>
+    <td><a th:href="@{/profiles/{id}}"
+            th:if="${person.image != null}"
+            th:src="@{/images/{id}(id=${person.image.id})}"
+            th:alt="${person.id}"
+           style="display: block;" width="100px"></a>
+    </td>
+    <td th:text="${person.firstName}"><a th:href="@{/profiles/{id}(id=${person.id})}">First Name</a></td>
     <td th:text="${person.lastName}">Last Name</td>
 </tr>
 </tbody>

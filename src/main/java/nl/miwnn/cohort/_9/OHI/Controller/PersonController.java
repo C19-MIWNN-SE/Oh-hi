@@ -46,26 +46,27 @@ public String showPeople(Model model) {
 /* Oh hi Mees */
 
 
-//@GetMapping("/1")
-//public String showProfile(Model model, RedirectAttributes redirectAttributes){
-//
-////    Person person = personRepository.findById(id)
-////            .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
-//
-//    List<Person> people = new ArrayList<>();
-//    Person Mark = new Person(4L, "Mark", null, "Sestero", null,
+@GetMapping("/{id}")
+public String showProfile(
+        @PathVariable Long id, Model model, RedirectAttributes redirectAttributes){
+
+    Person person = personRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
+
+    //List<Person> people = new ArrayList<>();
+//    Person Mark = new Person( "Mark", null, "Sestero", null,
 //            "I used to know a girl, she had a dozen guys. One of 'em found out about it..." +
 //                    "beat her up so bad she ended up in a hospital on Guerrero Street");
-//
-//    log.info("De pagina wordt geladen");
-//
+
+    log.info("De pagina wordt geladen");
+
 //    model.addAttribute("introText", "Oh hi " + Mark.getFirstName() + "!");
 //    model.addAttribute("aboutMe", Mark.getAboutMe());
-//
-//
-//
-//
-//    return "PersonProfile";
-//
-//}
+
+
+
+
+    return "PersonProfile";
+
+}
 }
