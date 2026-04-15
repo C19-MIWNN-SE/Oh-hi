@@ -1,0 +1,14 @@
+table tbody, table thead {
+    display: grid;
+}
+table td {
+    display: block;
+}
+/*outline all*/
+table, th, tr {
+    border: 2px solid black;
+}
+
+nav{
+    background-color: black;
+}

@@ -32,7 +32,9 @@ public class OHISecConfig {
                                 "/profiles/**",
                                 "/profiles",
                                 "/userlogin",
-                                "/webjars/**")
+                                "/webjars/**",
+                                "/static/**",
+                                "/css/**")
                         .permitAll().anyRequest().authenticated())
                 // custom form voor login
                 .formLogin((form) -> form
