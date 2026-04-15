@@ -1,4 +1,4 @@
-firstName, lastName
-"Mark", "Sestero"
-"Lisa", "Danielle"
-"Johnny", "Wisseau"
+firstName, lastName, aboutMe
+"Mark", "Sestero", "I used to know"
+"Lisa", "Danielle", "hei"
+"Johnny", "Wisseau", "pok"

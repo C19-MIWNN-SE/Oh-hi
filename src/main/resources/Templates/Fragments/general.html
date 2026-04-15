@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
-    <title th:replace="${title}">La Casa de Film</title>
+    <title th:replace="${title}">Oh, hi!</title>
     <link rel="stylesheet"
           th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet"
@@ -32,11 +32,11 @@
 </nav>
 <footer class="footer mt-auto py-3 bg-light"
         th:fragment="footer">
-    <div class="container">
-<span class="text-muted">
-Oh, hi! &mdash; INT-Developers, Hanze Groningen
-</span>
-    </div>
+            <div class="container">
+                <span class="text-muted">
+                    Oh, hi! &mdash; INT-Developers, Hanze Groningen
+                </span>
+            </div>
 </footer>
 <div th:fragment="scripts">
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
