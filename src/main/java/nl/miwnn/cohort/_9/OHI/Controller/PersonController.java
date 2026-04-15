@@ -14,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 /**
  * @author INT Developers
  * Controller for Person - how people will be displayed
@@ -57,6 +59,7 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
 
     model.addAttribute("name", String.format("Oh hi %s!", person.getFullName()));
     model.addAttribute("aboutMe", person.getAboutMe());
+    model.addAttribute("role", person.getEnumToLowerCase(person.getUserRole()));
 
     return "PersonProfile";
 
