@@ -1,0 +1,13 @@
+.our-nav-background {
+    background-color: black !important;
+    color: black;
+}
+
+.white {
+    color: black !important;
+}
+
+nav {
+    color: red;
+    background-color: indianred;
+}
