@@ -19,11 +19,6 @@ public class OHIUserService implements UserDetailsService {
         this.ohiUserRepository = ohiUserRepository;
     }
 
-//    public void createTestUser () {
-//        OHIUser testUser = new OHIUser(1L, "user", "test");
-//        ohiUserRepository.save(testUser);
-//    }
-
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {

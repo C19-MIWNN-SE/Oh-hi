@@ -6,13 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
 
 /**
  * @author Sara Omlor
@@ -24,9 +19,9 @@ public class OHISecConfig {
     private static final Logger log = LoggerFactory.getLogger(OHISecConfig.class);
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests( auth ->auth
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
                                 "/profiles/**",
@@ -34,7 +29,9 @@ public class OHISecConfig {
                                 "/userlogin",
                                 "/webjars/**",
                                 "/static/**",
-                                "/css/**")
+                                "/css/**",
+                                "/static-images/**",
+                                "/js/**")
                         .permitAll().anyRequest().authenticated())
                 // custom form voor login
                 .formLogin((form) -> form
@@ -45,23 +42,6 @@ public class OHISecConfig {
         log.info("Toestemming gegeven");
         return http.build();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-//        var student = User.builder()
-//                .username("student")
-//                .password(passwordEncoder.encode("student"))
-//                .roles("STUDENT")
-//                .build();
-//        log.info("student aangemaakt");
-//        var docent = User.builder()
-//                .username("docent")
-//                .password(passwordEncoder.encode("docent"))
-//                .roles("TEACHER")
-//                .build();
-//        log.info("docent aangemaakt");
-//        return new InMemoryUserDetailsManager(student, docent);
-//    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

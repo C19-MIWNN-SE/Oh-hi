@@ -6,24 +6,32 @@
 <body>
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <!--    rows bepalen-->
     <div class="row">
-
         <!--    div info text-->
         <div class="col-7">
-            <h1>Oh hi, world!</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.
-            </p>
+            <div>
+                <h1>Oh hi, world!</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip
+                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                    dolore eu
+                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                </p>
+            </div>
+            <img th:src="@{/static-images/landing1.png}" class="img-fluid" alt="landing1">
+            <!--                style="object-position: top; object-fit: cover; height: 500px;"-->
         </div>
         <!--    div inloggen-->
         <div class="col-5">
-            <h1>Login</h1>
+            <div class="text-center">
+                <h1>Login</h1>
+            </div>
             <div th:if="${param.error}">
                 Invalid username and password.
             </div>
@@ -33,7 +41,7 @@
             <form th:action="@{/userlogin}" method="post">
                 <div class="">
                     <label for="username" class="form-label"></label>
-                    <input type="text" class="form-control d-block" id="username"
+                    <input type="text" class="form-control d-block" id="username" name="username"
                            placeholder="Gebruikersnaam"/>
                 </div>
                 <div>

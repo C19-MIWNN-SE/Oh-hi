@@ -19,7 +19,7 @@
 <tr th:each="person : ${people}">
     <td><a th:href="@{/profiles/{id}(id=${person.id})}"
             th:if="${person.image != null}"
-            th:src="@{/images/{id}(id=${person.image.id})}"
+            th:src="@{/static-images/{id}(id=${person.image.id})}"
             th:alt="${person.id}"
            style="display: block;" width="100px">image goes here</a>
     </td>

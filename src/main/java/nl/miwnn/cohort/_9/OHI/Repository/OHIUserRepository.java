@@ -7,7 +7,7 @@ import java.util.Optional;
 
 /**
  * @author Alexander Banic
- * INFO OVER PROJECT
+ * Repository for saving users
  */
 public interface OHIUserRepository extends JpaRepository<OHIUser, Long> {
     Optional<OHIUser> findByUsername(String username);
