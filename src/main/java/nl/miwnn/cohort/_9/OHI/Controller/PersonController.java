@@ -59,7 +59,7 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
 //    model.addAttribute("class", person.);
 //    model.addAttribute("cohort", )
 
-    return "PersonProfile/" + id;
+    return "PersonProfile";
 
 }
 }

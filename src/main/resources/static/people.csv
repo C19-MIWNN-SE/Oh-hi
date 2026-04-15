@@ -1,4 +1,4 @@
-firstName, lastName
-"Mark", "Sestero"
-"Lisa", "Danielle"
-"Johnny", "Wisseau"
+firstName, lastName, infix, userRole
+"Mark", "Sestero", "A", "STUDENT"
+"Lisa", "Danielle", "B", "STUDENT"
+"Johnny", "Wisseau",, "TEACHER"

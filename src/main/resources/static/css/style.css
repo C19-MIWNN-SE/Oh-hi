@@ -1,14 +1,25 @@
-table tbody, table thead {
+.PersonTable tbody {
     display: grid;
+    grid-gap: 15px;
+    grid-auto-rows: minmax(auto, auto);
+    grid-template-columns: repeat(4, 1fr);
 }
-table td {
+/*hide the headers of the table*/
+.PersonTable thead{
+    display:none;
+}
+.PersonTable td {
     display: block;
+    padding: 8px 10px;
 }
-/*outline all*/
-table, th, tr {
+/*outline table elements*/
+.PersonTable th, .PersonTable tr {
     border: 2px solid black;
+    border-radius: 10px;
+    text-align: center;
 }
 
+/*navigation bar*/
 nav{
     background-color: black;
 }

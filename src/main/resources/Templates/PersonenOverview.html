@@ -6,7 +6,7 @@
 </head>
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
-<table>
+<table class="PersonTable">
     <thead>
     <tr>
         <th>Image</th>
@@ -24,7 +24,9 @@
            style="display: block;" width="100px">image goes here</a>
     </td>
     <td><a th:href="@{/profiles/{id}(id=${person.id})}" th:text="${person.firstName}">First Name</a></td>
+    <td th:text="${person.infix}">Middle Name</td>
     <td th:text="${person.lastName}">Last Name</td>
+    <td th:text="${person.userRole}">Role</td>
 </tr>
 </tbody>
 </table>
