@@ -55,7 +55,7 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
 
     log.info("De pagina wordt geladen");
 
-    model.addAttribute("name", String.format("Oh hi %s!", person.getFullname()));
+    model.addAttribute("name", String.format("Oh hi %s!", person.getFullName()));
     model.addAttribute("aboutMe", person.getAboutMe());
 
     return "PersonProfile";

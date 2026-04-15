@@ -63,6 +63,14 @@ public class Person {
 
     }
 
+    public String getFullName(){
+        if(infix == null){
+            infix = "";
+        }
+
+        return String.format("%s %s %s", firstName, infix, lastName);
+    }
+
     public Long getId() {
         return id;
     }
