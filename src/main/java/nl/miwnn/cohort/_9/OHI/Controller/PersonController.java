@@ -3,6 +3,7 @@ package nl.miwnn.cohort._9.OHI.Controller;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -54,12 +55,10 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
 
     log.info("De pagina wordt geladen");
 
-    model.addAttribute("name", String.format("%s %s %s", person.getFirstName(), person.getInfix(),
-    person.getLastName()));
-//    model.addAttribute("class", person.);
-//    model.addAttribute("cohort", )
+    model.addAttribute("name", String.format("Oh hi %s!", person.getFullname()));
+    model.addAttribute("aboutMe", person.getAboutMe());
 
-    return "PersonProfile/" + id;
+    return "PersonProfile";
 
 }
 }

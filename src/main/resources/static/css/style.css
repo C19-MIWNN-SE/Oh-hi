@@ -12,3 +12,8 @@ table, th, tr {
 nav{
     background-color: black;
 }
+
+.my-nav-background {
+    background-color: black;
+    color: white;
+}

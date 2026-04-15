@@ -37,9 +37,32 @@ public class Person {
 
     private String aboutMe;
 
+    public Person( String firstName, String infix, String lastName, Image image, String aboutMe) {
+        this.firstName = firstName;
+        this.infix = infix;
+        this.lastName = lastName;
+        this.image = image;
+        this.aboutMe = aboutMe;
+    }
+
+    public Person(String firstName, String lastName){
+        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME);
+
+    }
+
+    //voor een test
+    public Person(String firstName, String lastName, String aboutMe){
+        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, aboutMe);
+
+    }
+
+    public Person(){
+
+    }
+
     public class User {
 
-        private enum Role {
+        public enum Role {
             STUDENT,
             TEACHER
         }
@@ -55,31 +78,21 @@ public class Person {
         }
     }
 
-
-
-    public Person( String firstName, String infix, String lastName, Image image, String aboutMe) {
-        this.firstName = firstName;
-        this.infix = infix;
-        this.lastName = lastName;
-        this.image = image;
-        this.aboutMe = aboutMe;
-    }
-
-    public Person(String firstName, String lastName){
-        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME);
-
-    }
-
-    public Person(){
-
-    }
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFullname(){
+
+        if (infix == null){
+            infix = "";
+        }
+
+        return String.format("%s %s %s", firstName, infix, lastName);
     }
 
     public String getFirstName() {

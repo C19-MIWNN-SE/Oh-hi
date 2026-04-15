@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="~{Fragments/general :: head(${introText})}">
+<head th:replace="~{Fragments/general :: baseheader(~{:: title})}">
     <title th:text="${introText}">Film informatie</title>
 </head>
 <body class="bg-light">
@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="ps-2">
-                    <h4 class="mb-1" th:text="${introText}">Mark Sestero</h4>
+                    <h4 class="mb-1" th:text="${name}">Mark Sestero</h4>
                     <p class="text-muted mb-0">Student</p>
                     <p class="text-muted">cohort 19</p>
                 </div>
@@ -32,7 +32,7 @@
             <div class="p-4 rounded shadow-sm" style="background-color: #e2e2e2; min-height: 400px;">
                 <h5 class="fw-bold mb-4">Over mij</h5>
                 <p style="word-wrap: break-word; line-height: 1.6;" th:text="${aboutMe}">
-                    Hier komt de tekst van de student te staan die je in je screenshot ziet...
+
                 </p>
             </div>
 
