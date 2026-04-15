@@ -3,6 +3,8 @@ package nl.miwnn.cohort._9.OHI.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import javax.management.relation.Role;
+
 /**
  * Author: INT-developers
  * Model of a person that can consist of either a teacher or student.
@@ -35,11 +37,25 @@ public class Person {
 
     private String aboutMe;
 
-//    @NotNull(message = "Moet een rol toegewezen krijgen")
-    private enum role {
-        STUDENT,
-        TEACHER,
+    public class User {
+
+        private enum Role {
+            STUDENT,
+            TEACHER
+        }
+
+        private Role userRole;
+
+        public void setUserRole(Role value) {
+            this.userRole = value;
+        }
+
+        public Role getUserRole() {
+            return userRole;
+        }
     }
+
+
 
     public Person( String firstName, String infix, String lastName, Image image, String aboutMe) {
         this.firstName = firstName;
@@ -50,7 +66,6 @@ public class Person {
     }
 
     public Person(String firstName, String lastName){
-        //this.id = id;
         this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME);
 
     }
@@ -106,6 +121,8 @@ public class Person {
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
     }
+
+
 
 
 }
