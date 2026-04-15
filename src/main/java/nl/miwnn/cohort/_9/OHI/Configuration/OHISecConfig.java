@@ -29,7 +29,6 @@ public class OHISecConfig {
                 .authorizeHttpRequests( auth ->auth
                         .requestMatchers(
                                 "/",
-                                "/profiles/**",
                                 "/profiles",
                                 "/userlogin",
                                 "/webjars/**",

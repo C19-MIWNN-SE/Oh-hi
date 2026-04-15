@@ -17,6 +17,7 @@ public class Person {
     private static final String DEFAULT_INFIX = null;
     private static final Image DEFAULT_IMAGE = null;
     private static final String DEFAULT_ABOUTME = null;
+    private static final Role DEFAULT_ROLE = null;
 
 
     @Id
@@ -37,8 +38,6 @@ public class Person {
 
     private String aboutMe;
 
-    public class User {
-
         private enum Role {
             STUDENT,
             TEACHER
@@ -46,27 +45,17 @@ public class Person {
 
         private Role userRole;
 
-        public void setUserRole(Role value) {
-            this.userRole = value;
-        }
-
-        public Role getUserRole() {
-            return userRole;
-        }
-    }
-
-
-
-    public Person( String firstName, String infix, String lastName, Image image, String aboutMe) {
+    public Person( String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
         this.image = image;
         this.aboutMe = aboutMe;
+        this.userRole= userRole;
     }
 
     public Person(String firstName, String lastName){
-        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME);
+        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_ROLE);
 
     }
 
@@ -122,7 +111,13 @@ public class Person {
         this.aboutMe = aboutMe;
     }
 
+    public void setUserRole(Role value) {
+        this.userRole = value;
+    }
 
+    public Role getUserRole() {
+        return userRole;
+    }
 
 
 }
