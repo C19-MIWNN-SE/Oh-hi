@@ -17,6 +17,7 @@ public class Person {
     private static final String DEFAULT_INFIX = null;
     private static final Image DEFAULT_IMAGE = null;
     private static final String DEFAULT_ABOUTME = null;
+    private static final Role DEFAULT_ROLE = null;
 
 
     @Id
@@ -37,45 +38,29 @@ public class Person {
 
     private String aboutMe;
 
-    public Person( String firstName, String infix, String lastName, Image image, String aboutMe) {
-        this.firstName = firstName;
-        this.infix = infix;
-        this.lastName = lastName;
-        this.image = image;
-        this.aboutMe = aboutMe;
-    }
-
-    public Person(String firstName, String lastName){
-        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME);
-
-    }
-
-    //voor een test
-    public Person(String firstName, String lastName, String aboutMe){
-        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, aboutMe);
-
-    }
-
-    public Person(){
-
-    }
-
-    public class User {
-
-        public enum Role {
+        private enum Role {
             STUDENT,
             TEACHER
         }
 
         private Role userRole;
 
-        public void setUserRole(Role value) {
-            this.userRole = value;
-        }
+    public Person( String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
+        this.firstName = firstName;
+        this.infix = infix;
+        this.lastName = lastName;
+        this.image = image;
+        this.aboutMe = aboutMe;
+        this.userRole= userRole;
+    }
 
-        public Role getUserRole() {
-            return userRole;
-        }
+    public Person(String firstName, String lastName){
+        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_ROLE);
+
+    }
+
+    public Person(){
+
     }
 
     public Long getId() {
@@ -84,15 +69,6 @@ public class Person {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFullname(){
-
-        if (infix == null){
-            infix = "";
-        }
-
-        return String.format("%s %s %s", firstName, infix, lastName);
     }
 
     public String getFirstName() {
@@ -135,7 +111,13 @@ public class Person {
         this.aboutMe = aboutMe;
     }
 
+    public void setUserRole(Role value) {
+        this.userRole = value;
+    }
 
+    public Role getUserRole() {
+        return userRole;
+    }
 
 
 }
