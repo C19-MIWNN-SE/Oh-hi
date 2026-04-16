@@ -14,8 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  * @author INT Developers
  * Controller for Person - how people will be displayed
@@ -32,8 +30,6 @@ public class PersonController {
         this.personService = personService;
     }
 
-
-
 @GetMapping("")
 public String showPeople(Model model) {
     List<Person> people = personRepository.findAll();
@@ -47,6 +43,11 @@ public String showPeople(Model model) {
 
 
 /* Oh hi Mees */
+@GetMapping("/add")
+public String showEditOrAddForm(Model model, RedirectAttributes redirectAttributes){
+
+    return "add-edit-form";
+}
 
 
 @GetMapping("/{id}")
