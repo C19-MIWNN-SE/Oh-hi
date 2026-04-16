@@ -19,7 +19,6 @@ public class Person {
     private static final String DEFAULT_ABOUTME = null;
     private static final Role DEFAULT_ROLE = null;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,33 +37,38 @@ public class Person {
 
     private String aboutMe;
 
-        private enum Role {
-            STUDENT,
-            TEACHER
-        }
+    private enum Role {
+        STUDENT,
+        TEACHER
+    }
 
-        private Role userRole;
+    private Role userRole;
 
-    public Person( String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
+    @ManyToOne
+    @JoinColumn(name = "cohort_id")
+    private Cohort cohort;
+
+
+    public Person(String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
         this.image = image;
         this.aboutMe = aboutMe;
-        this.userRole= userRole;
+        this.userRole = userRole;
     }
 
-    public Person(String firstName, String lastName){
+    public Person(String firstName, String lastName) {
         this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_ROLE);
 
     }
 
-    public Person(){
+    public Person() {
 
     }
 
-    public String getFullName(){
-        if(infix == null){
+    public String getFullName() {
+        if (infix == null) {
             infix = "";
         }
 
@@ -127,5 +131,11 @@ public class Person {
         return userRole;
     }
 
+    public Cohort getCohort() {
+        return cohort;
+    }
 
+    public void setCohort(Cohort cohort) {
+        this.cohort = cohort;
+    }
 }
