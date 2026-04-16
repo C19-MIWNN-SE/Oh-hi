@@ -16,11 +16,23 @@
     <i class="bi bi-trash-fill me-2"></i> <span th:text="${errorMessage}"></span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+<a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg our-button">
+    <i class="bi bi-plus-circle me-1"></i> Nieuw cohort toevoegen
+</a>
 <div class="d-flex justify-content-between align-items-center mb-4">
-<!--    <div>-->
-<!--        <h1 th:text="${cohort}" class="display-5 fw-bold titleLink" >Cohort group</h1>-->
-<!--        <p class="text-muted" th:text="${cohortInfo}">Dit coort bevat X aantal personen</p>-->
-<!--    </div>-->
+
+    <label for="dropDownList"></label>
+    <select th:field="${allCohorts}" class="form-select" multiple="multiple" id="dropDownList">
+        <option value="0">cohorts</option>
+        <option th:each="cohort : ${allCohorts}" th:value="${cohort.id}"
+                th:text="|${cohort.id} ${cohort.discipline}|"></option>
+    </select>
+
+
+    <!--    <div>-->
+    <!--        <h1 th:text="${cohort}" class="display-5 fw-bold titleLink" >Cohort group</h1>-->
+    <!--        <p class="text-muted" th:text="${cohortInfo}">Dit coort bevat X aantal personen</p>-->
+    <!--    </div>-->
     <a th:href="@{/profiles/add}" class="btn btn-success shadow-sm search-bg our-button">
         <i class="bi bi-plus-circle me-1"></i> Nieuw lid toevoegen
     </a>
@@ -33,32 +45,32 @@
         <th>Last Name</th>
     </tr>
     </thead>
-<tbody>
+    <tbody>
 
-<tr th:each="person : ${people}">
-    <td class = "PersonImageHolder"><img class="MiniPic" th:if="${person.image != null}"
-                                          th:src="@{/static-images/{id}(id=${person.image.id})}"
-                                          th:alt="${person.id}">
-    </td>
-    <td  class="PersonImageHolder">
-        <img class="MiniPic" th:unless="${person.image != null}"
-                                th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}"
-             alt="picture of a spoon"></td>
-    <td><a th:href="@{/profiles/{id}(id=${person.id})}" th:text="${person.firstName}">First Name</a></td>
-    <td th:text="${person.infix}">Middle Name</td>
-    <td th:text="${person.lastName}">Last Name</td>
-    <td th:text="${person.userRole}">Role</td>
+    <tr th:each="person : ${people}">
+        <td class="PersonImageHolder"><img class="MiniPic" th:if="${person.image != null}"
+                                           th:src="@{/static-images/{id}(id=${person.image.id})}"
+                                           th:alt="${person.id}">
+        </td>
+        <td class="PersonImageHolder">
+            <img class="MiniPic" th:unless="${person.image != null}"
+                 th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}"
+                 alt="picture of a spoon"></td>
+        <td><a th:href="@{/profiles/{id}(id=${person.id})}" th:text="${person.firstName}">First Name</a></td>
+        <td th:text="${person.infix}">Middle Name</td>
+        <td th:text="${person.lastName}">Last Name</td>
+        <td th:text="${person.userRole}">Role</td>
 
-    <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3">
-        <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
-           class="btn btn-sm btn-outline-danger"
-           onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')">
-            <i class="bi bi-trash"></i>
-        </a>
-    </td>
+        <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3">
+            <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
+               class="btn btn-sm btn-outline-danger"
+               onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')">
+                <i class="bi bi-trash"></i>
+            </a>
+        </td>
 
-</tr>
-</tbody>
+    </tr>
+    </tbody>
 </table>
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>

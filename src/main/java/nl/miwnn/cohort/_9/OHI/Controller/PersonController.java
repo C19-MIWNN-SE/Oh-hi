@@ -1,7 +1,9 @@
 package nl.miwnn.cohort._9.OHI.Controller;
 
 import jakarta.validation.Valid;
+import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.apache.catalina.User;
@@ -27,19 +29,23 @@ public class PersonController {
     private static final Logger log = LoggerFactory.getLogger(PersonController.class);
     private final PersonRepository personRepository;
     private final PersonService personService;
+    private final CohortRepository cohortRepository;
 
-    public PersonController(PersonRepository personRepository, PersonService personService) {
+    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository) {
         this.personRepository = personRepository;
         this.personService = personService;
+        this.cohortRepository = cohortRepository;
     }
 
 @GetMapping("")
 public String showPeople(Model model) {
     List<Person> people = personRepository.findAll();
+    List<Cohort> cohorts = cohortRepository.findAll();
 
     //people.add(new Person(1L, "Mark", "Sestero"));
     log.debug("person overview requested");
     model.addAttribute("people", people);
+    model.addAttribute("allCohorts", cohorts);
 
     return "PersonenOverview";
 }
