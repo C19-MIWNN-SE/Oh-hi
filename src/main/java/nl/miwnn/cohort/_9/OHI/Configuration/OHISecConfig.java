@@ -25,13 +25,17 @@ public class OHISecConfig {
                         .requestMatchers(
                                 "/",
                                 "/profiles",
+                                "/cohort",
+                                "/cohort/**",
                                 "/profiles/**",
                                 "/userlogin",
                                 "/webjars/**",
                                 "/static/**",
                                 "/css/**",
                                 "/static-images/**",
-                                "/js/**")
+                                "/js/**",
+                                "/select2",
+                                "/select2/**")
                         .permitAll().anyRequest().authenticated())
                 // custom form voor login
                 .formLogin((form) -> form

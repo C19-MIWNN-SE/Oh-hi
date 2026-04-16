@@ -32,7 +32,6 @@ public class PersonService {private final PersonRepository personRepository;
     public void findInfoPerson(@PathVariable Long id){
 
         Optional<Person> person = personRepository.findById(id);
-
     }
 
 
