@@ -44,9 +44,30 @@ public String showPeople(Model model) {
 
 /* Oh hi Mees */
 @GetMapping("/add")
-public String showEditOrAddForm(Model model, RedirectAttributes redirectAttributes){
+public String addPersonToCohort(Model model, RedirectAttributes redirectAttributes){
+    model.addAttribute("person", new Person());
 
     return "add-edit-form";
+}
+
+@PostMapping("/save")
+public String saveMemberToCohort(@ModelAttribute("person") Person person){
+
+    personRepository.save(person);
+    return "redirect:/profiles";
+}
+
+@GetMapping("/remove/{id}")
+public String deleteMemberFromCohort(@PathVariable Long id, RedirectAttributes redirectAttributes){
+
+    try {
+        personService.deleteMemberFromCohort(id);
+        redirectAttributes.addFlashAttribute("successMessage",  "Het persoon is succesvol verwijderd");
+    } catch (Exception exception) {
+        redirectAttributes.addFlashAttribute("errorMessage", "Het persoon kon niet verwijderd worden.");
+    }
+
+    return "redirect:/profiles";
 }
 
 
@@ -60,7 +81,7 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
 
     model.addAttribute("name", String.format("Oh hi %s!", person.getFullName()));
     model.addAttribute("aboutMe", person.getAboutMe());
-    model.addAttribute("role", person.getEnumToLowerCase(person.getUserRole()));
+    model.addAttribute("role", person.getUserRole().getDisplayName());
 
     return "PersonProfile";
 

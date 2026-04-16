@@ -40,4 +40,12 @@ public class PersonService {private final PersonRepository personRepository;
 
     }
 
+    public void addMemberToCohort(Model model){
+
+    }
+
+    public void deleteMemberFromCohort(Long id){
+        personRepository.deleteById(id);
+    }
+
 }

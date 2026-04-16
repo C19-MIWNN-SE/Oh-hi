@@ -41,9 +41,19 @@ public class Person {
     @JoinColumn(name = "cohort_id")
     private Cohort cohort;
 
-        private enum Role {
-            STUDENT,
-            TEACHER
+        public enum Role {
+            STUDENT("Student"),
+            TEACHER("Docent");
+
+            private final String displayName;
+
+            Role(String displayName){
+                this.displayName = displayName;
+            }
+
+            public String getDisplayName() {
+                return displayName;
+            }
         }
 
         private Role userRole;
