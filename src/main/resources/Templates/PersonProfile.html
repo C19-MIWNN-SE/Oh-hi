@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{Fragments/general :: baseheader(~{:: title})}">
-    <title th:text="${introText}">Film informatie</title>
+    <title>About me</title>
 </head>
 <body class="bg-light">
 
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
 
+
 <div class="container mt-5">
     <div class="row mb-4">
         <div class="col-12 bg-secondary" style="height: 60px; opacity: 0.2;"></div>
     </div>
-
     <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="mb-4">
-                <div class="bg-secondary mb-3 d-flex align-items-center justify-content-center text-white"
-                     style="width: 100%; aspect-ratio: 1/1; opacity: 0.3; position: relative;">
-                    <span style="font-size: 5rem; font-weight: 100; position: absolute;">X</span>
-                </div>
-
-                <div class="ps-2">
-                    <h4 class="mb-1" th:text="${name}">Mark Sestero</h4>
-                    <p class="text-muted mb-0">Student</p>
-                    <p class="text-muted">cohort 19</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-5">
-            <div class="p-4 rounded shadow-sm" style="background-color: #e2e2e2; min-height: 400px;">
-                <h5 class="fw-bold mb-4">Over mij</h5>
-                <p style="word-wrap: break-word; line-height: 1.6;" th:text="${aboutMe}">
-
-                </p>
-            </div>
-
+                <div class="col-md-4">
+                  <div class="mb-4">
+<table class="PersonTable">
+    <tbody>
+    <tr>
+        <td class = "AboutMeImageHolder"><img class="ProfilePic" th:if="${person.image != null}"
+               th:src="@{/static-images/{id}(id=${person.image.id})}"
+               th:alt="${person.id}">
+        </td>
+        <td  class="AboutMeImageHolder"><img class="ProfilePic" th:unless="${person.image != null}"
+             th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}" alt="picture of a spoon"></td>
+        <td th:text="${name}">Mark Sestero</td>
+        <td th:text="${person.userRole}">Role</td>
+    </tr>
+    <tr class="aboutMeText">
+        <td>
+            <h5 class="fw-bold mb-4">Over mij</h5>
+            <p style="word-wrap: break-word; line-height: 1.6;" th:text="${aboutMe}"></p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+                  </div>
+                    </div>
             <div th:if="${successMessage}" class="alert alert-success mt-3" th:text="${successMessage}"></div>
             <div th:if="${errorMessage}" class="alert alert-danger mt-3" th:text="${errorMessage}"></div>
         </div>
     </div>
-</div>
 
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>

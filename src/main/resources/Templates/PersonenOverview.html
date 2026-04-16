@@ -17,12 +17,14 @@
 <tbody>
 
 <tr th:each="person : ${people}">
-    <td><a th:href="@{/profiles/{id}(id=${person.id})}"
-            th:if="${person.image != null}"
-            th:src="@{/static-images/{id}(id=${person.image.id})}"
-            th:alt="${person.id}"
-           style="display: block;" width="100px">image goes here</a>
+    <td class = "PersonImageHolder"><img class="MiniPic" th:if="${person.image != null}"
+                                          th:src="@{/static-images/{id}(id=${person.image.id})}"
+                                          th:alt="${person.id}">
     </td>
+    <td  class="PersonImageHolder">
+        <img class="MiniPic" th:unless="${person.image != null}"
+                                th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}"
+             alt="picture of a spoon"></td>
     <td><a th:href="@{/profiles/{id}(id=${person.id})}" th:text="${person.firstName}">First Name</a></td>
     <td th:text="${person.infix}">Middle Name</td>
     <td th:text="${person.lastName}">Last Name</td>
