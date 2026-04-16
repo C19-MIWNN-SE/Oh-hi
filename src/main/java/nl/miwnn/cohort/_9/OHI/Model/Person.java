@@ -3,8 +3,6 @@ package nl.miwnn.cohort._9.OHI.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import javax.management.relation.Role;
-
 /**
  * Author: INT-developers
  * Model of a person that can consist of either a teacher or student.
