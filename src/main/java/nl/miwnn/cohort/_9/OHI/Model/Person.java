@@ -1,6 +1,7 @@
 package nl.miwnn.cohort._9.OHI.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import javax.management.relation.Role;
@@ -23,7 +24,7 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Moet een naam hebben")
+    @NotBlank(message = "Moet een naam hebben")
     private String firstName;
 
     private String infix;

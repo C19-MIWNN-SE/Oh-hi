@@ -1,5 +1,6 @@
 package nl.miwnn.cohort._9.OHI.Controller;
 
+import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.validation.BindingResult;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +54,28 @@ public String addPersonToCohort(Model model, RedirectAttributes redirectAttribut
 }
 
 @PostMapping("/save")
-public String saveMemberToCohort(@ModelAttribute("person") Person person){
+public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult, Model model ){
+
+
+    if (person.getId() == null) {
+        boolean exists;
+        if (person.getInfix() == null || person.getInfix().isEmpty()) {
+            exists = personRepository.findPersonByFirstNameAndLastName(person.getFirstName(), person.getLastName()).isPresent();
+        } else {
+            exists = personRepository.findPersonByFirstNameAndInfixAndLastName(person.getFirstName(), person.getInfix(), person.getLastName()).isPresent();
+        }
+
+        if (exists){
+            bindingResult.rejectValue("firstName", "alreadyExists", "Dit persoon bestaat al");
+        }
+
+
+    }
+
+    if (bindingResult.hasErrors()) {
+        return "add-edit-form";
+    }
+
 
     personRepository.save(person);
     return "redirect:/profiles";
