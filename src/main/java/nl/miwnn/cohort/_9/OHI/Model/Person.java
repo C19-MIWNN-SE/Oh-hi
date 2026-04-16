@@ -133,5 +133,11 @@ public class Person {
         } else return "Student";
     }
 
+    public Cohort getCohort() {
+        return cohort;
+    }
 
+    public void setCohort(Cohort cohort) {
+        this.cohort = cohort;
+    }
 }
