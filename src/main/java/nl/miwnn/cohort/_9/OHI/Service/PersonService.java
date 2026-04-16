@@ -40,8 +40,19 @@ public class PersonService {private final PersonRepository personRepository;
 
     }
 
-    public void addMemberToCohort(Model model){
+    public void saveMemberToCohort(Long id, Person person){
 
+//        if (person.getId() == null){
+//            if (personRepository.findPersonByFullName(person.getFullName()).isPresent()){
+//
+//            }
+//
+//                if (filmRepository.findFilmByTitle(film.getTitle()).isPresent()) {
+//                    bindingResult.rejectValue("title", "alreadyExists", "Deze filmtitel bestaat al in de database");
+//                }
+//        }
+
+        personRepository.save(person);
     }
 
     public void deleteMemberFromCohort(Long id){
