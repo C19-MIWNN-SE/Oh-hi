@@ -1,10 +1,15 @@
 body {
-    background-color: #f0ECE1;
+    background-color: #FBFBFB;
     font-family: "Roboto Light"
 }
 
 .background-color {
     background-color: #f0ECE1;
+}
+
+/*navigation bar*/
+nav{
+    background-color: #8494FF;
 }
 
 .our-button{
@@ -13,6 +18,7 @@ body {
     margin-left: 1300px;
 }
 
+/*Deleting member*/
 .delete-button {
     text-align: center;
     align-items: center;
@@ -22,16 +28,29 @@ body {
     background-color: mediumpurple;
 }
 
+/*Button for both add cohort and add member*/
+.add-cohort-member-buttons{
+    margin: 2%;
+    background-color: #C9BEFF;
+}
+
+.add-cohort-member-buttons:hover{
+    background-color: #FFDBFD;
+}
+
 .roleDisplay {
     color: mediumpurple;
 }
 
+
+
 .PersonTable tbody {
     display: grid;
-    grid-gap: 15px;
-    width: 200px;
+    grid-gap: 100px;
+    width: 100%;
     grid-auto-rows: minmax(auto, auto);
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    margin-left: 50%;
 }
 /*hide the headers of the table*/
 .PersonTable thead{
@@ -48,11 +67,7 @@ body {
     text-align: center;
 }
 
-/*navigation bar*/
-nav{
-    background-color: black;
 
-}
 
 .my-nav-background {
     color: white;
