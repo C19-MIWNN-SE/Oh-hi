@@ -48,7 +48,6 @@ public class Person {
     @JoinColumn(name = "cohort_id")
     private Cohort cohort;
 
-
     public Person(String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
         this.firstName = firstName;
         this.infix = infix;
@@ -60,11 +59,9 @@ public class Person {
 
     public Person(String firstName, String lastName) {
         this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_ROLE);
-
     }
 
     public Person() {
-
     }
 
     public String getFullName() {
