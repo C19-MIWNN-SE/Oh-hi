@@ -40,20 +40,19 @@ public class PersonService {private final PersonRepository personRepository;
 
     }
 
-    public void saveMemberToCohort(Long id, Person person){
-
-//        if (person.getId() == null){
-//            if (personRepository.findPersonByFullName(person.getFullName()).isPresent()){
-//
-//            }
-//
-//                if (filmRepository.findFilmByTitle(film.getTitle()).isPresent()) {
-//                    bindingResult.rejectValue("title", "alreadyExists", "Deze filmtitel bestaat al in de database");
-//                }
-//        }
-
+    public void saveMemberToCohort(Person person){
         personRepository.save(person);
     }
+
+        public boolean personAlreadyExists(Person person) {
+            if (person.getInfix() == null || person.getInfix().isEmpty()) {
+                return personRepository.findPersonByFirstNameAndLastName(
+                        person.getFirstName(), person.getLastName()).isPresent();
+            }
+            return personRepository.findPersonByFirstNameAndInfixAndLastName(
+                    person.getFirstName(), person.getInfix(), person.getLastName()).isPresent();
+        }
+
 
     public void deleteMemberFromCohort(Long id){
         personRepository.deleteById(id);

@@ -37,7 +37,6 @@ public class PersonController {
 public String showPeople(Model model) {
     List<Person> people = personRepository.findAll();
 
-    //people.add(new Person(1L, "Mark", "Sestero"));
     log.debug("person overview requested");
     model.addAttribute("people", people);
 
@@ -47,37 +46,29 @@ public String showPeople(Model model) {
 
 /* Oh hi Mees */
 @GetMapping("/add")
-public String addPersonToCohort(Model model, RedirectAttributes redirectAttributes){
+public String addPersonToCohort(Model model){
     model.addAttribute("person", new Person());
 
     return "add-edit-form";
 }
 
 @PostMapping("/save")
-public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult, Model model ){
-
-
-    if (person.getId() == null) {
-        boolean exists;
-        if (person.getInfix() == null || person.getInfix().isEmpty()) {
-            exists = personRepository.findPersonByFirstNameAndLastName(person.getFirstName(), person.getLastName()).isPresent();
-        } else {
-            exists = personRepository.findPersonByFirstNameAndInfixAndLastName(person.getFirstName(), person.getInfix(), person.getLastName()).isPresent();
-        }
-
-        if (exists){
+public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    if (personService.personAlreadyExists(person)){
             bindingResult.rejectValue("firstName", "alreadyExists", "Dit persoon bestaat al");
-        }
-
-
     }
 
     if (bindingResult.hasErrors()) {
         return "add-edit-form";
     }
 
+    try {
+        personService.saveMemberToCohort(person);
+    } catch (Exception exception){
+        redirectAttributes.addFlashAttribute("Dit persoon kon niet worden opgeslagen");
+    }
 
-    personRepository.save(person);
+    redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
     return "redirect:/profiles";
 }
 
@@ -105,8 +96,9 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
 
     model.addAttribute("name", String.format("Oh hi %s!", person.getFullName()));
     model.addAttribute("aboutMe", person.getAboutMe());
+    model.addAttribute("userRole", person.getEnumToLowerCase(person.getUserRole()));
     model.addAttribute("person", person);
-    model.addAttribute("role", person.getUserRole().getDisplayName());
+
 
     return "PersonProfile";
 

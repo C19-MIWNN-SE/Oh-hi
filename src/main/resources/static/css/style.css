@@ -1,5 +1,6 @@
 body {
     background-color: #f0ECE1;
+    font-family: "Roboto Light"
 }
 
 .background-color {
@@ -12,8 +13,17 @@ body {
     margin-left: 1300px;
 }
 
+.delete-button {
+    text-align: center;
+    align-items: center;
+}
+
 .our-button:hover{
     background-color: mediumpurple;
+}
+
+.roleDisplay {
+    color: mediumpurple;
 }
 
 .PersonTable tbody {

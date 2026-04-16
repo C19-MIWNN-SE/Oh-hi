@@ -143,7 +143,7 @@ public class Person {
 
     public String getEnumToLowerCase(Role role){
         if (userRole.toString().equals("TEACHER")){
-            return "Teacher";
+            return "Docent";
         } else return "Student";
     }
 

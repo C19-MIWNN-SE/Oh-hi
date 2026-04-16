@@ -24,7 +24,7 @@
         <td  class="AboutMeImageHolder"><img class="ProfilePic" th:unless="${person.image != null}"
              th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}" alt="picture of a spoon"></td>
         <td th:text="${name}">Mark Sestero</td>
-        <td th:text="${person.userRole}">Role</td>
+        <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>
     </tr>
     <tr class="aboutMeText">
         <td>
