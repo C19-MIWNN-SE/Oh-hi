@@ -1,6 +1,25 @@
+body {
+    background-color: #f0ECE1;
+}
+
+.background-color {
+    background-color: #f0ECE1;
+}
+
+.our-button{
+    background-color: cornflowerblue;
+    margin-top: 30px;
+    margin-left: 1300px;
+}
+
+.our-button:hover{
+    background-color: mediumpurple;
+}
+
 .PersonTable tbody {
     display: grid;
     grid-gap: 15px;
+    width: 200px;
     grid-auto-rows: minmax(auto, auto);
     grid-template-columns: repeat(4, 1fr);
 }
@@ -22,10 +41,10 @@
 /*navigation bar*/
 nav{
     background-color: black;
+
 }
 
 .my-nav-background {
-    background-color: black;
     color: white;
 }
 

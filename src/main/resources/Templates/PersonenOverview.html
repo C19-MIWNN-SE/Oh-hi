@@ -6,6 +6,25 @@
 </head>
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
+
+<div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i> <span th:text="${successMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+    <i class="bi bi-trash-fill me-2"></i> <span th:text="${errorMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="d-flex justify-content-between align-items-center mb-4">
+<!--    <div>-->
+<!--        <h1 th:text="${cohort}" class="display-5 fw-bold titleLink" >Cohort group</h1>-->
+<!--        <p class="text-muted" th:text="${cohortInfo}">Dit coort bevat X aantal personen</p>-->
+<!--    </div>-->
+    <a th:href="@{/profiles/add}" class="btn btn-success shadow-sm search-bg our-button">
+        <i class="bi bi-plus-circle me-1"></i> Nieuw lid toevoegen
+    </a>
+</div>
 <table class="PersonTable">
     <thead>
     <tr>
@@ -29,6 +48,15 @@
     <td th:text="${person.infix}">Middle Name</td>
     <td th:text="${person.lastName}">Last Name</td>
     <td th:text="${person.userRole}">Role</td>
+
+    <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3">
+        <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
+           class="btn btn-sm btn-outline-danger"
+           onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')">
+            <i class="bi bi-trash"></i>
+        </a>
+    </td>
+
 </tr>
 </tbody>
 </table>

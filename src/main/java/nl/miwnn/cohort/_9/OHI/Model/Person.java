@@ -37,38 +37,47 @@ public class Person {
 
     private String aboutMe;
 
-    private enum Role {
-        STUDENT,
-        TEACHER
-    }
-
-    private Role userRole;
-
     @ManyToOne
     @JoinColumn(name = "cohort_id")
     private Cohort cohort;
 
+        public enum Role {
+            STUDENT("Student"),
+            TEACHER("Docent");
 
-    public Person(String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
+            private final String displayName;
+
+            Role(String displayName){
+                this.displayName = displayName;
+            }
+
+            public String getDisplayName() {
+                return displayName;
+            }
+        }
+
+        private Role userRole;
+
+    public Person( String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
         this.image = image;
         this.aboutMe = aboutMe;
-        this.userRole = userRole;
+        this.userRole= userRole;
     }
 
-    public Person(String firstName, String lastName) {
+    public Person(String firstName, String lastName){
         this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_ROLE);
 
     }
 
-    public Person() {
+    public Person(){
 
     }
 
-    public String getFullName() {
-        if (infix == null) {
+    public String getFullName(){
+        if(infix == null){
             infix = "";
         }
 
@@ -129,6 +138,12 @@ public class Person {
 
     public Role getUserRole() {
         return userRole;
+    }
+
+    public String getEnumToLowerCase(Role role){
+        if (userRole.toString().equals("TEACHER")){
+            return "Teacher";
+        } else return "Student";
     }
 
     public Cohort getCohort() {
