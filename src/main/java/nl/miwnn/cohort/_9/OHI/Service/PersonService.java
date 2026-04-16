@@ -29,10 +29,10 @@ public class PersonService {private final PersonRepository personRepository;
         return personRepository.findAll();
     }
 
-    public void findInfoPerson(@PathVariable Long id){
-
-        Optional<Person> person = personRepository.findById(id);
-    }
+//    public void findInfoPerson(@PathVariable Long id){
+//
+//        Optional<Person> person = personRepository.findById(id);
+//    }
 
 
     public void showEditOrAddForm(Model model, RedirectAttributes redirectAttributes){

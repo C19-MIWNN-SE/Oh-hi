@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{Fragments/general :: baseheader(~{:: title})}">
+    <meta charset="UTF-8">
+    <title>Profiles</title>
+</head>
+<body>
+<nav th:replace="~{fragments/general :: navbar}"></nav>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body p-4">
+<!--                    <form th:action="@{/profiles/save}" th:object="${person}"-->
+<!--                          method="post"-->
+<!--                          enctype="multipart/form-data">-->
+
+                        <div class="mb-3">
+                            <label for="infix" class="form-label fw-bold">Tussenvoegsel</label>
+                            <input type="text" id="infix" th:field="*{infix}"
+                                   class="form-control" placeholder="Tussenvoegsel">
+
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold d-block">Rol</label>
+                            <div class="card bg-light border-0 shadow-sm rounded">
+                                <div class="card-body p-3" style="max-height: 200px; overflow-y: auto;">
+
+                                    <div th:each="role : ${T(nl.miwnn.cohort._9.OHI.Model.Person.Role).values()}">
+                                        <label>
+                                            <input class="form-check-input"
+                                                   type="radio"
+                                                   th:field="*{userRole}"
+                                                   th:value="${role}"
+                                                   th:id="${'role_' + role}">
+                                        </label>
+                                        <label class="form-check-label ms-2"
+                                               th:for="${'role_' + role}"
+                                               th:text="${role.displayName}">
+                                        </label>
+                                    </div>
+
+                                    <input type="hidden" name="_person" value="on"/>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary btn-lg shadow-sm" type="submit">
+                                <i class="bi bi-save"></i> Lid opslaan
+                            </button>
+                            <a href="/profiles" class="btn btn-link text-secondary text-decoration-none text-center">Annuleren</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{Fragments/general :: footer}"></footer>
+<div th:replace="~{Fragments/general :: scripts}"></div>
+</body>
+</html>

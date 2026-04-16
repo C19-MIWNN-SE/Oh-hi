@@ -109,4 +109,26 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
     return "PersonProfile";
 
 }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        log.info("Bewerkformulier geopend voor: {}", id);
+        //Person personToEdit = personRepository.findById(id);
+
+//        return "add-edit-profile";
+
+        return "redirect:/{id}";
+}
+    @PostMapping("/saveProfile")
+    public String saveProfile(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        try {
+            personService.saveMemberToCohort(person);
+        } catch (Exception exception){
+            redirectAttributes.addFlashAttribute("Dit persoon kon niet worden opgeslagen");
+        }
+
+        redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
+        return "redirect:/profiles";
+    }
+
 }
