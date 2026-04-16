@@ -20,17 +20,27 @@
 
 <div class="row">
     <div class="col">
-        <a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg add-cohort-member-buttons" sec:authorize="hasRole('DOCENT')">
-            <i class="bi bi-plus-circle me-1"></i> Nieuw cohort toevoegen
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <label for="dropDownList"></label>
+            <select th:field="${allCohorts}" class="form-select cohort-dropdown" multiple="multiple" id="dropDownList" sec:authorize="hasRole('DOCENT')">
+                <option value="0" style="font-style: italic">Cohorts</option>
+                <option th:each="cohort : ${allCohorts}" th:value="${cohort.id}"
+                        th:text="|${cohort.id} ${cohort.discipline}|"></option>
+            </select>
+
+        </div>
+    </div>
+    <div class="col">
+        <a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg add-cohort-member-buttons" sec:authorize="hasRole('DOCENT')" style="margin-left: 50%">
+            <i class="bi bi-plus-circle me-1"></i> Cohort
         </a>
 
         <a th:href="@{/profiles/add}" class="btn btn-success shadow-sm search-bg add-cohort-member-buttons" sec:authorize="hasRole('DOCENT')">
-            <i class="bi bi-plus-circle me-1"></i> Nieuw lid toevoegen
+            <i class="bi bi-plus-circle me-1"></i> Lid
         </a>
     </div>
-    <div class="col">
-
-    </div>
 </div>
 
 
@@ -38,16 +48,7 @@
 
 
 
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <label for="dropDownList"></label>
-    <select th:field="${allCohorts}" class="form-select" multiple="multiple" id="dropDownList" sec:authorize="hasRole('DOCENT')">
-        <option value="0">cohorts</option>
-        <option th:each="cohort : ${allCohorts}" th:value="${cohort.id}"
-                th:text="|${cohort.id} ${cohort.discipline}|"></option>
-    </select>
-
-</div>
 <table class="PersonTable">
     <thead>
     <tr>
@@ -72,9 +73,9 @@
     <td th:text="${person.fullName}">First Name</td>
     <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>
 
-    <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3 delete-button">
+    <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3 ">
         <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
-           class="btn btn-sm btn-outline-danger"
+           class="btn btn-sm btn-outline-danger delete-button"
            onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')" sec:authorize="hasRole('DOCENT')">
             <i class="bi bi-trash"></i>
         </a>
