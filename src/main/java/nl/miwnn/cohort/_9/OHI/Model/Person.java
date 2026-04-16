@@ -19,7 +19,6 @@ public class Person {
     private static final String DEFAULT_ABOUTME = null;
     private static final Role DEFAULT_ROLE = null;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -14,13 +14,14 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark my-nav-background"
      th:fragment="navbar">
+
     <div class="container">
-        <a class="navbar-brand" href="/all">Oh, hi!</a>
+        <a class="navbar-brand" href="/all" >Oh, hi!</a>
         <div class="navbar-nav">
             <a class="nav-link"
                th:classappend="${activePage == 'all'} ? 'active' : ''"
                href="/profiles">
-                <i class="bi bi-film"></i> Overzicht
+                <i class="bi bi-people"></i> Overzicht
             </a>
 
 <!--            <form th:action="@{/logout}" method="post"-->

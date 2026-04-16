@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
+
 /**
  * Author: INT-Developers
  * Model about cohort and what type it is
