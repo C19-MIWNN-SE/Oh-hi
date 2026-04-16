@@ -37,6 +37,10 @@ public class Person {
 
     private String aboutMe;
 
+    @ManyToOne
+    @JoinColumn(name = "cohort_id")
+    private Cohort cohort;
+
         private enum Role {
             STUDENT,
             TEACHER
