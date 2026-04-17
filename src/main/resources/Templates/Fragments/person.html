@@ -6,20 +6,38 @@
 </head>
 <body>
 
-<table>
-    <thead th:fragment="fields(theadFields)">
-    <tr th:replace="${theadFields}">
-    </tr>
-    </thead>
-    <tbody th:fragment="tableBody(tableData)">
-    <tr th:each="row: ${tableData}">
-        <td th:text="${row.id}">0</td>
-        <td th:text="${row.name}">Name</td>
-    </tr>
-    </tbody>
-    <tfoot>
-    </tfoot>
-</table>
+<div th:fragment="personCard(person)">
+    <!--     th:onclick="|window.location='@{/profiles/{id}(id=${person.id})}'|"-->
 
+    <!--    hoogte vastzetten met card h-100? of bepalen aan de hand van klasse waar die geplaatst wordt?
+    kan flexible worden door style hieronder correct in te stellen -->
+    <div class="ratio w-100" style="--bs-aspect-ratio: 140%;">
+        <div class="card bg-secondary">
+            <!--            style="display: flex; flex-direction: column;-->
+            <div class="p-2 text-center">
+                <img class="MiniPic" th:if="${person.image != null}"
+                     th:src="@{/static-images/{id}(id=${person.image.id})}"
+                     th:alt="${person.id}">
+            </div>
+            <div class="text-center">
+                <img class="MiniPic" th:unless="${person.image != null}"
+                     th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}"
+                     alt="picture of a spoon">
+            </div>
+
+            <div th:text="${person.fullName}">First Name</div>
+            <div th:text="${person.userRole.displayName}" class="roleDisplay">Role</div>
+
+            <div class="d-grid gap-2 justify-content-between border-top pt-3 ">
+                <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
+                   class="btn btn-sm btn-outline-danger delete-button"
+                   onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')"
+                   sec:authorize="hasRole('DOCENT')">
+                    <i class="bi bi-trash"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

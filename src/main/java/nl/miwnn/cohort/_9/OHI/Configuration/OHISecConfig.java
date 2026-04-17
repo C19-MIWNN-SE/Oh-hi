@@ -25,6 +25,7 @@ public class OHISecConfig {
                         .requestMatchers(
                                 "/",
                                 "/profiles",
+                                "/profiles/**",
                                 "/userlogin",
                                 "/webjars/**",
                                 "/static/**",
