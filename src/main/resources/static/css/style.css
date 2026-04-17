@@ -9,7 +9,9 @@ body {
 
 /*navigation bar*/
 nav{
-    background-color: #8494FF;
+    background-image: url("/static-images/navbar.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .our-button{
@@ -52,48 +54,50 @@ nav{
 
 .roleDisplay {
     color: mediumpurple;
+    text-decoration: none;}
+
+/*about the members' cards'*/
+.cardControl {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgba(201, 190, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 10px 2px 5px #888888;
+
 }
 
-
-.PersonTable tbody {
-    display: grid;
-    grid-gap: 100px;
-    width: 100%;
-    grid-auto-rows: minmax(auto, auto);
-    grid-template-columns: repeat(4, 1fr);
-    margin-left: 20%;
+.cardControl:hover {
+    background-color: rgba(201, 190, 255, 0.2);
+    transition: 0.3s;
+    scale: 1.02;
 }
+
+.cardControl, .cardControl a {
+    text-decoration: none !important;
+}
+
+.cardControl .fw-bold {
+    text-decoration: none;
+}
+
+.person-image {
+    box-shadow: 1px 1px 3px #888888;
+}
+
+.delete-button{
+    text-align: center;
+    margin-right: 40%;
+
+}
+
 /*hide the headers of the table*/
 .PersonTable thead{
     display:none;
 }
 
 .PersonTable td {
-    display: block;
-    padding: 8px 10px;
-}
-
-/*outline table elements*/
-.PersonTable th, .PersonTable tr {
-    border: 1px solid #C9BEFF;
-    width: 110%;
-    border-radius: 10px;
-    text-align: center;
-    background-color: rgba(201, 190, 255, 0.1);
-
-}
-
-.overview div {
-    transform: scale(1.05);
-}
-
-.PersonTable td {
     transition: all 0.2s ease;
 }
-
-/*.PersonTable tr:hover td {*/
-/*    transform: scale(1.05);*/
-/*}*/
 
 .my-nav-background {
     color: white;
@@ -110,6 +114,7 @@ nav{
     width: 90%;
     object-fit: cover;
 }
+
 .aboutMeText{
     /*padding: 4px;*/
     box-shadow: 10px 5px 5px lightgray;

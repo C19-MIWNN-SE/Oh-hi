@@ -55,7 +55,7 @@
 <div class="row">
 <!--   je kan ook de row klasse veranderen naar onderstaande, en style=:width weghalen
 <div class="row row-cols-4 g-3">-->
-    <div class="col-auto" style="width: 300px;" th:each="person : ${people}">
+    <div class="col-auto" style="width: 300px" th:each="person : ${people}">
         <a th:href="@{/profiles/{id}(id=${person.id})}"
            style="cursor: pointer;">
             <div th:replace="~{fragments/person :: personCard(${person})}"></div>
@@ -64,16 +64,7 @@
 </div>
 </div>
 
-<div class="container m-4">
-    <div class="row row-cols-5 g-3">
-        <div class="col" th:each="person : ${people}">
-            <a th:href="@{/profiles/{id}(id=${person.id})}"
-               style="cursor: pointer;">
-                <div th:replace="~{fragments/person :: personCard(${person})}"></div>
-            </a>
-        </div>
-    </div>
-</div>
+
 
 <!--<table class="PersonTable overview">-->
 <!--    <thead>-->

@@ -9,32 +9,26 @@
 <body>
 
 <div th:fragment="personCard(person)">
-    <!--     th:onclick="|window.location='@{/profiles/{id}(id=${person.id})}'|"-->
-
-    <!--    hoogte vastzetten met card h-100? of bepalen aan de hand van klasse waar die geplaatst wordt?
-    kan flexible worden door style hieronder correct in te stellen -->
     <div class="ratio w-100" style="--bs-aspect-ratio: 140%;">
-        <div class="card bg-secondary">
-            <!--            style="display: flex; flex-direction: column;-->
-            <div class="p-2 text-center">
-                <img class="MiniPic" th:if="${person.image != null}"
-                     th:src="@{/static-images/{id}(id=${person.image.id})}"
-                     th:alt="${person.id}">
-            </div>
-            <div class="text-center">
-                <img class="MiniPic" th:unless="${person.image != null}"
-                     th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}"
-                     alt="picture of a spoon">
+
+        <div class=" d-flex flex-column align-items-center shadow-sm cardControl" >
+
+            <!--         ik heb voor nu: mix-blend-mode: multiply; even weggehaald zodat de afbeelding de achtergrond kleur niet meeneemt.-->
+            <div class="mb-2" style="margin-top: 30%;">
+                <img class="MiniPic img-fluid rounded person-image"
+                     th:src="${person.image != null ? '/static-images/' + person.image.id : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'}"
+                     style="height: 180px; width: 180px; object-fit: cover; ">
             </div>
 
-            <div th:text="${person.fullName}">First Name</div>
-            <div th:text="${person.userRole.displayName}" class="roleDisplay">Role</div>
+            <div class="text-center" style="margin-top: 20%;">
+                <div class="fw-bold text-dark"  th:text="${person.fullName}">First Name</div>
+                <div class="roleDisplay" th:text="${person.userRole.displayName}">Role</div>
+            </div>
 
-            <div class="d-grid gap-2 justify-content-between border-top pt-3 ">
+            <div class="position-absolute bottom-0 end-0 p-2 delete-button" style="z-index: 5;" sec:authorize="hasRole('DOCENT')">
                 <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
-                   class="btn btn-sm btn-outline-danger delete-button"
-                   onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')"
-                   sec:authorize="hasRole('DOCENT')">
+                   class="btn btn-sm btn-outline-danger border-0"
+                   onclick="return confirm('Weet je zeker?')">
                     <i class="bi bi-trash"></i>
                 </a>
             </div>
