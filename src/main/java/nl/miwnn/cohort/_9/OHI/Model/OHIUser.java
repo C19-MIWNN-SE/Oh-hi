@@ -3,6 +3,7 @@ package nl.miwnn.cohort._9.OHI.Model;
 import jakarta.persistence.*;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
@@ -44,7 +45,7 @@ public class OHIUser implements UserDetails {
     // Spring code die automatisch werd toegevoegd
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
     @Override

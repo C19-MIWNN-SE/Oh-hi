@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{Fragments/general :: baseheader(~{:: title})}">
     <meta charset="UTF-8">
     <title>Profiles</title>
@@ -16,27 +17,38 @@
     <i class="bi bi-trash-fill me-2"></i> <span th:text="${errorMessage}"></span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-<a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg our-button">
-    <i class="bi bi-plus-circle me-1"></i> Nieuw cohort toevoegen
-</a>
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <label for="dropDownList"></label>
-    <select th:field="${allCohorts}" class="form-select" multiple="multiple" id="dropDownList">
-        <option value="0">cohorts</option>
-        <option th:each="cohort : ${allCohorts}" th:value="${cohort.id}"
-                th:text="|${cohort.id} ${cohort.discipline}|"></option>
-    </select>
+<div class="row">
+    <div class="col">
 
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <!--    <div>-->
-    <!--        <h1 th:text="${cohort}" class="display-5 fw-bold titleLink" >Cohort group</h1>-->
-    <!--        <p class="text-muted" th:text="${cohortInfo}">Dit coort bevat X aantal personen</p>-->
-    <!--    </div>-->
-    <a th:href="@{/profiles/add}" class="btn btn-success shadow-sm search-bg our-button">
-        <i class="bi bi-plus-circle me-1"></i> Nieuw lid toevoegen
-    </a>
+            <label for="dropDownList"></label>
+            <select th:field="${allCohorts}" class="form-select cohort-dropdown" multiple="multiple" id="dropDownList" sec:authorize="hasRole('DOCENT')">
+                <option value="0" style="font-style: italic">Cohorts</option>
+                <option th:each="cohort : ${allCohorts}" th:value="${cohort.id}"
+                        th:text="|${cohort.id} ${cohort.discipline}|"></option>
+            </select>
+
+        </div>
+    </div>
+    <div class="col">
+        <a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg add-cohort-member-buttons" sec:authorize="hasRole('DOCENT')" style="margin-left: 50%">
+            <i class="bi bi-plus-circle me-1"></i> Cohort
+        </a>
+
+        <a th:href="@{/profiles/add}" class="btn btn-success shadow-sm search-bg add-cohort-member-buttons" sec:authorize="hasRole('DOCENT')">
+            <i class="bi bi-plus-circle me-1"></i> Lid
+        </a>
+    </div>
 </div>
+
+
+
+
+
+
+
 <table class="PersonTable">
     <thead>
     <tr>
@@ -61,10 +73,10 @@
     <td th:text="${person.fullName}">First Name</td>
     <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>
 
-    <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3 delete-button">
+    <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3 ">
         <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
-           class="btn btn-sm btn-outline-danger"
-           onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')">
+           class="btn btn-sm btn-outline-danger delete-button"
+           onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')" sec:authorize="hasRole('DOCENT')">
             <i class="bi bi-trash"></i>
         </a>
     </td>
