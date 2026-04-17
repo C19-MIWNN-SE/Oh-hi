@@ -28,6 +28,8 @@ public class OHISecConfig {
                                 "/cohort",
                                 "/cohort/**",
                                 "/profiles/**",
+                                "/fragments",
+                                "/fragments/**",
                                 "/userlogin",
                                 "/webjars/**",
                                 "/static/**",
