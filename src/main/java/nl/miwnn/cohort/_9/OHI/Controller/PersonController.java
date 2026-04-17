@@ -125,10 +125,8 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
 
 //Save results of add/edit to about me information
 @PostMapping("/saveAboutMe")
-public String saveAboutMe(
-        @ModelAttribute("person") Person aboutPerson,
+public String saveAboutMe(@Valid @ModelAttribute("person") Person aboutPerson,
         @RequestParam("imageFile") MultipartFile imageFile
-//        @RequestParam(value = "deleteImage", defaultValue = "false") boolean deleteImage
 ) throws IOException {
 
     // Load existing person
@@ -140,10 +138,8 @@ public String saveAboutMe(
 
     // Update fields
     profilePerson.setAboutMe(aboutPerson.getAboutMe());
+    profilePerson.setImage(aboutPerson.getImage());
 
-//    if (deleteImage) {
-//        profilePerson.setImage(null);
-//    }
     // Replace image if a new one was uploaded
     if (!imageFile.isEmpty()) {
         Image image = new Image();
