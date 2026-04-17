@@ -46,15 +46,20 @@ nav{
 
 .edit-cohort-member-button{
     background-color: #C9BEFF;
-    width: 100%;
+    width: 20%;
     border-color: #C9BEFF;
     transition: 0.3s;
 }
 
+.fp-btn-colour{
+    background-color: #C9BEFF;
+    border-color: #C9BEFF;
+    transition: 0.3s;
+}
 /*Cohort lijst opmaak*/
 .cohort-dropdown {
-    width: 50%;
-    margin: 2% 30%
+    width: 100%;
+
 }
 
 .roleDisplay {
