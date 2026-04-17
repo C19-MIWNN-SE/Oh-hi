@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="~{Fragments/general :: baseheader(~{:: title})}">
+    <title>Cohort toevoegen/bewerken</title>
+</head>
+<body>
+<nav th:replace="~{Fragments/general :: navbar}"></nav>
+<div>
+    <h2>Cohort toevoegen/bewerken</h2>
+</div>
+<form th:action="@{/cohort/save}" method="post"
+      th:object="${cohort}">
+
+    <div class="m-3">
+        <label for="CN" class="form-label d-block fw-bold">Cohort nummer</label>
+        <input type="text" id="CN" th:field="*{cohortNum}" class="form-control"/>
+        <span th:if="${#fields.hasErrors('cohortNum')}"
+              th:errors="*{cohortNum}"
+              class="error"></span>
+    </div>
+    <div class="m-3">
+        <label for="DC" class="form-label d-block fw-bold">Vakgebied</label>
+        <input type="text" id="DC" th:field="*{discipline}" class="form-control"/>
+        <span th:if="${#fields.hasErrors('discipline')}"
+              th:errors="*{discipline}"
+              class="error"></span>
+    </div>
+
+    <div>
+        <label for="SD">Startdatum</label>
+        <input type="date" th:field="*{startDate}" id="SD"/>
+    </div>
+
+    <div>
+        <label for="ED">Einddatum</label>
+        <input type="date" th:field="*{endDate}" id="ED"/>
+    </div>
+
+    <!--  Csv invoegen?-->
+    <label for="dropDownList"></label>
+    <select th:field="*{members}" class="form-select" multiple="multiple" id="dropDownList">
+        <option value="0">Personen (Houd ctrl ingedrukt om meerdere te selecteren</option>
+        <option th:each="member : ${allMembers}" th:value="${member.id}" th:text="${member.getFullName}"></option>
+    </select>
+
+    <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary form-control d-block">Opslaan</button>
+    </div>
+</form>
+
+<footer th:replace="~{Fragments/general :: footer}"></footer>
+<div th:replace="~{Fragments/general :: scripts}"></div>
+</body>
+
+</html>
