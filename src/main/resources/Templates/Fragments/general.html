@@ -1,0 +1,48 @@
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="baseheader(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <title th:replace="${title}">Oh, hi!</title>
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark my-nav-background"
+     th:fragment="navbar">
+
+
+    <div class="container">
+        <a class="navbar-brand" href="/userlogin" >Oh, hi!</a>
+        <div class="navbar-nav">
+            <a class="nav-link"
+               th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
+               href="/profiles">
+                <i class="bi bi-people"></i> Overzicht
+            </a>
+
+<!--            <form th:action="@{/logout}" method="post"-->
+<!--                  style="display: inline; margin-left: 100px ">-->
+<!--                <button type="submit" class="btn btn-primary">Uitloggen</button>-->
+<!--            </form>-->
+        </div>
+    </div>
+</nav>
+<footer class="footer mt-auto py-3 bg-light"
+        th:fragment="footer">
+            <div class="container">
+                <span class="text-muted">
+                    Oh, hi! &mdash; INT-Developers, Hanze Groningen
+                </span>
+            </div>
+</footer>
+<div th:fragment="scripts">
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
+    </script>
+</div>
+</body>
+</html>
