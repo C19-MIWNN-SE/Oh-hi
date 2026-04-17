@@ -37,80 +37,76 @@ public class PersonController {
         this.cohortRepository = cohortRepository;
     }
 
-    @GetMapping("")
-    public String showPeople(Model model) {
-        List<Person> people = personRepository.findAll();
-        List<Cohort> cohorts = cohortRepository.findAll();
+@GetMapping("")
+public String showPeople(Model model) {
+    List<Person> people = personRepository.findAll();
+    List<Cohort> cohorts = cohortRepository.findAll();
 
-        //people.add(new Person(1L, "Mark", "Sestero"));
-        log.debug("person overview requested");
-        model.addAttribute("people", people);
-        model.addAttribute("allCohorts", cohorts);
+    log.debug("person overview requested");
+    model.addAttribute("people", people);
+    model.addAttribute("allCohorts", cohorts);
 
-        return "PersonenOverview";
+    return "PersonenOverview";
+}
+
+
+/* Oh hi Mees */
+@GetMapping("/add")
+public String addPersonToCohort(Model model){
+    model.addAttribute("person", new Person());
+
+    return "add-edit-form";
+}
+
+@PostMapping("/save")
+public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    if (personService.personAlreadyExists(person)){
+            bindingResult.rejectValue("firstName", "alreadyExists", "Dit persoon bestaat al");
     }
 
-
-    /* Oh hi Mees */
-    @GetMapping("/add")
-    public String addPersonToCohort(Model model, RedirectAttributes redirectAttributes) {
-        model.addAttribute("person", new Person());
-
+    if (bindingResult.hasErrors()) {
         return "add-edit-form";
     }
 
-    @PostMapping("/save")
-    public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult, Model model) {
-
-
-        if (person.getId() == null) {
-            boolean exists;
-            if (person.getInfix() == null || person.getInfix().isEmpty()) {
-                exists = personRepository.findPersonByFirstNameAndLastName(person.getFirstName(), person.getLastName()).isPresent();
-            } else {
-                exists = personRepository.findPersonByFirstNameAndInfixAndLastName(person.getFirstName(), person.getInfix(), person.getLastName()).isPresent();
-            }
-
-            if (exists) {
-                bindingResult.rejectValue("firstName", "alreadyExists", "Dit persoon bestaat al");
-            }
-        }
-
-        if (bindingResult.hasErrors()) {
-            return "add-edit-form";
-        }
-
-        personRepository.save(person);
-        return "redirect:/profiles";
+    try {
+        personService.saveMemberToCohort(person);
+    } catch (Exception exception){
+        redirectAttributes.addFlashAttribute("Dit persoon kon niet worden opgeslagen");
     }
 
-    @GetMapping("/remove/{id}")
-    public String deleteMemberFromCohort(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
+    return "redirect:/profiles";
+}
 
-        try {
-            personService.deleteMemberFromCohort(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol verwijderd");
-        } catch (Exception exception) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Het persoon kon niet verwijderd worden.");
-        }
+@GetMapping("/remove/{id}")
+public String deleteMemberFromCohort(@PathVariable Long id, RedirectAttributes redirectAttributes){
 
-        return "redirect:/profiles";
+    try {
+        personService.deleteMemberFromCohort(id);
+        redirectAttributes.addFlashAttribute("successMessage",  "Het persoon is succesvol verwijderd");
+    } catch (Exception exception) {
+        redirectAttributes.addFlashAttribute("errorMessage", "Het persoon kon niet verwijderd worden.");
     }
 
+    return "redirect:/profiles";
+}
 
-    @GetMapping("/{id}")
-    public String showProfile(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
 
-        Person person = personRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
+@GetMapping("/{id}")
+public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes redirectAttributes){
 
-        log.info("De pagina wordt geladen");
+    Person person = personRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
 
-        model.addAttribute("name", String.format("Oh hi %s!", person.getFullName()));
-        model.addAttribute("aboutMe", person.getAboutMe());
-        model.addAttribute("person", person);
-        model.addAttribute("role", person.getUserRole().getDisplayName());
+    log.info("De pagina wordt geladen");
 
-        return "PersonProfile";
-    }
+    model.addAttribute("name", String.format("Oh hi %s!", person.getFullName()));
+    model.addAttribute("aboutMe", person.getAboutMe());
+    model.addAttribute("userRole", person.getEnumToLowerCase(person.getUserRole()));
+    model.addAttribute("person", person);
+
+
+    return "PersonProfile";
+
+}
 }

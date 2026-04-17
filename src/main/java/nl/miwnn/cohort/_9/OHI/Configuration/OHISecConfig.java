@@ -25,11 +25,6 @@ public class OHISecConfig {
                         .requestMatchers(
                                 "/",
                                 "/profiles",
-                                "/cohort",
-                                "/cohort/**",
-                                "/profiles/**",
-                                "/fragments",
-                                "/fragments/**",
                                 "/userlogin",
                                 "/webjars/**",
                                 "/static/**",
@@ -38,7 +33,13 @@ public class OHISecConfig {
                                 "/js/**",
                                 "/select2",
                                 "/select2/**")
-                        .permitAll().anyRequest().authenticated())
+                        .permitAll().requestMatchers(
+                                "/profiles/add",
+                                "/profiles/remove",
+                                "/profiles/save",
+                                "/cohort",
+                                "/cohort/**"
+                        ).hasAnyRole("DOCENT").anyRequest().authenticated())
                 // custom form voor login
                 .formLogin((form) -> form
                         .loginPage("/userlogin")
