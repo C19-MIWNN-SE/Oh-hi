@@ -123,23 +123,26 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
         return "add-edit-aboutme";
 }
 
-//    @PostMapping("/save")
-//    public String saveFilm
-//            (@Valid @ModelAttribute
-//             Film film, BindingResult bindingResult, Model model, @RequestParam("leadActor")
-//             Long leadActorId,RedirectAttributes redirectAttributes,
-//             @RequestParam("imageFile") MultipartFile imageFile) throws IOException  {
-//        if (film.getId() != null) {
-//            Film existingFilm = filmService.getFilmById(film.getId());
-
 //Save results of add/edit to about me information
 @PostMapping("/saveAboutMe")
-public String saveAboutMe(@Valid @ModelAttribute("person") Person aboutPerson,
+public String saveAboutMe(@ModelAttribute Person aboutPerson,
         @RequestParam("imageFile") MultipartFile imageFile
 ) throws IOException {
 
-    // Load existing person
     Person profilePerson = personService.findById(aboutPerson.getId());
+
+    if(aboutPerson.getId() != null){
+
+        if (!imageFile.isEmpty()) {
+            Image image = new Image();
+            image.setData(imageFile.getBytes());
+            image.setContentType(imageFile.getContentType());
+            imageRepository.save(image);
+            profilePerson.setImage(image);
+        }
+    }
+    // Load existing person
+    //Person profilePerson = personService.findById(aboutPerson.getId());
 
     if (profilePerson == null) {
         throw new IllegalStateException("No person found with ID " + aboutPerson.getId());
@@ -147,16 +150,6 @@ public String saveAboutMe(@Valid @ModelAttribute("person") Person aboutPerson,
 
     // Update fields
     profilePerson.setAboutMe(aboutPerson.getAboutMe());
-    profilePerson.setImage(aboutPerson.getImage());
-
-    // Replace image if a new one was uploaded
-    if (!imageFile.isEmpty()) {
-        Image image = new Image();
-        image.setData(imageFile.getBytes());
-        image.setContentType(imageFile.getContentType());
-        imageRepository.save(image);
-        profilePerson.setImage(image);
-    }
 
     // Save updated person
     personService.savePerson(profilePerson);

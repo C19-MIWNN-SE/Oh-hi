@@ -18,11 +18,11 @@
     <tbody>
     <tr>
         <td>
-        <img class="ProfilePic"
-             th:src="${person.image != null} ?
-             '/static-images/' + person.image.id :
+            <img class="ProfilePic"
+                 th:src="${person.image != null} ?
+             '/images/' + ${person.image.id} :
              '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'"
-             th:alt="${person.id}" /></td>
+                 th:alt="${person.id}" />
         <td th:text="${name}">Mark Sestero</td>
         <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>
     </tr>

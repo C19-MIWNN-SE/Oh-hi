@@ -60,11 +60,11 @@ public class PersonService {
         personRepository.deleteById(id);
     }
 
-    public Object findById() {
-        return null;
-    }
+//    public Object findById() {
+//        return null;
+//    }
 
-    public void savePerson(Person profilePerson) { personRepository.save(person);}
+    public void savePerson(Person person) { personRepository.save(person);}
 
     public Person findById(Long id) {
         return personRepository.findById(id).orElseThrow(

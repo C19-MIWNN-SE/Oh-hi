@@ -65,7 +65,7 @@
     <td class = "AboutMeImageHolder">
         <img class="ProfilePic"
              th:src="${person.image != null} ?
-             '/static-images/' + person.image.id :
+             '/images/' + ${person.image.id} :
              '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'"
              th:alt="${person.id}" /></td>
     <td th:text="${person.fullName}">First Name</td>
