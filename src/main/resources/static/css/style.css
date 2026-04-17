@@ -44,6 +44,13 @@ nav{
     border-color: #FFDBFD;
 }
 
+.edit-cohort-member-button{
+    background-color: #C9BEFF;
+    width: 100%;
+    border-color: #C9BEFF;
+    transition: 0.3s;
+}
+
 /*Cohort lijst opmaak*/
 .cohort-dropdown {
     width: 50%;
@@ -114,6 +121,7 @@ nav{
     /*padding: 4px;*/
     box-shadow: 10px 5px 5px lightgray;
     background-color: #e2e2e2;
-    min-height: 400px;
-    min-width: 500px;
+    height: 100%;
+    width: 100%;
+    text-align: center;
 }
