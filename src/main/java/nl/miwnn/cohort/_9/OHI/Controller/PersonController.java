@@ -123,6 +123,15 @@ public String showProfile(@PathVariable Long id ,Model model, RedirectAttributes
         return "add-edit-aboutme";
 }
 
+//    @PostMapping("/save")
+//    public String saveFilm
+//            (@Valid @ModelAttribute
+//             Film film, BindingResult bindingResult, Model model, @RequestParam("leadActor")
+//             Long leadActorId,RedirectAttributes redirectAttributes,
+//             @RequestParam("imageFile") MultipartFile imageFile) throws IOException  {
+//        if (film.getId() != null) {
+//            Film existingFilm = filmService.getFilmById(film.getId());
+
 //Save results of add/edit to about me information
 @PostMapping("/saveAboutMe")
 public String saveAboutMe(
