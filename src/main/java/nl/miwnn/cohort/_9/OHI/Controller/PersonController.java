@@ -141,8 +141,6 @@ public String saveAboutMe(@ModelAttribute Person aboutPerson,
             profilePerson.setImage(image);
         }
     }
-    // Load existing person
-    //Person profilePerson = personService.findById(aboutPerson.getId());
 
     if (profilePerson == null) {
         throw new IllegalStateException("No person found with ID " + aboutPerson.getId());
@@ -156,55 +154,6 @@ public String saveAboutMe(@ModelAttribute Person aboutPerson,
 
     return "redirect:/profiles/" + profilePerson.getId();
 }
-
-
-//    @PostMapping("/saveAboutMe")
-//    public String saveAboutMe(@Valid @ModelAttribute("person") Person aboutPerson,
-//                              BindingResult bindingResult,
-//                              RedirectAttributes redirectAttributes,
-//                              @RequestParam("imageFile") MultipartFile imageFile,
-//                              @RequestParam(value = "deleteImage", defaultValue = "false") boolean deleteImage) throws IOException {
-//    log.info("AboutMe opslaan voor {}", aboutPerson.getFullName());
-//
-//    if (bindingResult.hasErrors()){
-//        log.warn("Error bij opslaan voor {}", bindingResult.getErrorCount());
-//        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.aboutPerson", bindingResult);
-//        redirectAttributes.addFlashAttribute("aboutPerson", aboutPerson);
-//        return "redirect:/profiles/" + aboutPerson.getId();
-//    }
-//    if(aboutPerson.getId() != null){
-//        Person profilePerson = personService.findById(aboutPerson.getId());
-//
-//        // Copy updated fields
-//        profilePerson.setAboutMe(aboutPerson.getAboutMe());
-//
-//        if(imageFile.isEmpty()){
-//            Image image = new Image();
-//            image.setData(imageFile.getBytes());
-//            image.setContentType(imageFile.getContentType());
-//            imageRepository.save(image);
-//            profilePerson.setImage(image);
-//        }
-//        else if (deleteImage){
-//            aboutPerson.setImage(null);
-//        }
-//
-//        personService.savePerson(profilePerson);
-//        log.info("Aboutme van {} bijgewerkt", aboutPerson.getFullName());
-//        return "redirect:/profiles/" + aboutPerson.getId();
-//    }
-//        if(!imageFile.isEmpty()){
-//            Image image = new Image();
-//            image.setData(imageFile.getBytes());
-//            image.setContentType(imageFile.getContentType());
-//            imageRepository.save(image);
-//        }
-//
-//        personService.savePerson(aboutPerson);
-//        log.info("Aboutme van {} bijgewerkt", aboutPerson.getFullName());
-//        return "redirect:/profiles/" + aboutPerson.getId();
-//
-//    }
 
 //consider renaming for program longevity
     @PostMapping("/saveProfile")
