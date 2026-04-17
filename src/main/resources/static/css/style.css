@@ -83,13 +83,17 @@ nav{
 
 }
 
+.overview div {
+    transform: scale(1.05);
+}
+
 .PersonTable td {
     transition: all 0.2s ease;
 }
 
-.PersonTable tr:hover td {
-    transform: scale(1.05);
-}
+/*.PersonTable tr:hover td {*/
+/*    transform: scale(1.05);*/
+/*}*/
 
 .my-nav-background {
     color: white;
@@ -100,8 +104,11 @@ nav{
     width: auto;
 }
 .MiniPic{
-    height:200px;
-    width:auto;
+    display: block;
+    margin: 0 auto;
+    height: 90%;
+    width: 90%;
+    object-fit: cover;
 }
 .aboutMeText{
     /*padding: 4px;*/
