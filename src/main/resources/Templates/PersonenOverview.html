@@ -62,14 +62,12 @@
 
 <tr th:each="person : ${people}" th:onclick="|window.location='@{/profiles/{id}(id=${person.id})}'|"
     style="cursor: pointer;">
-    <td class = "PersonImageHolder"><img class="MiniPic" th:if="${person.image != null}"
-                                          th:src="@{/static-images/{id}(id=${person.image.id})}"
-                                          th:alt="${person.id}">
-    </td>
-    <td  class="PersonImageHolder">
-        <img class="MiniPic" th:unless="${person.image != null}"
-                                th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}"
-             alt="picture of a spoon"></td>
+    <td class = "AboutMeImageHolder">
+        <img class="ProfilePic"
+             th:src="${person.image != null} ?
+             '/static-images/' + person.image.id :
+             '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'"
+             th:alt="${person.id}" /></td>
     <td th:text="${person.fullName}">First Name</td>
     <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>
 

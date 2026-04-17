@@ -17,12 +17,12 @@
 <table class="PersonTable">
     <tbody>
     <tr>
-        <td class = "AboutMeImageHolder"><img class="ProfilePic" th:if="${person.image != null}"
-               th:src="@{/static-images/{id}(id=${person.image.id})}"
-               th:alt="${person.id}">
-        </td>
-        <td  class="AboutMeImageHolder"><img class="ProfilePic" th:unless="${person.image != null}"
-             th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}" alt="picture of a spoon"></td>
+        <td>
+        <img class="ProfilePic"
+             th:src="${person.image != null} ?
+             '/static-images/' + person.image.id :
+             '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'"
+             th:alt="${person.id}" /></td>
         <td th:text="${name}">Mark Sestero</td>
         <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>
     </tr>
@@ -40,6 +40,10 @@
             <div th:if="${errorMessage}" class="alert alert-danger mt-3" th:text="${errorMessage}"></div>
         </div>
     </div>
+<!--using format from other buttons-->
+<a th:href="@{/profiles/editAbout/{id}(id=${person.id})}" class="btn btn-success shadow-sm search-bg add-cohort-member-buttons">
+    <i class="bi bi-plus-circle me-1"></i> Edit Profile
+</a>
 
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>
