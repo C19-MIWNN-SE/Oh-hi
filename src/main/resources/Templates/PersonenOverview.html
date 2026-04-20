@@ -18,91 +18,88 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
+<div class="container text-center">
 
-
-<div class="container">
-<div class="row">
-    <div class="col">
-
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
-            <label for="dropDownList"></label>
-            <select th:field="${allCohorts}" class="form-select cohort-dropdown" multiple="multiple" id="dropDownList"
-                    sec:authorize="hasRole('DOCENT')">
-                <option value="0" style="font-style: italic">Cohorts</option>
-                <option th:each="cohort : ${allCohorts}" th:value="${cohort.id}"
-                        th:text="|${cohort.id} ${cohort.discipline}|"></option>
-            </select>
-
+    <div class="container mt-4">
+        <div class="row align-items-start">
+            <!--        <div class="col-3">-->
+            <!--            <label for="dropDownList"></label>-->
+            <!--            <select th:field="${allCohorts}" class="form-select cohort-dropdown" multiple="multiple"-->
+            <!--                    id="dropDownList"-->
+            <!--                    sec:authorize="hasRole('DOCENT')">-->
+            <!--                <option value="0" style="font-style: italic">Cohorts</option>-->
+            <!--                <option th:each="cohort : ${allCohorts}" th:value="${cohort.id}"-->
+            <!--                        th:text="|${cohort.id} ${cohort.discipline}|"></option>-->
+            <!--            </select>-->
+            <!--        </div>-->
+            <div class="col-3" sec:authorize="hasRole('DOCENT')">
+                <div class="dropdown">
+                    <button class="btn btn-primary shadow-sm search-bg dropdown-toggle fp-btn-colour"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Cohorts
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li th:each="cohort : ${allCohorts}">
+                            <a class="dropdown-item"
+                               th:href="@{/cohorts/{id}(id=${cohort.id})}"
+                               th:text="|${cohort.id} ${cohort.discipline}|">
+                            </a>
+                        </li>
+                    </ul>
+                    <a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour"
+                       sec:authorize="hasRole('DOCENT')">
+                        <i class="bi bi-plus-circle me-1"></i> Cohort
+                    </a>
+                    <a th:href="@{/profiles/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour"
+                       sec:authorize="hasRole('DOCENT')">
+                        <i class="bi bi-plus-circle me-1"></i> Lid
+                    </a>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                <h1 class="fw-light">Cohort 19</h1>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col">
-        <a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg add-cohort-member-buttons"
-           sec:authorize="hasRole('DOCENT')" style="margin-left: 50%">
-            <i class="bi bi-plus-circle me-1"></i> Cohort
-        </a>
 
-        <a th:href="@{/profiles/add}" class="btn btn-success shadow-sm search-bg add-cohort-member-buttons"
-           sec:authorize="hasRole('DOCENT')">
-            <i class="bi bi-plus-circle me-1"></i> Lid
-        </a>
+    <div class="container">
+        <div class="row row-cols-4 mt-1 g-4 justify-content-center">
+            <div class="col" th:each="person : ${people}"
+                 th:if="${person.userRole.name() == 'TEACHER'}">
+                <a th:href="@{/profiles/{id}(id=${person.id})}"
+                   style="cursor: pointer;">
+                    <div th:replace="~{fragments/person :: personCard(${person})}"></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row row-cols-4 mt-1 g-4">
+            <div class="col" th:each="person : ${people}"
+                 th:if="${person.userRole.name() == 'STUDENT'}">
+                <a th:href="@{/profiles/{id}(id=${person.id})}"
+                   style="cursor: pointer;">
+                    <div th:replace="~{fragments/person :: personCard(${person})}"></div>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
-
-
-<div class="container m-4">
-<div class="row">
-<!--   je kan ook de row klasse veranderen naar onderstaande, en style=:width weghalen
-<div class="row row-cols-4 g-3">-->
-    <div class="col-auto" style="width: 300px;" th:each="person : ${people}">
-        <a th:href="@{/profiles/{id}(id=${person.id})}"
-           style="cursor: pointer;">
-            <div th:replace="~{fragments/person :: personCard(${person})}"></div>
-        </a>
-    </div>
-</div>
-</div>
-
-
-
-<!--<table class="PersonTable overview">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th>Image</th>-->
-<!--        <th>Full name</th>-->
-<!--        <th>Role</th>-->
-<!--        <th>Delete Person</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-
-<!--    <tr th:each="person : ${people}" th:onclick="|window.location='@{/profiles/{id}(id=${person.id})}'|"-->
-<!--        style="cursor: pointer;">-->
-<!--        <td class="PersonImageHolder"><img class="MiniPic" th:if="${person.image != null}"-->
-<!--                                           th:src="@{/static-images/{id}(id=${person.image.id})}"-->
-<!--                                           th:alt="${person.id}">-->
-<!--        </td>-->
-<!--        <td class="PersonImageHolder">-->
-<!--            <img class="MiniPic" th:unless="${person.image != null}"-->
-<!--                 th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}"-->
-<!--                 alt="picture of a spoon"></td>-->
-<!--        <td th:text="${person.fullName}">First Name</td>-->
-<!--        <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>-->
-
-<!--        <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3 ">-->
-<!--            <a th:href="@{/profiles/remove/{id}(id=${person.id})}"-->
-<!--               class="btn btn-sm btn-outline-danger delete-button"-->
-<!--               onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')"-->
-<!--               sec:authorize="hasRole('DOCENT')">-->
-<!--                <i class="bi bi-trash"></i>-->
+<!--<div class="container m-4">-->
+<!--    <div class="row">-->
+<!--        &lt;!&ndash;   je kan ook de row klasse veranderen naar onderstaande, en style=:width weghalen-->
+<!--        <div class="row row-cols-4 g-3">&ndash;&gt;-->
+<!--        <div class="col-auto" style="width: 300px;" th:each="person : ${people}">-->
+<!--            <a th:href="@{/profiles/{id}(id=${person.id})}"-->
+<!--               style="cursor: pointer;">-->
+<!--                <div th:replace="~{fragments/person :: personCard(${person})}"></div>-->
 <!--            </a>-->
-<!--        </td>-->
-
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
-
-
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>
 </body>

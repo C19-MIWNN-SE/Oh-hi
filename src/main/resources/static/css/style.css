@@ -9,9 +9,7 @@ body {
 
 /*navigation bar*/
 nav{
-    background-image: url("/static-images/navbar.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: #8494FF;
 }
 
 .our-button{
@@ -46,10 +44,22 @@ nav{
     border-color: #FFDBFD;
 }
 
+.edit-cohort-member-button{
+    background-color: #C9BEFF;
+    width: 20%;
+    border-color: #C9BEFF;
+    transition: 0.3s;
+}
+
+.fp-btn-colour{
+    background-color: #C9BEFF;
+    border-color: #C9BEFF;
+    transition: 0.3s;
+}
 /*Cohort lijst opmaak*/
 .cohort-dropdown {
-    width: 50%;
-    margin: 2% 30%
+    width: 100%;
+
 }
 
 .roleDisplay {
@@ -119,6 +129,7 @@ nav{
     /*padding: 4px;*/
     box-shadow: 10px 5px 5px lightgray;
     background-color: #e2e2e2;
-    min-height: 400px;
-    min-width: 500px;
+    height: 100%;
+    width: 100%;
+    text-align: center;
 }

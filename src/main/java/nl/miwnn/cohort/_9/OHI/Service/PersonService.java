@@ -37,9 +37,7 @@ public class PersonService {
 //        Optional<Person> person = personRepository.findById(id);
 //    }
 
-
     public void showEditOrAddForm(Model model, RedirectAttributes redirectAttributes){
-
     }
 
     public void saveMemberToCohort(Person person){
@@ -54,7 +52,6 @@ public class PersonService {
             return personRepository.findPersonByFirstNameAndInfixAndLastName(
                     person.getFirstName(), person.getInfix(), person.getLastName()).isPresent();
         }
-
 
     public void deleteMemberFromCohort(Long id){
         personRepository.deleteById(id);
