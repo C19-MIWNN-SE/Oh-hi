@@ -36,6 +36,8 @@ public class Person {
     @JoinColumn(name = "image_id")
     private Image image;
 
+    @Lob
+    @Column(name = "about_me")
     private String aboutMe;
 
     @ManyToOne

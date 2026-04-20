@@ -75,6 +75,10 @@ nav{
 
 }
 
+.img-spacing-card {
+    margin-top: 20%;
+}
+
 .roleDisplay {
     color: mediumpurple;
     text-decoration: none;}
@@ -108,9 +112,7 @@ nav{
 }
 
 .delete-button{
-    text-align: center;
-    margin-right: 40%;
-
+    justify-content: center;
 }
 
 /*hide the headers of the table*/

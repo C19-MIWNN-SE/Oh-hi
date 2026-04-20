@@ -19,19 +19,19 @@
             <div class=" d-flex flex-column align-items-center shadow-sm cardControl" >
 
                 <!--         ik heb voor nu: mix-blend-mode: multiply; even weggehaald zodat de afbeelding de achtergrond kleur niet meeneemt.-->
-                <div class="mb-2" style="margin-top: 30%;">
+                <div class="mb-2 img-spacing-card">
                     <img class="MiniPic img-fluid rounded person-image"
                          th:src="${person.image != null} ? '/images/' + ${person.image.id} : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'"
 
                          style="height: 180px; width: 180px; object-fit: cover; ">
                 </div>
 
-                <div class="text-center" style="margin-top: 20%;">
+                <div class="text-center">
                     <div class="fw-bold text-dark"  th:text="${person.fullName}">First Name</div>
                     <div class="roleDisplay" th:text="${person.userRole.displayName}">Role</div>
                 </div>
 
-                <div class="position-absolute bottom-0 end-0 p-2 delete-button" style="z-index: 5;" sec:authorize="hasRole('DOCENT')">
+                <div class="position-absolute bottom-0 delete-button" style="z-index: 5;" sec:authorize="hasRole('DOCENT')">
                     <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
                        class="btn btn-sm btn-outline-danger border-0"
                        onclick="return confirm('Weet je zeker?')">
