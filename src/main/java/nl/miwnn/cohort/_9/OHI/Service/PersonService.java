@@ -1,5 +1,6 @@
 package nl.miwnn.cohort._9.OHI.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,9 @@ import java.util.Optional;
  * Service layer for Person
  */
 @Service
-public class PersonService {private final PersonRepository personRepository;
+public class PersonService {
+    private final PersonRepository personRepository;
+    private Person person;
 
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
@@ -29,10 +32,10 @@ public class PersonService {private final PersonRepository personRepository;
         return personRepository.findAll();
     }
 
-    public void findInfoPerson(@PathVariable Long id){
-
-        Optional<Person> person = personRepository.findById(id);
-    }
+//    public void findInfoPerson(@PathVariable Long id){
+//
+//        Optional<Person> person = personRepository.findById(id);
+//    }
 
 
     public void showEditOrAddForm(Model model, RedirectAttributes redirectAttributes){
@@ -57,4 +60,14 @@ public class PersonService {private final PersonRepository personRepository;
         personRepository.deleteById(id);
     }
 
+//    public Object findById() {
+//        return null;
+//    }
+
+    public void savePerson(Person person) { personRepository.save(person);}
+
+    public Person findById(Long id) {
+        return personRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Persoon %d niet gevonden", id)));
+    }
 }
