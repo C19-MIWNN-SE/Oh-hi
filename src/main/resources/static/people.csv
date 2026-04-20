@@ -3,3 +3,4 @@ firstName, lastName, infix, userRole
 "Lisa", "Danielle", "B", "STUDENT"
 "Johnny", "Wisseau",, "TEACHER"
 "Danny", "Haldiman",, "STUDENT"
+"Claudette", "Minnott",,"STUDENT"

@@ -11,9 +11,9 @@
 
 
 <div class="container mt-4">
-    <div class="row mb-4">
-        <div class="col-12 bg-secondary" style="height: 60px; opacity: 0.2;"></div>
-    </div>
+<!--    <div class="row mb-4">-->
+<!--        <div class="col-12 bg-secondary" style="height: 60px; opacity: 0.2;"></div>-->
+<!--    </div>-->
 
     <!--    kolom wordt hoger obv breedte card/col-x, row wordt groter obv van colommen, about me resized mee-->
     <div class="row mb-4">
@@ -23,10 +23,10 @@
         <div class="col-9">
             <div class="aboutMeText">
                 <div class="col mx-auto">
-                    <h5 class="fw-bold mb-4">Over mij</h5>
+                    <h5 class="fw-bold mb-4 aboutMeHeader">Over mij</h5>
                 </div>
 
-                <p style="word-wrap: break-word; line-height: 1.6;" th:text="${aboutMe}"></p>
+                <p class="aboutMeContent" th:text="${aboutMe}"></p>
             </div>
             <div th:if="${successMessage}" class="alert alert-success mt-3" th:text="${successMessage}"></div>
             <div th:if="${errorMessage}" class="alert alert-danger mt-3" th:text="${errorMessage}"></div>
