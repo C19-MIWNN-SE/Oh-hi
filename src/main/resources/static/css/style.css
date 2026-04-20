@@ -44,10 +44,22 @@ nav{
     border-color: #FFDBFD;
 }
 
+.edit-cohort-member-button{
+    background-color: #C9BEFF;
+    width: 40%;
+    border-color: #C9BEFF;
+    transition: 0.3s;
+}
+
+.fp-btn-colour{
+    background-color: #C9BEFF;
+    border-color: #C9BEFF;
+    transition: 0.3s;
+}
 /*Cohort lijst opmaak*/
 .cohort-dropdown {
-    width: 50%;
-    margin: 2% 30%
+    width: 100%;
+
 }
 
 .roleDisplay {
@@ -83,30 +95,47 @@ nav{
 
 }
 
+.overview div {
+    transform: scale(1.05);
+}
+
 .PersonTable td {
     transition: all 0.2s ease;
 }
 
-.PersonTable tr:hover td {
-    transform: scale(1.05);
-}
+/*.PersonTable tr:hover td {*/
+/*    transform: scale(1.05);*/
+/*}*/
 
 .my-nav-background {
     color: white;
 }
 
-.ProfilePic{
-    height: 400px;
-    width: auto;
-}
+/*.ProfilePic{*/
+/*    height: 400px;*/
+/*    width: auto;*/
+/*}*/
 .MiniPic{
-    height:200px;
-    width:auto;
+    display: block;
+    margin: 0 auto;
+    height: 20%;
+    width: 90%;
+    object-fit: cover;
 }
 .aboutMeText{
     /*padding: 4px;*/
     box-shadow: 10px 5px 5px lightgray;
     background-color: #e2e2e2;
-    min-height: 400px;
-    min-width: 500px;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+.card {
+    width: 400px;
+    margin: 0 auto;
+    overflow: scroll;
+}
+
+.ratio{
+    --bs-aspect-ratio: 140%;
 }

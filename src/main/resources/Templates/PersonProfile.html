@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{Fragments/general :: baseheader(~{:: title})}">
+    <title>About me</title></html><!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{Fragments/general :: baseheader(~{:: title})}">
+
     <title>About me</title>
 </head>
 <body class="bg-light">
@@ -11,39 +16,39 @@
     <div class="row mb-4">
         <div class="col-12 bg-secondary" style="height: 60px; opacity: 0.2;"></div>
     </div>
-    <div class="row justify-content-center">
-                <div class="col-md-4">
-                  <div class="mb-4">
-<table class="PersonTable">
-    <tbody>
-    <tr>
-        <td>
-            <img class="ProfilePic"
-                 th:src="${person.image != null} ?
-             '/images/' + ${person.image.id} :
-             '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'"
-                 th:alt="${person.id}" />
-        <td th:text="${name}">Mark Sestero</td>
-        <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>
-    </tr>
-    <tr class="aboutMeText">
-        <td>
-            <h5 class="fw-bold mb-4">Over mij</h5>
-            <p style="word-wrap: break-word; line-height: 1.6;" th:text="${aboutMe}"></p>
-        </td>
-    </tr>
-    </tbody>
-</table>
-                  </div>
-                    </div>
+    <div class="row">
+
+        <div class="col-auto" style="width:300px;">
+            <div th:replace="~{fragments/person :: personCard(${person})}"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-4">
+
+
+                <div class="aboutMeText">
+                    <table>
+                        <tr>
+                        <td>
+                        <h5 class="fw-bold mb-4">Over mij</h5>
+                        <p style="word-wrap: break-word; line-height: 1.6;" th:text="${aboutMe}"></p>
+                        </td>
+                        </tr>
+                    </table>
+
+
             <div th:if="${successMessage}" class="alert alert-success mt-3" th:text="${successMessage}"></div>
             <div th:if="${errorMessage}" class="alert alert-danger mt-3" th:text="${errorMessage}"></div>
         </div>
     </div>
-<!--using format from other buttons-->
-<a th:href="@{/profiles/editAbout/{id}(id=${person.id})}" class="btn btn-success shadow-sm search-bg add-cohort-member-buttons">
-    <i class="bi bi-plus-circle me-1"></i> Edit Profile
-</a>
+
+    <div>
+        <a  th:href="@{/profiles/editAbout/{id}(id=${person.id})}"
+           class="btn btn-success shadow-sm search-bg edit-cohort-member-button"
+           sec:authorize="hasRole('STUDENT')">
+            <i class="bi bi-gear me-1"></i> Profiel bewerken
+        </a>
+    </div>
+</div>
 
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>
