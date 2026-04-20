@@ -31,6 +31,8 @@ nav{
     background-color: mediumpurple;
 }
 
+
+
 /*Button for both add cohort and add member*/
 .add-cohort-member-buttons{
     margin: 2% 2% 2% 2%;
@@ -42,8 +44,8 @@ nav{
 }
 
 .add-cohort-member-buttons:hover{
-    background-color: #e2e2e2;
-    border-color: #e2e2e2;
+    background-color: rgba(255, 219, 253, 0.5);
+    border-color: rgba(255, 219, 253, 0.5);
 }
 
 .edit-cohort-member-button{
@@ -57,6 +59,15 @@ nav{
     background-color: #C9BEFF;
     border-color: #C9BEFF;
     transition: 0.3s;
+}
+
+.fp-btn-colour:hover{
+    background-color: rgb(255, 219, 253);
+    border-color: rgb(255, 219, 253);
+}
+
+.btn-spacing {
+    margin: 0 5px 0px 5px ;
 }
 /*Cohort lijst opmaak*/
 .cohort-dropdown {
@@ -128,7 +139,7 @@ nav{
 }
 
 .aboutMeText{
-    background-color: rgba(255, 219, 253, 0.5);
+    background-color: #C9BEFF;
     height: 100%;
     width: 100%;
     border-radius: 10px;
