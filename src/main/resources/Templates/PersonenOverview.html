@@ -18,6 +18,8 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
+
+
 <div class="container">
 <div class="row">
     <div class="col">
@@ -48,6 +50,7 @@
 </div>
 </div>
 
+
 <div class="container m-4">
 <div class="row">
 <!--   je kan ook de row klasse veranderen naar onderstaande, en style=:width weghalen
@@ -61,53 +64,46 @@
 </div>
 </div>
 
-<div class="container m-4">
-    <div class="row row-cols-5 g-3">
-        <div class="col" th:each="person : ${people}">
-            <a th:href="@{/profiles/{id}(id=${person.id})}"
-               style="cursor: pointer;">
-                <div th:replace="~{fragments/person :: personCard(${person})}"></div>
-            </a>
-        </div>
-    </div>
-</div>
 
-<table class="PersonTable overview">
-    <thead>
-    <tr>
-        <th>Image</th>
-        <th>Full name</th>
-        <th>Role</th>
-        <th>Delete Person</th>
-    </tr>
-    </thead>
-    <tbody>
 
-    <tr th:each="person : ${people}" th:onclick="|window.location='@{/profiles/{id}(id=${person.id})}'|"
-        style="cursor: pointer;">
-        <td class="PersonImageHolder"><img class="MiniPic" th:if="${person.image != null}"
-                                           th:src="@{/static-images/{id}(id=${person.image.id})}"
-                                           th:alt="${person.id}">
-        </td>
-        <td class="PersonImageHolder">
-            <img class="MiniPic" th:unless="${person.image != null}"
-                 th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}"
-                 alt="picture of a spoon"></td>
-        <td th:text="${person.fullName}">First Name</td>
-        <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>
+<!--<table class="PersonTable overview">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Image</th>-->
+<!--        <th>Full name</th>-->
+<!--        <th>Role</th>-->
+<!--        <th>Delete Person</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
 
-        <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3 ">
-            <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
-               class="btn btn-sm btn-outline-danger delete-button"
-               onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')"
-               sec:authorize="hasRole('DOCENT')">
-                <i class="bi bi-trash"></i>
-            </a>
-        </td>
+<!--    <tr th:each="person : ${people}" th:onclick="|window.location='@{/profiles/{id}(id=${person.id})}'|"-->
+<!--        style="cursor: pointer;">-->
+<!--        <td class="PersonImageHolder"><img class="MiniPic" th:if="${person.image != null}"-->
+<!--                                           th:src="@{/static-images/{id}(id=${person.image.id})}"-->
+<!--                                           th:alt="${person.id}">-->
+<!--        </td>-->
+<!--        <td class="PersonImageHolder">-->
+<!--            <img class="MiniPic" th:unless="${person.image != null}"-->
+<!--                 th:src="@{/static-images/teaspoon-steel-isolated-picture-id520537085.jpg}"-->
+<!--                 alt="picture of a spoon"></td>-->
+<!--        <td th:text="${person.fullName}">First Name</td>-->
+<!--        <td th:text="${person.userRole.displayName}" class="roleDisplay">Role</td>-->
 
-    </tr>
-    </tbody>
-</table>
+<!--        <td class="d-grid gap-2 d-flex justify-content-between border-top pt-3 ">-->
+<!--            <a th:href="@{/profiles/remove/{id}(id=${person.id})}"-->
+<!--               class="btn btn-sm btn-outline-danger delete-button"-->
+<!--               onclick="return confirm('Weet je zeker dat je deze persoon wilt verwijderen?')"-->
+<!--               sec:authorize="hasRole('DOCENT')">-->
+<!--                <i class="bi bi-trash"></i>-->
+<!--            </a>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+
+
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>
 </body>
