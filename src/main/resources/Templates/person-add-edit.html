@@ -17,7 +17,7 @@
 <!--                </div>-->
 
                 <div class="card-body p-4">
-                    <form th:action="@{/profiles/save}" th:object="${person}"
+                    <form th:action="@{/person/save}" th:object="${person}"
                           method="post"
                           enctype="multipart/form-data">
 
@@ -80,7 +80,7 @@
                             <button class="btn btn-primary btn-lg shadow-sm" type="submit">
                                 <i class="bi bi-save"></i> Lid opslaan
                             </button>
-                            <a href="/profiles" class="btn btn-link text-secondary text-decoration-none text-center">Annuleren</a>
+                            <a href="/person/overview" class="btn btn-link text-secondary text-decoration-none text-center">Annuleren</a>
                         </div>
 
                     </form>

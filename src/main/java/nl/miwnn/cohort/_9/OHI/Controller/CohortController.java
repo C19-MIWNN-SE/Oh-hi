@@ -55,11 +55,11 @@ public class CohortController {
                     bindingResult.getErrorCount());
             List<Person> allMembers = personRepository.findAll();
             model.addAttribute("allMembers", allMembers);
-            return "add-edit-film";
+            return "cohort-add-edit";
         }
 
         cohortRepository.save(cohort);
-        return ("redirect:/profiles");
+        return ("redirect:/person/overview");
     }
 
 

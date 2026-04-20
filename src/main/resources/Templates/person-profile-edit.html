@@ -13,7 +13,7 @@
             <div class="card shadow-sm border-0">
                 <div class="card-body p-4">
 
-                    <form th:action="@{/profiles/saveAboutMe}"
+                    <form th:action="@{/person/profile/save}"
                           th:object="${person}"
                           method="post"
                           enctype="multipart/form-data">
@@ -44,7 +44,7 @@
                                 <i class="bi bi-save"></i> Save Info
                             </button>
 
-                            <a th:href="@{/profiles/editAbout/{id}(id=${person.id})}"
+                            <a th:href="@{/person/{id}(id=${person.id})}"
                                class="btn btn-link text-secondary text-decoration-none text-center">
                                 Annuleren
                             </a>
