@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="position-absolute bottom-0 end-0 p-2 delete-button" style="z-index: 5;" sec:authorize="hasRole('DOCENT')">
-                    <a th:href="@{/profiles/remove/{id}(id=${person.id})}"
+                    <a th:href="@{/person/remove/{id}(id=${person.id})}"
                        class="btn btn-sm btn-outline-danger border-0"
                        onclick="return confirm('Weet je zeker?')">
                         <i class="bi bi-trash"></i>

@@ -52,7 +52,7 @@
                        sec:authorize="hasRole('DOCENT')">
                         <i class="bi bi-plus-circle me-1"></i> Cohort
                     </a>
-                    <a th:href="@{/profiles/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour"
+                    <a th:href="@{/person/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour"
                        sec:authorize="hasRole('DOCENT')">
                         <i class="bi bi-plus-circle me-1"></i> Lid
                     </a>
@@ -70,7 +70,7 @@
         <div class="row row-cols-4 mt-1 g-4 justify-content-center">
             <div class="col" th:each="person : ${people}"
                  th:if="${person.userRole.name() == 'TEACHER'}">
-                <a th:href="@{/profiles/{id}(id=${person.id})}"
+                <a th:href="@{/person/{id}(id=${person.id})}"
                    style="cursor: pointer;">
                     <div th:replace="~{fragments/person :: personCard(${person})}"></div>
                 </a>
@@ -80,7 +80,7 @@
         <div class="row row-cols-4 mt-1 g-4">
             <div class="col" th:each="person : ${people}"
                  th:if="${person.userRole.name() == 'STUDENT'}">
-                <a th:href="@{/profiles/{id}(id=${person.id})}"
+                <a th:href="@{/person/{id}(id=${person.id})}"
                    style="cursor: pointer;">
                     <div th:replace="~{fragments/person :: personCard(${person})}"></div>
                 </a>

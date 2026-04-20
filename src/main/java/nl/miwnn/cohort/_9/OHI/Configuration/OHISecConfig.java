@@ -24,8 +24,8 @@ public class OHISecConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
-                                "/profiles",
-                                "/profiles/**",
+                                "/person",
+                                "/person/**",
                                 "/userlogin",
                                 "/webjars/**",
                                 "/static/**",
@@ -35,9 +35,9 @@ public class OHISecConfig {
                                 "/select2",
                                 "/select2/**")
                         .permitAll().requestMatchers(
-                                "/profiles/add",
-                                "/profiles/remove",
-                                "/profiles/save",
+                                "/person/add",
+                                "/person/remove",
+                                "/person/save",
                                 "/cohort",
                                 "/cohort/**"
                         ).hasAnyRole("DOCENT").anyRequest().authenticated())
@@ -45,7 +45,7 @@ public class OHISecConfig {
                 .formLogin((form) -> form
                         .loginPage("/userlogin")
                         .loginProcessingUrl("/userlogin")
-                        .defaultSuccessUrl("/profiles", true)
+                        .defaultSuccessUrl("/person/overview", true)
                         .permitAll());
         log.info("Toestemming gegeven");
         return http.build();
