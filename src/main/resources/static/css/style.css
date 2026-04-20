@@ -9,7 +9,9 @@ body {
 
 /*navigation bar*/
 nav{
-    background-color: #8494FF;
+    background-image: url("/static-images/navbar.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .our-button{
@@ -40,8 +42,8 @@ nav{
 }
 
 .add-cohort-member-buttons:hover{
-    background-color: #FFDBFD;
-    border-color: #FFDBFD;
+    background-color: #e2e2e2;
+    border-color: #e2e2e2;
 }
 
 .edit-cohort-member-button{

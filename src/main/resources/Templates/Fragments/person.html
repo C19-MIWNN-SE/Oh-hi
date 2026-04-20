@@ -21,7 +21,8 @@
                 <!--         ik heb voor nu: mix-blend-mode: multiply; even weggehaald zodat de afbeelding de achtergrond kleur niet meeneemt.-->
                 <div class="mb-2" style="margin-top: 30%;">
                     <img class="MiniPic img-fluid rounded person-image"
-                         th:src="${person.image != null ? '/static-images/' + person.image.id : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'}"
+                         th:src="${person.image != null} ? '/images/' + ${person.image.id} : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'"
+
                          style="height: 180px; width: 180px; object-fit: cover; ">
                 </div>
 
