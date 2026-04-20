@@ -28,11 +28,6 @@ public class OHIUser implements UserDetails {
 
     private String role;
 
-//    private enum role {
-//        STUDENT,
-//        TEACHER,
-//    }
-
     public OHIUser(String username, String password, String role) {
         this.username = username;
         this.password = password;
@@ -42,7 +37,6 @@ public class OHIUser implements UserDetails {
     public OHIUser() {
     }
 
-    // Spring code die automatisch werd toegevoegd
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role));
@@ -77,13 +71,6 @@ public class OHIUser implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
-
-//    private enum role {
-//        STUDENT,
-//        TEACHER,
-//    }
-
-    // getters and setters
 
     public long getId() {
         return id;

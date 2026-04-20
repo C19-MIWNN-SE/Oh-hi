@@ -55,7 +55,7 @@ public class InitializeController {
 
     private void seedPeople() {
         try {
-            //later load this in via variable from the docent upload file
+            //later load this in via variable from the docent upload file - see cohort controller
             ClassPathResource resource = new ClassPathResource("static/people.csv");
             Reader reader = new InputStreamReader(resource.getInputStream());
 
@@ -73,6 +73,7 @@ public class InitializeController {
         }
     }
 
+    //todo
     private void seedUsers() {
         if (ohiUserRepository.count() == 0) {
             OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT");

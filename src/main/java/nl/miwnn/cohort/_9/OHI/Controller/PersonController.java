@@ -51,8 +51,6 @@ public class PersonController {
         return "person-overview";
     }
 
-
-    /* Oh hi Mees */
     @GetMapping("/add")
     public String addPersonToCohort(Model model) {
         model.addAttribute("person", new Person());
@@ -93,9 +91,8 @@ public class PersonController {
         return "redirect:/person/overview";
     }
 
-
     @GetMapping("/{id}")
-    public String showProfile(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+    public String showProfile(@PathVariable Long id, Model model) {
 
         Person person = personRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
@@ -140,11 +137,7 @@ public class PersonController {
         if (profilePerson == null) {
             throw new IllegalStateException("No person found with ID " + aboutPerson.getId());
         }
-
-        // Update fields
         profilePerson.setAboutMe(aboutPerson.getAboutMe());
-
-        // Save updated person
         personService.savePerson(profilePerson);
 
         return "redirect:/person/" + profilePerson.getId();

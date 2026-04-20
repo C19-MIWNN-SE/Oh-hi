@@ -12,7 +12,6 @@
         <div class="col-md-6">
             <div class="card shadow-sm border-0">
                 <div class="card-body p-4">
-
                     <form th:action="@{/person/profile/save}"
                           th:object="${person}"
                           method="post"
@@ -31,7 +30,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="imageFile" class="form-label fw-bold">Profiel Foto</label>
+                            <label for="imageFile"
+                                   class="form-label fw-bold">Profiel Foto
+                            </label>
                             <input type="file"
                                    id="imageFile"
                                    name="imageFile"
@@ -40,7 +41,8 @@
                         </div>
 
                         <div class="d-grid gap-2 mt-4">
-                            <button class="btn btn-primary btn-lg shadow-sm" type="submit">
+                            <button class="btn btn-primary btn-lg shadow-sm"
+                                    type="submit">
                                 <i class="bi bi-save"></i> Save Info
                             </button>
 
@@ -51,7 +53,6 @@
                         </div>
 
                     </form>
-
                 </div>
             </div>
         </div>

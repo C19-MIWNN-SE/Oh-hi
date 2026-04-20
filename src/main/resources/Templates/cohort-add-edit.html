@@ -43,29 +43,6 @@
         <option th:each="member : ${allMembers}" th:value="${member.id}" th:text="${member.getFullName}"></option>
     </select>
 
-<!--    <div class="col-3" sec:authorize="hasRole('DOCENT')">-->
-<!--        <div class="dropdown">-->
-<!--            <button class="btn btn-primary dropdown-toggle"-->
-<!--                    type="button"-->
-<!--                    data-bs-toggle="dropdown"-->
-<!--                    data-bs-auto-close="outside"-->
-<!--                    aria-expanded="false">-->
-<!--                Cohorts-->
-<!--            </button>-->
-<!--            <ul class="dropdown-menu">-->
-<!--                <li th:each="cohort : ${allCohorts}">-->
-<!--                    <label class="dropdown-item">-->
-<!--                        <input type="checkbox"-->
-<!--                               name="selectedCohortIds"-->
-<!--                               th:value="${cohort.id}">-->
-<!--                        <span th:text="|${cohort.id} ${cohort.discipline}|"></span>-->
-<!--                    </label>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-
-
     <div class="text-center mt-3">
         <button type="submit" class="btn btn-primary form-control d-block">Opslaan</button>
     </div>

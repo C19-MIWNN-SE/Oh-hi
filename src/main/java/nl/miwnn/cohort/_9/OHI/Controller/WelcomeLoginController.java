@@ -11,12 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WelcomeLoginController {
 
-//    @GetMapping("")
-//    public String redirect () {
-//        return "redirect:/-welcome-login";
-//    }
-
-
     @GetMapping("")
     public String startpagina() {
         return "welcome-login";

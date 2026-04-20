@@ -14,7 +14,6 @@ import javax.management.relation.Role;
 @Entity
 public class Person {
 
-    //defaults
     private static final String DEFAULT_INFIX = null;
     private static final Image DEFAULT_IMAGE = null;
     private static final String DEFAULT_ABOUTME = null;
@@ -44,43 +43,42 @@ public class Person {
     @JoinColumn(name = "cohort_id")
     private Cohort cohort;
 
-        public enum Role {
-            STUDENT("Student"),
-            TEACHER("Docent");
+    //todo review this - separate enum roles from a method to format the text
+    public enum Role {
+        STUDENT("Student"),
+        TEACHER("Docent");
 
-            private final String displayName;
+        private final String displayName;
 
-            Role(String displayName){
-                this.displayName = displayName;
-            }
-
-            public String getDisplayName() {
-                return displayName;
-            }
+        Role(String displayName) {
+            this.displayName = displayName;
         }
 
-        private Role userRole;
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
 
-    public Person( String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
+    private Role userRole;
+
+    public Person(String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
         this.image = image;
         this.aboutMe = aboutMe;
-        this.userRole= userRole;
+        this.userRole = userRole;
     }
 
-    public Person(String firstName, String lastName){
+    public Person(String firstName, String lastName) {
         this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_ROLE);
 
     }
 
-    public Person(){
+    public Person() {}
 
-    }
-
-    public String getFullName(){
-        if(infix == null){
+    public String getFullName() {
+        if (infix == null) {
             infix = "";
         }
 
@@ -143,8 +141,9 @@ public class Person {
         return userRole;
     }
 
-    public String getEnumToLowerCase(Role role){
-        if (userRole.toString().equals("TEACHER")){
+    //todo - see if this alone works
+    public String getEnumToLowerCase(Role role) {
+        if (userRole.toString().equals("TEACHER")) {
             return "Docent";
         } else return "Student";
     }

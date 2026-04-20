@@ -9,7 +9,6 @@
 <body>
 
 <div th:fragment="personCard(person)">
-    <!--     th:onclick="|window.location='@{/profiles/{id}(id=${person.id})}'|"-->
 
     <!--    hoogte vastzetten met card h-100? of bepalen aan de hand van klasse waar die geplaatst wordt?
     kan flexible worden door style hieronder correct in te stellen -->
@@ -19,11 +18,11 @@
             <div class=" d-flex flex-column align-items-center shadow-sm cardControl" >
 
                 <!--         ik heb voor nu: mix-blend-mode: multiply; even weggehaald zodat de afbeelding de achtergrond kleur niet meeneemt.-->
-                <div class="mb-2" style="margin-top: 30%;">
+                <div class="mb-2 image-content">
                     <img class="MiniPic img-fluid rounded person-image"
                          th:src="${person.image != null} ? '/images/' + ${person.image.id} : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'"
 
-                         style="height: 180px; width: 180px; object-fit: cover; ">
+                         style="height: 180px; width: 180px; object-fit: cover; " alt="profile image of person">
                 </div>
 
                 <div class="text-center" style="margin-top: 20%;">

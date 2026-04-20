@@ -32,34 +32,22 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-//    public void findInfoPerson(@PathVariable Long id){
-//
-//        Optional<Person> person = personRepository.findById(id);
-//    }
-
-    public void showEditOrAddForm(Model model, RedirectAttributes redirectAttributes){
-    }
-
     public void saveMemberToCohort(Person person){
         personRepository.save(person);
     }
 
-        public boolean personAlreadyExists(Person person) {
+    public boolean personAlreadyExists(Person person) {
             if (person.getInfix() == null || person.getInfix().isEmpty()) {
                 return personRepository.findPersonByFirstNameAndLastName(
                         person.getFirstName(), person.getLastName()).isPresent();
             }
             return personRepository.findPersonByFirstNameAndInfixAndLastName(
                     person.getFirstName(), person.getInfix(), person.getLastName()).isPresent();
-        }
+    }
 
     public void deleteMemberFromCohort(Long id){
         personRepository.deleteById(id);
     }
-
-//    public Object findById() {
-//        return null;
-//    }
 
     public void savePerson(Person person) { personRepository.save(person);}
 
