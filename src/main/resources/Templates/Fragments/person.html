@@ -19,7 +19,7 @@
 
                 <!--         ik heb voor nu: mix-blend-mode: multiply; even weggehaald zodat de afbeelding de achtergrond kleur niet meeneemt.-->
                 <div class="mb-2 image-content">
-                    <img class="MiniPic img-fluid rounded person-image"
+                    <img class="MiniPic img-fluid rounded person-image image-content"
                          th:src="${person.image != null} ? '/images/' + ${person.image.id} : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'"
 
                          style="height: 180px; width: 180px; object-fit: cover; " alt="profile image of person">

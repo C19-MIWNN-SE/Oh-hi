@@ -24,7 +24,6 @@ import java.util.List;
  */
 
 @RequestMapping("/cohort")
-
 @Controller
 public class CohortController {
 
@@ -84,6 +83,22 @@ public class CohortController {
         }
         cohortRepository.save(cohort);
         return ("redirect:/person/overview");
+    }
+
+    @GetMapping("/{id}")
+    public String showCohort(@PathVariable Long id, Model model){
+
+        cohortRepository.findById(id).ifPresent(cohort -> {
+            model.addAttribute("cohort", cohort);
+            model.addAttribute("members", cohort.getMembers());
+            model.addAttribute("cohortName", String.format("Cohort %d - %s", cohort.getCohortNum(), cohort.getDiscipline()));
+            });
+
+        List<Cohort> cohorts = cohortRepository.findAll();
+        model.addAttribute("allCohorts", cohorts);
+
+
+        return "cohort-overview";
     }
 
 
