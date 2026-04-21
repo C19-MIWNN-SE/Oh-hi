@@ -1,5 +1,7 @@
 package nl.miwnn.cohort._9.OHI.Controller;
 
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Person;
@@ -10,11 +12,10 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.util.List;
 
 /**
@@ -39,17 +40,41 @@ public class CohortController {
     }
 
     @GetMapping("/add")
-    public String addCohort(Model model) {
+    public String addCohort( Model model) {
         model.addAttribute("cohort", new Cohort());
         List<Person> allMembers = personRepository.findAll();
         model.addAttribute("allMembers", allMembers);
         // Lijst van studenten uit repository halen om toe te voegen?
         // CSV lezer toevoegen om csv in te lezen?
+
         return ("cohort-add-edit");
     }
 
+
+
     @PostMapping("/save")
-    public String saveCohort(@Valid @ModelAttribute Cohort cohort, BindingResult bindingResult, Model model) {
+    public String saveCohort(@Valid @ModelAttribute Cohort cohort, MultipartFile file, BindingResult bindingResult, Model model) {
+
+        if (file.isEmpty()) {
+            model.addAttribute("message", "Selecteer een csv van cohort leden informatie");
+            model.addAttribute("status", false);
+        } else {
+            try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+
+                CsvToBean<Person> csvToBean = new CsvToBeanBuilder<Person>(reader)
+                        .withType(Person.class)
+                        .withIgnoreLeadingWhiteSpace(true)
+                        .build();
+
+                List<Person> people = csvToBean.parse();
+                personRepository.saveAll(people);
+
+                //todo - make more specific
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        model.addAttribute("cohort", new Cohort());
         if (bindingResult.hasErrors()) {
             log.warn("Validatiefouten bij opslaan: {}",
                     bindingResult.getErrorCount());
@@ -57,7 +82,6 @@ public class CohortController {
             model.addAttribute("allMembers", allMembers);
             return "cohort-add-edit";
         }
-
         cohortRepository.save(cohort);
         return ("redirect:/person/overview");
     }

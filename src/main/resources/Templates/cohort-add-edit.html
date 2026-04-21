@@ -8,7 +8,7 @@
 <div>
     <h2>Cohort toevoegen/bewerken</h2>
 </div>
-<form th:action="@{/cohort/save}" method="post"
+<form th:action="@{/cohort/save}" method="post" enctype="multipart/form-data"
       th:object="${cohort}">
 
     <div class="m-3">
@@ -36,7 +36,12 @@
         <input type="date" th:field="*{endDate}" id="ED"/>
     </div>
 
-    <!--  Csv invoegen?-->
+    <!--  Csv invoegen? - th:field needed in input veld??-->
+    <div>
+           <label for="people-in-cohort">Cohort leden csv toevoegen:</label>
+           <input type="file" name ="file" accept=".csv" id="people-in-cohort" />
+    </div>
+
     <label for="dropDownList"></label>
     <select th:field="*{members}" class="form-select" multiple="multiple" id="dropDownList">
         <option value="0">Personen (Houd ctrl ingedrukt om meerdere te selecteren</option>
