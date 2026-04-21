@@ -5,6 +5,7 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -28,10 +29,23 @@ public class OHIUser implements UserDetails {
 
     private String role;
 
+    @OneToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
+
+    // Constructor voor docent en student testAccounts
     public OHIUser(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    // Constructor voor persoon dat wordt toegevoegd
+    public OHIUser(String username, String password, String role, Person person) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.person = person;
     }
 
     public OHIUser() {
@@ -94,5 +108,13 @@ public class OHIUser implements UserDetails {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

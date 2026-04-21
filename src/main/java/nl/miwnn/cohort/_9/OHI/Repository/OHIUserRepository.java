@@ -11,4 +11,6 @@ import java.util.Optional;
  */
 public interface OHIUserRepository extends JpaRepository<OHIUser, Long> {
     Optional<OHIUser> findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }

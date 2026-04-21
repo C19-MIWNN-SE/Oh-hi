@@ -43,6 +43,9 @@ public class Person {
     @JoinColumn(name = "cohort_id")
     private Cohort cohort;
 
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private OHIUser account;
+
     //todo review this - separate enum roles from a method to format the text
     public enum Role {
         STUDENT("Student"),
