@@ -24,7 +24,7 @@
             <li th:each="cohort : ${allCohorts}">
               <a class="dropdown-item"
                  th:href="@{/cohort/{id}(id=${cohort.id})}"
-                 th:text="|${cohort.id} ${cohort.discipline}|">
+                 th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}">
               </a>
             </li>
           </ul>

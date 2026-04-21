@@ -3,53 +3,117 @@
 <head th:insert="~{Fragments/general :: baseheader(~{:: title})}">
     <title>Cohort toevoegen/bewerken</title>
 </head>
+
 <body>
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
-<div>
-    <h2>Cohort toevoegen/bewerken</h2>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-dark text-white text-center p-3">
+                    <h2 class="h4 mb-0">Cohort toevoegen/bewerken</h2>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form th:action="@{/cohort/save}" method="post" th:object="${cohort}">
+
+                        <!-- Cohort nummer -->
+                        <div class="mb-3">
+                            <label for="CN" class="form-label fw-bold">Cohort nummer</label>
+                            <input type="text"
+                                   id="CN"
+                                   th:field="*{cohortNum}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('cohortNum')} ? 'is-invalid'">
+
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('cohortNum')}"
+                                 th:errors="*{cohortNum}"></div>
+                        </div>
+
+                        <!-- Discipline -->
+                        <div class="mb-3">
+                            <label for="DC" class="form-label fw-bold">Vakgebied</label>
+                            <input type="text"
+                                   id="DC"
+                                   th:field="*{discipline}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('discipline')} ? 'is-invalid'">
+
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('discipline')}"
+                                 th:errors="*{discipline}"></div>
+                        </div>
+
+                        <!-- Dates -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="SD" class="form-label fw-bold">Startdatum</label>
+                                <input type="date"
+                                       id="SD"
+                                       th:field="*{startDate}"
+                                       class="form-control">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="ED" class="form-label fw-bold">Einddatum</label>
+                                <input type="date"
+                                       id="ED"
+                                       th:field="*{endDate}"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Members -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold d-block">Leden</label>
+
+                            <div class="card bg-light border-0 shadow-sm rounded">
+                                <div class="card-body p-3"
+                                     style="max-height: 200px; overflow-y: auto;">
+
+                                    <div th:each="member : ${allMembers}" class="form-check mb-1">
+
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               th:field="*{members}"
+                                               th:value="${member.id}"
+                                               th:id="${'member_' + member.id}">
+
+                                        <label class="form-check-label ms-2"
+                                               th:for="${'member_' + member.id}"
+                                               th:text="${member.fullName}">
+                                            Naam lid
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                                Opslaan
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
-<form th:action="@{/cohort/save}" method="post"
-      th:object="${cohort}">
-
-    <div class="m-3">
-        <label for="CN" class="form-label d-block fw-bold">Cohort nummer</label>
-        <input type="text" id="CN" th:field="*{cohortNum}" class="form-control"/>
-        <span th:if="${#fields.hasErrors('cohortNum')}"
-              th:errors="*{cohortNum}"
-              class="error"></span>
-    </div>
-    <div class="m-3">
-        <label for="DC" class="form-label d-block fw-bold">Vakgebied</label>
-        <input type="text" id="DC" th:field="*{discipline}" class="form-control"/>
-        <span th:if="${#fields.hasErrors('discipline')}"
-              th:errors="*{discipline}"
-              class="error"></span>
-    </div>
-
-    <div>
-        <label for="SD">Startdatum</label>
-        <input type="date" th:field="*{startDate}" id="SD"/>
-    </div>
-
-    <div>
-        <label for="ED">Einddatum</label>
-        <input type="date" th:field="*{endDate}" id="ED"/>
-    </div>
-
-    <!--  Csv invoegen?-->
-    <label for="dropDownList"></label>
-    <select th:field="*{members}" class="form-select" multiple="multiple" id="dropDownList">
-        <option value="0">Personen (Houd ctrl ingedrukt om meerdere te selecteren</option>
-        <option th:each="member : ${allMembers}" th:value="${member.id}" th:text="${member.getFullName}"></option>
-    </select>
-
-    <div class="text-center mt-3">
-        <button type="submit" class="btn btn-primary form-control d-block">Opslaan</button>
-    </div>
-</form>
 
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>
-</body>
 
+</body>
 </html>
