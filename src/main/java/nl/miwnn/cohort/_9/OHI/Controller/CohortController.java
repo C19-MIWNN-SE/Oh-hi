@@ -69,6 +69,8 @@ public class CohortController {
 
                 List<Person> people = csvToBean.parse();
                 personRepository.saveAll(people);
+                cohort.setMembers(people);
+
 
                 //todo - make more specific
             } catch (IOException e) {
@@ -80,12 +82,14 @@ public class CohortController {
             log.warn("Validatiefouten bij opslaan: {}",
                     bindingResult.getErrorCount());
             List<Person> allMembers = personRepository.findAll();
+
             model.addAttribute("allMembers", allMembers);
             return "cohort-add-edit";
         }
 
         for (Person member : cohort.getMembers()) {
             member.setCohort(cohort);
+            //personRepository.save(member);
         }
 
         cohortRepository.save(cohort);

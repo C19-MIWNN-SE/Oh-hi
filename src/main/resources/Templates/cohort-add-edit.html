@@ -21,7 +21,7 @@
 
                 <div class="card-body p-4">
 
-                    <form th:action="@{/cohort/save}" method="post" th:object="${cohort}">
+                    <form th:action="@{/cohort/save}" method="post"  enctype="multipart/form-data" th:object="${cohort}">
 
                         <!-- Cohort nummer -->
                         <div class="mb-3">
@@ -74,16 +74,6 @@
                         <div>
                             <label for="people-in-cohort">Cohort leden csv toevoegen:</label>
                             <input type="file" name ="file" accept=".csv" id="people-in-cohort" />
-                        </div>
-
-                        <label for="dropDownList"></label>
-                        <select th:field="*{members}" class="form-select" multiple="multiple" id="dropDownList">
-                            <option value="0">Personen (Houd ctrl ingedrukt om meerdere te selecteren</option>
-                            <option th:each="member : ${allMembers}" th:value="${member.id}" th:text="${member.getFullName}"></option>
-                        </select>
-
-                        <div class="text-center mt-3">
-                            <button type="submit" class="btn btn-primary form-control d-block">Opslaan</button>
                         </div>
 
                         <!-- Members -->
