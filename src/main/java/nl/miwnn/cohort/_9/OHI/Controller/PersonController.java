@@ -8,6 +8,7 @@ import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
+import org.hibernate.sql.ast.tree.expression.Collation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.validation.BindingResult;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,6 +48,7 @@ public class PersonController {
 
         log.debug("person overview requested");
         model.addAttribute("people", people);
+        Collections.sort(cohorts);
         model.addAttribute("allCohorts", cohorts);
 
         return "person-overview";

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -81,6 +83,11 @@ public class CohortController {
             model.addAttribute("allMembers", allMembers);
             return "cohort-add-edit";
         }
+
+        for (Person member : cohort.getMembers()) {
+            member.setCohort(cohort);
+        }
+
         cohortRepository.save(cohort);
         return ("redirect:/person/overview");
     }
@@ -95,8 +102,8 @@ public class CohortController {
             });
 
         List<Cohort> cohorts = cohortRepository.findAll();
+        Collections.sort(cohorts);
         model.addAttribute("allCohorts", cohorts);
-
 
         return "cohort-overview";
     }
