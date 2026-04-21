@@ -14,7 +14,7 @@
     <!--    kolom wordt hoger obv breedte card/col-x, row wordt groter obv van colommen, about me resized mee-->
     <div class="row mb-4">
         <div class="col-3">
-            <div th:replace="~{fragments/person :: personCard(${person})}"></div>
+            <div th:replace="~{fragments/person :: personCard(${person}, 'background-content-card-profile')}"></div>
         </div>
         <div class="col-9">
             <div class="aboutMeText">

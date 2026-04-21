@@ -113,6 +113,11 @@ nav{
     text-decoration: none;
 }
 
+.background-content-card-profile{
+    max-height: 400px !important;
+
+}
+
 .person-image {
     box-shadow: 1px 1px 3px #888888;
 }

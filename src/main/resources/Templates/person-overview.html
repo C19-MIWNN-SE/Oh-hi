@@ -75,7 +75,7 @@
                  th:if="${person.userRole.name() == 'TEACHER'}">
                 <a th:href="@{/person/{id}(id=${person.id})}"
                    style="cursor: pointer;">
-                    <div th:replace="~{fragments/person :: personCard(${person})}"></div>
+                    <div th:replace="~{fragments/person :: personCard(${person}, null)}"></div>
                 </a>
             </div>
         </div>
@@ -85,7 +85,7 @@
                  th:if="${person.userRole.name() == 'STUDENT'}">
                 <a th:href="@{/person/{id}(id=${person.id})}"
                    style="cursor: pointer;">
-                    <div th:replace="~{fragments/person :: personCard(${person})}"></div>
+                    <div th:replace="~{fragments/person :: personCard(${person}, null)}"></div>
                 </a>
             </div>
         </div>
