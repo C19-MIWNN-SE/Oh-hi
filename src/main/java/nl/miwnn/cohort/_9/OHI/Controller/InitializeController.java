@@ -35,6 +35,8 @@ public class InitializeController {
 
     @Autowired
     private OHIUserRepository ohiUserRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
     public InitializeController(OHIUserRepository ohiUserRepository, BCryptPasswordEncoder passwordEncoder) {
         this.ohiUserRepository = ohiUserRepository;
@@ -51,10 +53,14 @@ public class InitializeController {
     //todo
     private void seedUsers() {
         if (ohiUserRepository.count() == 0) {
-            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT");
+            Person testUser = new Person("Hans", "Hans");
+            personRepository.save(testUser);
+            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "TEACHER");
             OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
+            OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
             ohiUserRepository.save(docent);
             ohiUserRepository.save(student);
+            ohiUserRepository.save(hans);
         }
     }
 }

@@ -17,7 +17,7 @@ public class Person {
     private static final String DEFAULT_INFIX = null;
     private static final Image DEFAULT_IMAGE = null;
     private static final String DEFAULT_ABOUTME = null;
-    private static final Role DEFAULT_ROLE = null;
+    private static final Role DEFAULT_ROLE = Role.STUDENT;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +45,8 @@ public class Person {
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private OHIUser account;
+
+
 
     //todo review this - separate enum roles from a method to format the text
     public enum Role {
@@ -75,7 +77,6 @@ public class Person {
 
     public Person(String firstName, String lastName) {
         this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_ROLE);
-
     }
 
     public Person() {}

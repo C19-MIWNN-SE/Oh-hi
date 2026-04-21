@@ -11,6 +11,7 @@ import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.hibernate.sql.ast.tree.expression.Collation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -109,6 +110,7 @@ public class PersonController {
         return "person-detail";
     }
 
+    @PreAuthorize("#id == authentication.principal.person.id")
     @GetMapping("/profile/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Person person = personRepository.findById(id)
@@ -119,6 +121,7 @@ public class PersonController {
     }
 
     //Save results of add/edit to about me information
+    @PreAuthorize("#id == authentication.principal.person.id")
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
                               @RequestParam("imageFile") MultipartFile imageFile
