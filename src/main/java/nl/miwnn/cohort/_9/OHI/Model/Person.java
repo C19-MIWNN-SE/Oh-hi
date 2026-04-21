@@ -12,12 +12,17 @@ import javax.management.relation.Role;
  */
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype")
 public class Person {
 
     private static final String DEFAULT_INFIX = null;
     private static final Image DEFAULT_IMAGE = null;
     private static final String DEFAULT_ABOUTME = null;
     private static final Role DEFAULT_ROLE = null;
+    public static final String DEFAULT_LOCATION = null;
+    public static final Integer DEFAULT_AGE = null;
+    public static final String DEFAULT_PRONOUN = null;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,19 +67,28 @@ public class Person {
         }
     }
 
+    private String location;
+    private Integer age;
+    private String pronoun;
+
     private Role userRole;
 
-    public Person(String firstName, String infix, String lastName, Image image, String aboutMe, Role userRole) {
+    public Person(String firstName, String infix, String lastName, Image image, String aboutMe, String location,
+             Integer age, String pronoun, Role userRole) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
         this.image = image;
         this.aboutMe = aboutMe;
         this.userRole = userRole;
+        this.location = location;
+        this.age = age;
+        this.pronoun = pronoun;
     }
 
     public Person(String firstName, String lastName) {
-        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_ROLE);
+        this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_LOCATION,
+                DEFAULT_AGE, DEFAULT_PRONOUN, DEFAULT_ROLE);
 
     }
 
@@ -157,5 +171,29 @@ public class Person {
 
     public void setCohort(Cohort cohort) {
         this.cohort = cohort;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getPronoun() {
+        return pronoun;
+    }
+
+    public void setPronoun(String pronoun) {
+        this.pronoun = pronoun;
     }
 }

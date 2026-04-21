@@ -20,6 +20,53 @@
                         <input type="hidden" th:field="*{id}">
 
                         <div class="mb-3">
+                            <label for="age" class="form-label fw-bold">Leeftijd</label>
+                            <input type="text" id="age"
+                                   th:field="*{age}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('age')} ? 'is-invalid'"
+                                   placeholder="leeftijd...">
+
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('age')}"
+                                 th:errors="*{age}"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="location" class="form-label fw-bold">Woonplaats</label>
+                            <input type="text" id="location"
+                                   th:field="*{location}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('location')} ? 'is-invalid'"
+                                   placeholder="woonplaats">
+
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('location')}"
+                                 th:errors="*{location}"></div>
+                        </div>
+
+<!--                        <div class="mb-3">-->
+<!--                            <label for="employer" class="form-label fw-bold">Toekomstige werknemer</label>-->
+<!--                            <input type="text" id="employer"-->
+<!--                                   th:field="*{student.employer}"-->
+<!--                                   class="form-control"-->
+<!--                                   placeholder="Werknemer">-->
+<!--                        </div>-->
+
+                        <div class="mb-3">
+                            <label for="pronoun" class="form-label fw-bold">Voornaamwoorden</label>
+                            <input type="text" id="pronoun"
+                                   th:field="*{pronoun}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('pronoun')} ? 'is-invalid'"
+                                   placeholder="Hoe je wordt aangesproken:">
+
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('pronoun')}"
+                                 th:errors="*{pronoun}"></div>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="aboutMe" class="form-label fw-bold">About Me</label>
                             <textarea
                                     id="aboutMe"
@@ -28,6 +75,8 @@
                                     placeholder="About Me"
                                     rows="4"></textarea>
                         </div>
+
+
 
                         <div class="mb-3">
                             <label for="imageFile"

@@ -115,6 +115,7 @@ public class PersonController {
                 .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
         log.info("Bewerkformulier geopend voor: {}", id);
         model.addAttribute("person", personService.findById(id));
+
         return "person-profile-edit";
     }
 

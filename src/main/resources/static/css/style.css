@@ -1,5 +1,8 @@
 body {
-    background-color: #FBFBFB;
+    background-image: url("/static-images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*background-color: #FBFBFB;*/
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -152,7 +155,7 @@ nav{
 }
 
 .aboutMeText{
-    background-color: #C9BEFF;
+    background-color: rgba(201, 190, 255, 0.2);
     height: 100%;
     width: 100%;
     border-radius: 10px;
