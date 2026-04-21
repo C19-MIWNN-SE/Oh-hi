@@ -28,6 +28,10 @@ public class OHIUser implements UserDetails {
 
     private String role;
 
+    @OneToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
+
     public OHIUser(String username, String password, String role) {
         this.username = username;
         this.password = password;
