@@ -46,7 +46,10 @@ public class OHISecConfig {
                         .loginPage("/userlogin")
                         .loginProcessingUrl("/userlogin")
                         .defaultSuccessUrl("/person/overview", true)
-                        .permitAll());
+                        .permitAll())
+                .logout(logout -> logout
+                    .logoutSuccessUrl("/")
+                    .permitAll());
         log.info("Toestemming gegeven");
         return http.build();
     }
