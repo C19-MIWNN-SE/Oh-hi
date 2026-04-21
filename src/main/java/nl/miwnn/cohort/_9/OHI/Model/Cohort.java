@@ -18,16 +18,16 @@ import java.time.LocalDate;
  */
 
 @Entity
-public class Cohort {
+public class Cohort implements Comparable<Cohort>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Moet een cohortnummer bevatten")
+//    @NotNull(message = "Moet een cohortnummer bevatten")
     private Integer cohortNum;
 
-    @NotNull(message = "Cohort moet een vak behandelen")
+//    @NotNull(message = "Cohort moet een vak behandelen")
     private String discipline;
 
     private LocalDate startDate;
@@ -46,6 +46,11 @@ public class Cohort {
     }
 
     public Cohort(){}
+
+    @Override
+    public int compareTo(Cohort otherCohort) {
+        return Integer.compare(this.cohortNum, otherCohort.cohortNum);
+    }
 
     public Long getId() {
         return id;
