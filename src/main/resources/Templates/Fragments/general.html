@@ -1,4 +1,4 @@
-<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="baseheader(title)">
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -24,12 +24,9 @@
                href="/person/overview">
                 <i class="bi bi-people"></i> Overzicht
             </a>
-
-<!--            todo-->
-<!--            <form th:action="@{/logout}" method="post"-->
-<!--                  style="display: inline; margin-left: 100px ">-->
-<!--                <button type="submit" class="btn btn-primary">Uitloggen</button>-->
-<!--            </form>-->
+            <form class="nav-link" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button class="btn btn-outline-light btn-sm" type="submit">Uitloggen</button>
+            </form>
         </div>
     </div>
 </nav>
