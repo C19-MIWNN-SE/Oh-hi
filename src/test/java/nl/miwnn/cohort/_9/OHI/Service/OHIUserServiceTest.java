@@ -54,9 +54,8 @@ class OHIUserServiceTest {
         assertEquals(expectedUsername1, actualUsername1);
     }
 
-    // Users zijn al aangemaakt in security config, is een test wel nodig?
     @Test
-    void testUserCreation() {
+    void testUserPersonLink() {
         // Arrange
         Person expectedPerson = new Person("Johnny", "Wiseau");
 
