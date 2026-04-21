@@ -49,7 +49,10 @@ public class Cohort implements Comparable<Cohort>{
 
     @Override
     public int compareTo(Cohort otherCohort) {
-        return Integer.compare(this.cohortNum, otherCohort.cohortNum);
+        return Integer.compare(
+                this.cohortNum != null ? this.cohortNum : 0,
+                otherCohort.cohortNum != null ? otherCohort.cohortNum : 0
+        );
     }
 
     public Long getId() {
