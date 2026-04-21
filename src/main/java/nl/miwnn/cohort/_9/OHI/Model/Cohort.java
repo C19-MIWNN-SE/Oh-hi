@@ -24,20 +24,20 @@ public class Cohort {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@NotNull(message = "Moet een cohortnummer bevatten")
-    private String cohortNum;
+    @NotNull(message = "Moet een cohortnummer bevatten")
+    private Integer cohortNum;
 
-    //@NotNull(message = "Cohort moet een vak behandelen")
+    @NotNull(message = "Cohort moet een vak behandelen")
     private String discipline;
 
     private LocalDate startDate;
 
     private LocalDate endDate;
 
-    @OneToMany (mappedBy = "cohort", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "cohort", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Person> members = new ArrayList<>();
 
-    public Cohort(Long id, String cohortNum, String discipline, LocalDate startDate, LocalDate endDate) {
+    public Cohort(Long id, Integer cohortNum, String discipline, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.cohortNum = cohortNum;
         this.discipline = discipline;
@@ -55,11 +55,11 @@ public class Cohort {
         this.id = id;
     }
 
-    public String getCohortNum() {
+    public Integer getCohortNum() {
         return cohortNum;
     }
 
-    public void setCohortNum(String cohortNum) {
+    public void setCohortNum(Integer cohortNum) {
         this.cohortNum = cohortNum;
     }
 

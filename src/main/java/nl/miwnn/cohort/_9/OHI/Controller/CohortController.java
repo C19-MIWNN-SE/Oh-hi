@@ -10,10 +10,7 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +20,6 @@ import java.util.List;
  */
 
 @RequestMapping("/cohort")
-
 @Controller
 public class CohortController {
 
@@ -58,8 +54,28 @@ public class CohortController {
             return "cohort-add-edit";
         }
 
+        for (Person member : cohort.getMembers()) {
+            member.setCohort(cohort);
+        }
+
         cohortRepository.save(cohort);
         return ("redirect:/person/overview");
+    }
+
+    @GetMapping("/{id}")
+    public String showCohort(@PathVariable Long id, Model model){
+
+        cohortRepository.findById(id).ifPresent(cohort -> {
+            model.addAttribute("cohort", cohort);
+            model.addAttribute("members", cohort.getMembers());
+            model.addAttribute("cohortName", String.format("Cohort %d - %s", cohort.getCohortNum(), cohort.getDiscipline()));
+            });
+
+        List<Cohort> cohorts = cohortRepository.findAll();
+        model.addAttribute("allCohorts", cohorts);
+
+
+        return "cohort-overview";
     }
 
 
