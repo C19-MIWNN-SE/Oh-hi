@@ -10,6 +10,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     Optional<Person> findPersonByFirstNameAndLastName(String firstName, String lastName);
 
     Person getPersonById(Long id);
+
+    int countPeopleByFirstName(String firstName);
 }
 
 
