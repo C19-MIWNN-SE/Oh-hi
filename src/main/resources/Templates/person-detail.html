@@ -20,26 +20,31 @@
         <div class="col-5">
             <div class="aboutMeText">
                 <div class="col mx-auto">
-                    <h5 class="fw-bold mb-4 aboutMeHeader">Over mij</h5>
-                    <p class="aboutMeContent" th:text="${aboutMe}"></p>
+                    <h5 class="aboutMeHeader">Naam</h5>
+                    <p class="aboutMeContent" th:text="${person.fullName}"></p>
                 </div>
 
                 <div class="col mx-auto white-background">
-                    <h5 class="fw-bold mb-4 aboutMeHeader">Woonplaats</h5>
+                    <h5 class="aboutMeHeader">Woonplaats</h5>
                     <p class="aboutMeContent" th:text="${location}"></p>
+                </div>
+                <div class="col mx-auto">
+                    <h5 class="aboutMeHeader">Leeftijd</h5>
+                    <p class="aboutMeContent" th:text="${age}"></p>
                 </div>
             </div>
         </div>
 
         <div class="col-4">
-            <div class="col mx-auto">
-                <h5 class="fw-bold mb-4 aboutMeHeader">Leeftijd</h5>
-                <p class="aboutMeContent" th:text="${age}"></p>
-            </div>
+
 
             <div class="col mx-auto">
-                <h5 class="fw-bold mb-4 aboutMeHeader">Voornaamwoorden</h5>
+                <h5 class="aboutMeHeader">Voornaamwoorden</h5>
                 <p class="aboutMeContent" th:text="${pronoun}"></p>
+            </div>
+            <div class="col mx-auto">
+                <h5 class=" aboutMeHeader">Over mij</h5>
+                <p class="aboutMeContent" th:text="${aboutMe}"></p>
             </div>
         </div>
 
@@ -55,7 +60,7 @@
 
     <div>
         <a th:href="@{/person/profile/edit/{id}(id=${person.id})}"
-           class="btn btn-success shadow-sm search-bg fp-btn-colour"
+           class="btn btn-success shadow-sm search-bg fp-btn-colour fp-btn-content"
            sec:authorize="hasRole('STUDENT')">
             <i class="bi bi-gear me-1"></i> Profiel bewerken
         </a>

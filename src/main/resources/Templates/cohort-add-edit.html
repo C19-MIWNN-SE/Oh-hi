@@ -13,9 +13,6 @@
 
             <div class="card shadow-sm border-0">
 
-                <div class="card-header bg-dark text-white text-center p-3">
-                    <h2 class="h4 mb-0">Cohort toevoegen/bewerken</h2>
-                </div>
 
                 <div class="card-body p-4">
 
@@ -69,8 +66,8 @@
                         </div>
 
                         <!--  Csv invoegen? - th:field needed in input veld??-->
-                        <div>
-                            <label for="people-in-cohort">Cohort leden csv toevoegen:</label>
+                        <div class="mb-3">
+                            <label for="people-in-cohort" class="form-label fw-bold">Cohort leden csv toevoegen:</label><br>
                             <input type="file" name ="file" accept=".csv" id="people-in-cohort" />
                         </div>
 
@@ -102,12 +99,13 @@
                             </div>
                         </div>
 
-
-                        <!-- Submit -->
                         <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-primary btn-lg shadow-sm">
-                                Opslaan
+                            <button class="btn btn-primary btn-lg shadow-sm"
+                                    type="submit">
+                                <i class="bi bi-save"></i> Cohort opslaan
                             </button>
+                            <a href="/person/overview"
+                               class="btn btn-link text-secondary text-decoration-none text-center">Annuleren</a>
                         </div>
 
                     </form>
