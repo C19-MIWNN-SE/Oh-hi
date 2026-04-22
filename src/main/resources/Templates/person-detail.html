@@ -42,6 +42,10 @@
                 <h5 class="aboutMeHeader">Voornaamwoorden</h5>
                 <p class="aboutMeContent" th:text="${pronoun}"></p>
             </div>
+            <div class="col mx-auto" th:if="${person.getEmployerField()}">
+                <h5 class="aboutMeHeader">Toekomstig werkgever</h5>
+                <p class="aboutMeContent" th:text="${person.student?.employer}"></p>
+            </div>
             <div class="col mx-auto">
                 <h5 class=" aboutMeHeader">Over mij</h5>
                 <p class="aboutMeContent" th:text="${aboutMe}"></p>

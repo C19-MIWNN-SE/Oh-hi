@@ -4,9 +4,11 @@ import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Image;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.Student;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import nl.miwnn.cohort._9.OHI.Repository.StudentRepository;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.hibernate.sql.ast.tree.expression.Collation;
 import org.slf4j.Logger;
@@ -33,12 +35,14 @@ public class PersonController {
     private final PersonService personService;
     private final CohortRepository cohortRepository;
     private final ImageRepository imageRepository;
+    private final StudentRepository studentRepository;
 
-    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository) {
+    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
         this.imageRepository = imageRepository;
+        this.studentRepository = studentRepository;
     }
 
     @GetMapping("/overview")
@@ -108,7 +112,9 @@ public class PersonController {
         model.addAttribute("age", person.getAge());
         model.addAttribute("pronoun", person.getPronoun());
         model.addAttribute("userRole", person.getEnumToLowerCase(person.getUserRole()));
+        model.addAttribute("employer", person.getStudent());
         model.addAttribute("person", person);
+
         return "person-detail";
     }
 
@@ -130,6 +136,10 @@ public class PersonController {
 
         Person profilePerson = personService.findById(aboutPerson.getId());
 
+        if (profilePerson == null) {
+            throw new IllegalStateException("No person found with ID " + aboutPerson.getId());
+        }
+
         if (aboutPerson.getId() != null) {
 
             if (!imageFile.isEmpty()) {
@@ -141,14 +151,22 @@ public class PersonController {
             }
         }
 
-        if (profilePerson == null) {
-            throw new IllegalStateException("No person found with ID " + aboutPerson.getId());
-        }
-
         profilePerson.setAboutMe(aboutPerson.getAboutMe());
         profilePerson.setLocation(aboutPerson.getLocation());
         profilePerson.setAge(aboutPerson.getAge());
         profilePerson.setPronoun(aboutPerson.getPronoun());
+
+        if (profilePerson.getEmployerField() && aboutPerson.getStudent() != null) {
+            Student student = profilePerson.getStudent();
+
+            if (student == null) {
+                student = new Student();
+                profilePerson.setStudent(student);
+            }
+
+            student.setEmployer(aboutPerson.getStudent().getEmployer());
+        }
+
         personService.savePerson(profilePerson);
 
         return "redirect:/person/" + profilePerson.getId();
