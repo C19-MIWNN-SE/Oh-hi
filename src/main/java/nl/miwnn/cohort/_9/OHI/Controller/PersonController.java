@@ -71,13 +71,23 @@ public class PersonController {
     }
 
     @PostMapping("/save")
-    public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult,
+                                     @RequestParam(value = "cohort.id", required = false) Long cohortId,
+                                     RedirectAttributes redirectAttributes) {
         if (personService.personAlreadyExists(person)) {
             bindingResult.rejectValue("firstName", "alreadyExists", "Dit persoon bestaat al");
         }
 
         if (bindingResult.hasErrors()) {
             return "person-add-edit";
+        }
+
+        // cohort instellen op de persoon
+        if (cohortId != null) {
+            Cohort cohort = cohortService.findById(cohortId);
+            person.setCohort(cohort);
+        } else {
+            person.setCohort(null);
         }
 
         try {
@@ -99,7 +109,6 @@ public class PersonController {
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("errorMessage", "Het persoon kon niet verwijderd worden.");
         }
-
         return "redirect:/person/overview";
     }
 
