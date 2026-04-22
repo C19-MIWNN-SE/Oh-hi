@@ -131,7 +131,7 @@ public class PersonController {
     }
 
     //Save results of add/edit to about me information
-    @PreAuthorize("#id == authentication.principal.person.id")
+//    @PreAuthorize("#id == authentication.principal.person.id")
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
                               @RequestParam("imageFile") MultipartFile imageFile
