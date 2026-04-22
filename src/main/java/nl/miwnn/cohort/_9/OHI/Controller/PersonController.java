@@ -78,9 +78,11 @@ public class PersonController {
             redirectAttributes.addFlashAttribute("Dit persoon kon niet worden opgeslagen");
         }
 
+
         redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
         return "redirect:/person/overview";
     }
+
 
     @GetMapping("/remove/{id}")
     public String deleteMemberFromCohort(@PathVariable Long id, RedirectAttributes redirectAttributes) {

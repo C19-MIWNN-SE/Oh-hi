@@ -1,7 +1,9 @@
 package nl.miwnn.cohort._9.OHI.Service;
 
+import nl.miwnn.cohort._9.OHI.Model.AccountToken;
 import nl.miwnn.cohort._9.OHI.Model.OHIUser;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Repository.AccountTokenRespository;
 import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -20,11 +23,22 @@ import java.util.UUID;
 public class OHIUserService implements UserDetailsService {
     private final OHIUserRepository ohiUserRepository;
     private final PersonRepository personRepository;
+    private final AccountTokenRespository accountTokenRespository;
 
-    public OHIUser createAccount (Person person, String role) {
-        return new OHIUser(usernameCreation(person),"password", role);
-        // Onderstaande methode genereert een random wachtwoord, maar voor nu is hetzelfde wachtwoord gebruiken handig
-        // UUID.randomUUID().toString()
+    public String createAccount (Person person, String role) {
+        OHIUser user = new OHIUser(usernameCreation(person),"password", role);
+        ohiUserRepository.save(user);
+
+        //todo - check this
+        //does Person/OhiUser still need link here?
+        //person.setUser(user)
+
+        String token = UUID.randomUUID().toString();
+        AccountToken accountToken = new AccountToken(token,user, LocalDateTime.now().plusDays(7));
+        accountTokenRespository.save(accountToken);
+
+        //todo - see about this link
+        return "/account/setup?token=" + token;
     }
 
     public String usernameCreation(Person person) {
@@ -32,9 +46,10 @@ public class OHIUserService implements UserDetailsService {
         return person.getFirstName() + newCountUsername;
     }
 
-    public OHIUserService(OHIUserRepository ohiUserRepository, PersonRepository personRepository) {
+    public OHIUserService(OHIUserRepository ohiUserRepository, PersonRepository personRepository, AccountTokenRespository accountTokenRespository) {
         this.ohiUserRepository = ohiUserRepository;
         this.personRepository = personRepository;
+        this.accountTokenRespository = accountTokenRespository;
     }
 
     @Override
@@ -45,4 +60,5 @@ public class OHIUserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "Gebruiker niet gevonden: " + username));
     }
+
 }
