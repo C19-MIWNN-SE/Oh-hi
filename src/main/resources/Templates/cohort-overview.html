@@ -32,7 +32,7 @@
              sec:authorize="hasRole('DOCENT')">
             <i class="bi bi-plus-circle me-1"></i> Cohort
           </a>
-          <a th:href="@{/person/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour"
+          <a th:href="@{/person/add/{cohortId}(cohortId=${cohort.id})}" class="btn btn-success shadow-sm search-bg fp-btn-colour"
              sec:authorize="hasRole('DOCENT')">
             <i class="bi bi-plus-circle me-1"></i> Lid
           </a>

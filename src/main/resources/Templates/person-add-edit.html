@@ -68,11 +68,12 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Cohort</label>
-                            <select class="form-select" th:field="*{cohort}">
+                            <select class="form-select" th:field="*{cohort.id}">
                                 <option value="">-- Selecteer cohort --</option>
                                 <option th:each="cohort : ${allCohorts}"
                                         th:value="${cohort.id}"
-                                        th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}">
+                                        th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}"
+<!--                                    th:selected="${person.cohort != null and person.cohort.id == cohort.id}">-->
                                 </option>
                             </select>
                         </div>

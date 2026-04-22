@@ -58,9 +58,14 @@ public class PersonController {
         return "person-overview";
     }
 
-    @GetMapping("/add")
-    public String addPersonToCohort(Model model) {
-        model.addAttribute("person", new Person());
+    @GetMapping({"/add", "/add/{cohortId}"})
+    public String addPersonToCohort(@PathVariable(required = false) Long cohortId, Model model) {
+        Person person = new Person();
+        if (cohortId != null) {
+            Cohort cohort = cohortService.findById(cohortId);
+            person.setCohort(cohort);
+        }
+        model.addAttribute("person", person);
         model.addAttribute("allCohorts", cohortService.getAllCohorts());
         return "person-add-edit";
     }
