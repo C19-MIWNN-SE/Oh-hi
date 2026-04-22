@@ -14,6 +14,7 @@ import javax.management.relation.Role;
 @Entity
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@DiscriminatorColumn(name = "dtype")
+//@DiscriminatorValue("Person")
 public class Person {
 
     private static final String DEFAULT_INFIX = null;

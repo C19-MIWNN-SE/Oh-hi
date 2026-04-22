@@ -36,6 +36,10 @@ public class PersonService {
         personRepository.save(person);
     }
 
+    public void saveAllPeople(List<Person> people) {
+        personRepository.saveAll(people);
+    }
+
     public boolean personAlreadyExists(Person person) {
             if (person.getInfix() == null || person.getInfix().isEmpty()) {
                 return personRepository.findPersonByFirstNameAndLastName(

@@ -29,4 +29,8 @@ public class CohortService {
         return cohortRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Cohort %d niet gevonden", id)));
     }
+
+    public void saveCohort(Cohort cohort) {
+        cohortRepository.save(cohort);
+    }
 }
