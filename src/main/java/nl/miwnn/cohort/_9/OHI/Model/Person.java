@@ -19,7 +19,8 @@ public class Person {
     private static final String DEFAULT_INFIX = null;
     private static final Image DEFAULT_IMAGE = null;
     private static final String DEFAULT_ABOUTME = null;
-    private static final Role DEFAULT_ROLE = null;
+
+    private static final Role DEFAULT_ROLE = Role.STUDENT;
     public static final String DEFAULT_LOCATION = null;
     public static final Integer DEFAULT_AGE = null;
     public static final String DEFAULT_PRONOUN = null;
@@ -74,7 +75,7 @@ public class Person {
     private Role userRole;
 
     public Person(String firstName, String infix, String lastName, Image image, String aboutMe, String location,
-             Integer age, String pronoun, Role userRole) {
+                  Integer age, String pronoun, Role userRole) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
@@ -89,10 +90,10 @@ public class Person {
     public Person(String firstName, String lastName) {
         this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_LOCATION,
                 DEFAULT_AGE, DEFAULT_PRONOUN, DEFAULT_ROLE);
-
     }
 
-    public Person() {}
+    public Person() {
+    }
 
     public String getFullName() {
         if (infix == null) {
