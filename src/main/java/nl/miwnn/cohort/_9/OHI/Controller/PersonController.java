@@ -9,6 +9,7 @@ import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Repository.StudentRepository;
+import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
 import nl.miwnn.cohort._9.OHI.Service.CohortService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.hibernate.sql.ast.tree.expression.Collation;
@@ -39,16 +40,16 @@ public class PersonController {
     private final CohortService cohortService;
     private final ImageRepository imageRepository;
     private final StudentRepository studentRepository;
+    private final OHIUserService oHIUserService;
 
-    public PersonController(PersonRepository personRepository, PersonService personService,
-                            CohortRepository cohortRepository, CohortService cohortService,
-                            ImageRepository imageRepository, StudentRepository studentRepository) {
+    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserService oHIUserService, CohortService cohortService) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
         this.cohortService = cohortService;
         this.imageRepository = imageRepository;
         this.studentRepository = studentRepository;
+        this.oHIUserService = oHIUserService;
     }
 
     @GetMapping("/overview")
@@ -102,7 +103,9 @@ public class PersonController {
             redirectAttributes.addFlashAttribute("Dit persoon kon niet worden opgeslagen");
         }
 
+        String setupLink = oHIUserService.createAccount(person, "STUDENT");
 
+        redirectAttributes.addFlashAttribute("setupLink", setupLink);
         redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
         return "redirect:/person/overview";
     }

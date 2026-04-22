@@ -5,15 +5,23 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
+import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
 import nl.miwnn.cohort._9.OHI.Service.CohortService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.slf4j.Logger;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,13 +33,20 @@ import java.util.List;
 @RequestMapping("/cohort")
 @Controller
 public class CohortController {
+
+    private final PersonRepository personRepository;
     private final PersonService personService;
+    private final CohortRepository cohortRepository;
+    private final OHIUserService oHIUserService;
     private final CohortService cohortService;
     private Logger log;
 
-    public CohortController(PersonService personService, CohortService cohortService) {
+    public CohortController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, OHIUserService oHIUserService, CohortService cohortService) {
+        this.personRepository = personRepository;
         this.personService = personService;
+        this.cohortRepository = cohortRepository;
         this.cohortService = cohortService;
+        this.oHIUserService = oHIUserService;
     }
 
     @GetMapping("/add")
@@ -43,8 +58,10 @@ public class CohortController {
         return ("cohort-add-edit");
     }
 
+//    //todo - check if teacher or docent
+//    @PreAuthorize("hasRole('DOCENT')")
     @PostMapping("/save")
-    public String saveCohort(@Valid @ModelAttribute Cohort cohort, BindingResult bindingResult, MultipartFile file,  Model model) {
+    public String saveCohort(@Valid @ModelAttribute Cohort cohort, MultipartFile file, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if (file.isEmpty()) {
             model.addAttribute("message", "Selecteer een csv van cohort leden informatie");
@@ -76,11 +93,19 @@ public class CohortController {
             return "cohort-add-edit";
         }
 
+        cohortRepository.save(cohort);
+
+        List<String> setupLinks = null;
         for (Person member : cohort.getMembers()) {
             member.setCohort(cohort);
+            String setupLink = oHIUserService.createAccount(member, "STUDENT");
+            setupLinks = new ArrayList<>();
+            setupLinks.add(member.getFullName() + ": " + setupLink);
         }
 
-        cohortService.saveCohort(cohort);
+        model.addAttribute("setupLink", setupLinks.toString());
+        redirectAttributes.addFlashAttribute("setupLinks", setupLinks);
+        redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
         return ("redirect:/person/overview");
     }
 
