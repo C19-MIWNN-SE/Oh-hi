@@ -104,6 +104,9 @@ public class PersonController {
 
         model.addAttribute("name", String.format("Oh hi %s!", person.getFullName()));
         model.addAttribute("aboutMe", person.getAboutMe());
+        model.addAttribute("location", person.getLocation());
+        model.addAttribute("age", person.getAge());
+        model.addAttribute("pronoun", person.getPronoun());
         model.addAttribute("userRole", person.getEnumToLowerCase(person.getUserRole()));
         model.addAttribute("person", person);
         return "person-detail";
@@ -141,7 +144,11 @@ public class PersonController {
         if (profilePerson == null) {
             throw new IllegalStateException("No person found with ID " + aboutPerson.getId());
         }
+
         profilePerson.setAboutMe(aboutPerson.getAboutMe());
+        profilePerson.setLocation(aboutPerson.getLocation());
+        profilePerson.setAge(aboutPerson.getAge());
+        profilePerson.setPronoun(aboutPerson.getPronoun());
         personService.savePerson(profilePerson);
 
         return "redirect:/person/" + profilePerson.getId();

@@ -16,14 +16,32 @@
         <div class="col-3">
             <div th:replace="~{fragments/person :: personCard(${person}, 'background-content-card-profile')}"></div>
         </div>
-        <div class="col-9">
+
+        <div class="col-5">
             <div class="aboutMeText">
                 <div class="col mx-auto">
                     <h5 class="fw-bold mb-4 aboutMeHeader">Over mij</h5>
+                    <p class="aboutMeContent" th:text="${aboutMe}"></p>
                 </div>
 
-                <p class="aboutMeContent" th:text="${aboutMe}"></p>
+                <div class="col mx-auto white-background">
+                    <h5 class="fw-bold mb-4 aboutMeHeader">Woonplaats</h5>
+                    <p class="aboutMeContent" th:text="${location}"></p>
+                </div>
             </div>
+        </div>
+
+        <div class="col-4">
+            <div class="col mx-auto">
+                <h5 class="fw-bold mb-4 aboutMeHeader">Leeftijd</h5>
+                <p class="aboutMeContent" th:text="${age}"></p>
+            </div>
+
+            <div class="col mx-auto">
+                <h5 class="fw-bold mb-4 aboutMeHeader">Voornaamwoorden</h5>
+                <p class="aboutMeContent" th:text="${pronoun}"></p>
+            </div>
+        </div>
 
             <div th:if="${successMessage}" class="alert alert-success mt-3"
                  th:text="${successMessage}">
