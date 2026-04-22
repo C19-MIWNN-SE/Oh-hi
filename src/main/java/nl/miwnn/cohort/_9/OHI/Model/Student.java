@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
  */
 
 @Entity
-@DiscriminatorValue("STUDENT")
+//@DiscriminatorValue("STUDENT")
 public class Student extends Person{
 
     private String employer;
