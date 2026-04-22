@@ -13,6 +13,12 @@
      role="alert">
     <i class="bi bi-check-circle-fill me-2"></i>
     <span th:text="${successMessage}"></span>
+
+
+    <div sec:authorize="hasRole('DOCENT')">
+        <p>Setup link single person: <span th:text="${setupLink}"></span></p>
+        <p>Setup link cohort: <span th:text="${setupLinks}"></span></p>
+    </div>
     <button type="button"
             class="btn-close"
             data-bs-dismiss="alert"
@@ -90,9 +96,6 @@
             </div>
         </div>
     </div>
-</div>
-<div sec:authorize="hasRole('DOCENT')">
-    <p th:each="link : ${setupLinks}" th:text="${link}"></p>
 </div>
 
 <footer th:replace="~{Fragments/general :: footer}"></footer>

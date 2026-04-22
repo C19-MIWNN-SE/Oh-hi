@@ -104,6 +104,7 @@ public class PersonController {
         }
 
         String setupLink = oHIUserService.createAccount(person, "STUDENT");
+
         redirectAttributes.addFlashAttribute("setupLink", setupLink);
         redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
         return "redirect:/person/overview";

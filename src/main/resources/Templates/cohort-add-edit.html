@@ -62,11 +62,6 @@
                             </div>
                         </div>
 
-                        <!-- will be used for the teacher to get setup link for accounts -->
-                        <div sec:authorize="hasRole('TEACHER')">
-                            <p>Setup link: <span th:text="${setupLink}"></span></p>
-                        </div>
-
                         <div class="mb-3">
                             <label for="people-in-cohort" class="form-label fw-bold">Cohort leden csv toevoegen:</label><br>
                             <input type="file" name ="file" accept=".csv" id="people-in-cohort" />

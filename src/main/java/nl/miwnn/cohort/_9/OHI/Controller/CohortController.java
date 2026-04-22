@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -58,10 +59,10 @@ public class CohortController {
         return ("cohort-add-edit");
     }
 
-    //todo - check if teacher or docent
-    @PreAuthorize("hasRole('TEACHER')")
+//    //todo - check if teacher or docent
+//    @PreAuthorize("hasRole('DOCENT')")
     @PostMapping("/save")
-    public String saveCohort(@Valid @ModelAttribute Cohort cohort, MultipartFile file, BindingResult bindingResult, Model model) {
+    public String saveCohort(@Valid @ModelAttribute Cohort cohort, MultipartFile file, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if (file.isEmpty()) {
             model.addAttribute("message", "Selecteer een csv van cohort leden informatie");
@@ -94,6 +95,8 @@ public class CohortController {
             return "cohort-add-edit";
         }
 
+        cohortRepository.save(cohort);
+
         List<String> setupLinks = null;
         for (Person member : cohort.getMembers()) {
             member.setCohort(cohort);
@@ -102,8 +105,9 @@ public class CohortController {
             setupLinks.add(member.getFullName() + ": " + setupLink);
         }
 
-        model.addAttribute("setupLink", setupLinks);
-        cohortRepository.save(cohort);
+        model.addAttribute("setupLink", setupLinks.toString());
+        redirectAttributes.addFlashAttribute("setupLinks", setupLinks);
+        redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
         return ("redirect:/person/overview");
     }
 
