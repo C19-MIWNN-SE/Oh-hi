@@ -19,6 +19,7 @@ public class AccountToken {
     @Column(nullable = false, unique = true, length = 255)
     private String token;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private OHIUser ohiUser;
