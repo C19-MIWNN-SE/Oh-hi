@@ -8,6 +8,7 @@ import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
+import nl.miwnn.cohort._9.OHI.Service.CohortService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.slf4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,12 +37,14 @@ public class CohortController {
     private final PersonService personService;
     private final CohortRepository cohortRepository;
     private final OHIUserService oHIUserService;
+    private final CohortService cohortService;
     private Logger log;
 
-    public CohortController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, OHIUserService oHIUserService) {
+    public CohortController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, OHIUserService oHIUserService, CohortService cohortService) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
+        this.cohortService = cohortService;
         this.oHIUserService = oHIUserService;
     }
 
@@ -52,7 +55,6 @@ public class CohortController {
         model.addAttribute("allMembers", allMembers);
         // Lijst van studenten uit repository halen om toe te voegen?
         // CSV lezer toevoegen om csv in te lezen?
-
         return ("cohort-add-edit");
     }
 
@@ -120,6 +122,4 @@ public class CohortController {
 
         return "cohort-overview";
     }
-
-
 }
