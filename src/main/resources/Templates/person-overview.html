@@ -91,6 +91,10 @@
         </div>
     </div>
 </div>
+<div sec:authorize="hasRole('DOCENT')">
+    <p th:each="link : ${setupLinks}" th:text="${link}"></p>
+</div>
+
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>
 </body>

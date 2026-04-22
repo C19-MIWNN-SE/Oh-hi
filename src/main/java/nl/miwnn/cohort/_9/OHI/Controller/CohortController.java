@@ -7,8 +7,10 @@ import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.slf4j.Logger;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -32,12 +35,14 @@ public class CohortController {
     private final PersonRepository personRepository;
     private final PersonService personService;
     private final CohortRepository cohortRepository;
+    private final OHIUserService oHIUserService;
     private Logger log;
 
-    public CohortController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository) {
+    public CohortController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, OHIUserService oHIUserService) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
+        this.oHIUserService = oHIUserService;
     }
 
     @GetMapping("/add")
@@ -51,8 +56,8 @@ public class CohortController {
         return ("cohort-add-edit");
     }
 
-
-
+    //todo - check if teacher or docent
+    @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/save")
     public String saveCohort(@Valid @ModelAttribute Cohort cohort, MultipartFile file, BindingResult bindingResult, Model model) {
 
@@ -87,11 +92,15 @@ public class CohortController {
             return "cohort-add-edit";
         }
 
+        List<String> setupLinks = null;
         for (Person member : cohort.getMembers()) {
             member.setCohort(cohort);
-            //personRepository.save(member);
+            String setupLink = oHIUserService.createAccount(member, "STUDENT");
+            setupLinks = new ArrayList<>();
+            setupLinks.add(member.getFullName() + ": " + setupLink);
         }
 
+        model.addAttribute("setupLink", setupLinks);
         cohortRepository.save(cohort);
         return ("redirect:/person/overview");
     }

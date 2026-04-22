@@ -9,6 +9,7 @@ import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Repository.StudentRepository;
+import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.hibernate.sql.ast.tree.expression.Collation;
 import org.slf4j.Logger;
@@ -37,13 +38,15 @@ public class PersonController {
     private final CohortRepository cohortRepository;
     private final ImageRepository imageRepository;
     private final StudentRepository studentRepository;
+    private final OHIUserService oHIUserService;
 
-    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository) {
+    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserService oHIUserService) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
         this.imageRepository = imageRepository;
         this.studentRepository = studentRepository;
+        this.oHIUserService = oHIUserService;
     }
 
     @GetMapping("/overview")
@@ -67,7 +70,9 @@ public class PersonController {
     }
 
     @PostMapping("/save")
-    public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person,
+                                     BindingResult bindingResult,
+                                     RedirectAttributes redirectAttributes) {
         if (personService.personAlreadyExists(person)) {
             bindingResult.rejectValue("firstName", "alreadyExists", "Dit persoon bestaat al");
         }
@@ -82,7 +87,8 @@ public class PersonController {
             redirectAttributes.addFlashAttribute("Dit persoon kon niet worden opgeslagen");
         }
 
-
+        String setupLink = oHIUserService.createAccount(person, "STUDENT");
+        redirectAttributes.addFlashAttribute("setupLink", setupLink);
         redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
         return "redirect:/person/overview";
     }
