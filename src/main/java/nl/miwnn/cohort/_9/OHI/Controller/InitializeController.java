@@ -29,7 +29,6 @@ import java.util.List;
 @Controller
 public class InitializeController {
     private final Logger log = LoggerFactory.getLogger(InitializeController.class);
-    private final PersonRepository personRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -37,39 +36,15 @@ public class InitializeController {
     @Autowired
     private OHIUserRepository ohiUserRepository;
 
-    public InitializeController(PersonRepository personRepository, OHIUserRepository ohiUserRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.personRepository = personRepository;
+    public InitializeController(OHIUserRepository ohiUserRepository, BCryptPasswordEncoder passwordEncoder) {
         this.ohiUserRepository = ohiUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
    @EventListener(ContextRefreshedEvent.class)
     public void seed(){
-        if(personRepository.count() == 0){
-            seedPeople();
-        }
         if(ohiUserRepository.count() == 0) {
             seedUsers();
-        }
-    }
-
-    private void seedPeople() {
-        try {
-            //later load this in via variable from the docent upload file - see cohort controller
-            ClassPathResource resource = new ClassPathResource("static/people.csv");
-            Reader reader = new InputStreamReader(resource.getInputStream());
-
-            CsvToBean<Person> csvToBean = new CsvToBeanBuilder<Person>(reader)
-                    .withType(Person.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
-
-            List<Person> people = csvToBean.parse();
-
-            personRepository.saveAll(people);
-
-        } catch (IOException ioException) {
-            throw new RuntimeException(ioException);
         }
     }
 
