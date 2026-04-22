@@ -7,6 +7,7 @@ import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import nl.miwnn.cohort._9.OHI.Service.CohortService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.hibernate.sql.ast.tree.expression.Collation;
 import org.slf4j.Logger;
@@ -33,12 +34,14 @@ public class PersonController {
     private final PersonRepository personRepository;
     private final PersonService personService;
     private final CohortRepository cohortRepository;
+    private final CohortService cohortService;
     private final ImageRepository imageRepository;
 
-    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository) {
+    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, CohortService cohortService, ImageRepository imageRepository) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
+        this.cohortService = cohortService;
         this.imageRepository = imageRepository;
     }
 
@@ -58,7 +61,7 @@ public class PersonController {
     @GetMapping("/add")
     public String addPersonToCohort(Model model) {
         model.addAttribute("person", new Person());
-
+        model.addAttribute("allCohorts", cohortService.getAllCohorts());
         return "person-add-edit";
     }
 
