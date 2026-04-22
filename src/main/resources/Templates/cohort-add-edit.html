@@ -13,7 +13,6 @@
 
             <div class="card shadow-sm border-0">
 
-
                 <div class="card-body p-4">
 
                     <form th:action="@{/cohort/save}" method="post"  enctype="multipart/form-data" th:object="${cohort}">
@@ -32,7 +31,6 @@
                                  th:errors="*{cohortNum}"></div>
                         </div>
 
-                        <!-- Discipline -->
                         <div class="mb-3">
                             <label for="DC" class="form-label fw-bold">Vakgebied</label>
                             <input type="text"
@@ -46,7 +44,6 @@
                                  th:errors="*{discipline}"></div>
                         </div>
 
-                        <!-- Dates -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="SD" class="form-label fw-bold">Startdatum</label>
@@ -75,7 +72,6 @@
                             <input type="file" name ="file" accept=".csv" id="people-in-cohort" />
                         </div>
 
-                        <!-- Members -->
                         <div class="mb-3">
                             <label class="form-label fw-bold d-block">Leden</label>
 

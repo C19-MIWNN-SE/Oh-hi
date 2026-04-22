@@ -72,6 +72,9 @@ public class Person {
     private Integer age;
     private String pronoun;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Student student;
+
     private Role userRole;
 
     public Person(String firstName, String infix, String lastName, Image image, String aboutMe, String location,
@@ -93,6 +96,10 @@ public class Person {
     }
 
     public Person() {
+    }
+
+    public boolean getEmployerField(){
+        return userRole == Role.STUDENT;
     }
 
     public String getFullName() {
@@ -196,5 +203,21 @@ public class Person {
 
     public void setPronoun(String pronoun) {
         this.pronoun = pronoun;
+    }
+
+    public OHIUser getAccount() {
+        return account;
+    }
+
+    public void setAccount(OHIUser account) {
+        this.account = account;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }

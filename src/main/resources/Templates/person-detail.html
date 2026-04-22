@@ -17,18 +17,19 @@
             <div th:replace="~{fragments/person :: personCard(${person}, 'background-content-card-profile')}"></div>
         </div>
 
-        <div class="col-5">
+        <div class="col-4">
             <div class="aboutMeText">
-                <div class="col mx-auto">
+                <div class="col mx-auto info-background-content">
                     <h5 class="aboutMeHeader">Naam</h5>
                     <p class="aboutMeContent" th:text="${person.fullName}"></p>
                 </div>
 
-                <div class="col mx-auto white-background">
+                <div class="col mx-auto info-background-content">
                     <h5 class="aboutMeHeader">Woonplaats</h5>
                     <p class="aboutMeContent" th:text="${location}"></p>
                 </div>
-                <div class="col mx-auto">
+
+                <div class="col mx-auto info-background-content">
                     <h5 class="aboutMeHeader">Leeftijd</h5>
                     <p class="aboutMeContent" th:text="${age}"></p>
                 </div>
@@ -37,12 +38,15 @@
 
         <div class="col-4">
 
-
-            <div class="col mx-auto">
+            <div class="col mx-auto info-background-content">
                 <h5 class="aboutMeHeader">Voornaamwoorden</h5>
                 <p class="aboutMeContent" th:text="${pronoun}"></p>
             </div>
-            <div class="col mx-auto">
+            <div class="col mx-auto info-background-content" th:if="${person.getEmployerField()}">
+                <h5 class="aboutMeHeader">Toekomstig werkgever</h5>
+                <p class="aboutMeContent" th:text="${person.student?.employer}"></p>
+            </div>
+            <div class="col mx-auto info-background-content">
                 <h5 class=" aboutMeHeader">Over mij</h5>
                 <p class="aboutMeContent" th:text="${aboutMe}"></p>
             </div>

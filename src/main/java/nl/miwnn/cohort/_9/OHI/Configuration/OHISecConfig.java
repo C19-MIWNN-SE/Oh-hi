@@ -35,14 +35,16 @@ public class OHISecConfig {
                                 "/static-images/**",
                                 "/js/**",
                                 "/select2",
-                                "/select2/**")
+                                "/select2/**",
+                                "/person/profile/save")
                         .permitAll().requestMatchers(
                                 "/person/add",
                                 "/person/remove",
                                 "/person/save",
                                 "/cohort",
                                 "/cohort/**"
-                        ).hasAnyRole("DOCENT").anyRequest().authenticated())
+                        ).hasAnyRole("DOCENT").anyRequest().authenticated()
+                        )
                 // custom form voor login
                 .formLogin((form) -> form
                         .loginPage("/userlogin")

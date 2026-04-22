@@ -1,7 +1,6 @@
 package nl.miwnn.cohort._9.OHI.Model;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 /**
  * Author: Mees Drenth
@@ -9,35 +8,21 @@ import jakarta.persistence.Entity;
  */
 
 @Entity
-//@DiscriminatorValue("STUDENT")
-public class Student extends Person{
+public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String employer;
 
-    public Student(String firstName, String infix, String lastName, Image image, String aboutMe, String location,
-                   Integer age, String pronoun, Role userRole, String employer) {
-        super(firstName, infix, lastName, image, aboutMe, location, age, pronoun, userRole);
-        this.employer = employer;
-    }
+    public Student() {}
 
-    public Student(String firstName, String lastName, String employer) {
-        super(firstName, lastName);
-        this.employer = employer;
-    }
+    public Long getId() { return id; }
 
-    public Student() {
-        super();
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public Student(String employer) {
-        this.employer = employer;
-    }
+    public String getEmployer() { return employer; }
 
-    public String getEmployer() {
-        return employer;
-    }
-
-    public void setEmployer(String employer) {
-        this.employer = employer;
-    }
+    public void setEmployer(String employer) { this.employer = employer; }
 }
