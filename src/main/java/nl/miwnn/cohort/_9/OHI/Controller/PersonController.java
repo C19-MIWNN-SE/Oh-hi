@@ -9,6 +9,7 @@ import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Repository.StudentRepository;
+import nl.miwnn.cohort._9.OHI.Service.CohortService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.hibernate.sql.ast.tree.expression.Collation;
 import org.slf4j.Logger;
@@ -35,13 +36,17 @@ public class PersonController {
     private final PersonRepository personRepository;
     private final PersonService personService;
     private final CohortRepository cohortRepository;
+    private final CohortService cohortService;
     private final ImageRepository imageRepository;
     private final StudentRepository studentRepository;
 
-    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository) {
+    public PersonController(PersonRepository personRepository, PersonService personService,
+                            CohortRepository cohortRepository, CohortService cohortService,
+                            ImageRepository imageRepository, StudentRepository studentRepository) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
+        this.cohortService = cohortService;
         this.imageRepository = imageRepository;
         this.studentRepository = studentRepository;
     }
@@ -59,21 +64,36 @@ public class PersonController {
         return "person-overview";
     }
 
-    @GetMapping("/add")
-    public String addPersonToCohort(Model model) {
-        model.addAttribute("person", new Person());
-
+    @GetMapping({"/add", "/add/{cohortId}"})
+    public String addPersonToCohort(@PathVariable(required = false) Long cohortId, Model model) {
+        Person person = new Person();
+        if (cohortId != null) {
+            Cohort cohort = cohortService.findById(cohortId);
+            person.setCohort(cohort);
+        }
+        model.addAttribute("person", person);
+        model.addAttribute("allCohorts", cohortService.getAllCohorts());
         return "person-add-edit";
     }
 
     @PostMapping("/save")
-    public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String saveMemberToCohort(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult,
+                                     @RequestParam(value = "cohort.id", required = false) Long cohortId,
+                                     RedirectAttributes redirectAttributes) {
         if (personService.personAlreadyExists(person)) {
             bindingResult.rejectValue("firstName", "alreadyExists", "Dit persoon bestaat al");
         }
 
         if (bindingResult.hasErrors()) {
             return "person-add-edit";
+        }
+
+        // cohort instellen op de persoon
+        if (cohortId != null) {
+            Cohort cohort = cohortService.findById(cohortId);
+            person.setCohort(cohort);
+        } else {
+            person.setCohort(null);
         }
 
         try {
@@ -97,7 +117,6 @@ public class PersonController {
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("errorMessage", "Het persoon kon niet verwijderd worden.");
         }
-
         return "redirect:/person/overview";
     }
 

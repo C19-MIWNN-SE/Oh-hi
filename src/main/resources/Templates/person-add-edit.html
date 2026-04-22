@@ -66,6 +66,18 @@
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Cohort</label>
+                            <select class="form-select" th:field="*{cohort.id}">
+                                <option value="">-- Selecteer cohort --</option>
+                                <option th:each="cohort : ${allCohorts}"
+                                        th:value="${cohort.id}"
+                                        th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}"
+<!--                                    th:selected="${person.cohort != null and person.cohort.id == cohort.id}">-->
+                                </option>
+                            </select>
+                        </div>
+
                         <div class="d-grid gap-2 mt-4">
                             <button class="btn btn-primary btn-lg shadow-sm"
                                     type="submit">
@@ -74,6 +86,9 @@
                             <a href="/person/overview"
                                class="btn btn-link text-secondary text-decoration-none text-center">Annuleren</a>
                         </div>
+
+
+                        <!--                        <input type="hidden" th:field="*{cohort.id}" id="blogId">-->
 
                     </form>
                 </div>
