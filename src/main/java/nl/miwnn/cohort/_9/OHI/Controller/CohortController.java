@@ -82,7 +82,7 @@ public class CohortController {
         model.addAttribute("setupLink", setupLinks.toString());
         redirectAttributes.addFlashAttribute("setupLinks", setupLinks);
         redirectAttributes.addFlashAttribute("successMessage",
-                "Het persoon is succesvol opgeslagen!");
+                "Het cohort is succesvol opgeslagen!");
         return ("redirect:/person/overview");
     }
 

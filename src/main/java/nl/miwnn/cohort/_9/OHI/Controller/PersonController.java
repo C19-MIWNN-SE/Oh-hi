@@ -107,9 +107,6 @@ public class PersonController {
         return "redirect:/person/overview";
     }
 
-
-
-
     @GetMapping("/remove/{id}")
     public String deleteMemberFromCohort(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
