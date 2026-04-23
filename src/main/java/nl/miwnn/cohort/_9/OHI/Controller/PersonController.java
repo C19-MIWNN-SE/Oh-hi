@@ -1,14 +1,9 @@
 package nl.miwnn.cohort._9.OHI.Controller;
 
+import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 import jakarta.validation.Valid;
-import nl.miwnn.cohort._9.OHI.Model.Cohort;
-import nl.miwnn.cohort._9.OHI.Model.Image;
-import nl.miwnn.cohort._9.OHI.Model.Person;
-import nl.miwnn.cohort._9.OHI.Model.Student;
-import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
-import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
-import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
-import nl.miwnn.cohort._9.OHI.Repository.StudentRepository;
+import nl.miwnn.cohort._9.OHI.Model.*;
+import nl.miwnn.cohort._9.OHI.Repository.*;
 import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
 import nl.miwnn.cohort._9.OHI.Service.CohortService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
@@ -16,6 +11,7 @@ import org.hibernate.sql.ast.tree.expression.Collation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.validation.BindingResult;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,8 +38,11 @@ public class PersonController {
     private final ImageRepository imageRepository;
     private final StudentRepository studentRepository;
     private final OHIUserService oHIUserService;
+    private final AccountTokenRespository accountTokenRespository;
+    private final OHIUserRepository oHIUserRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserService oHIUserService, CohortService cohortService) {
+    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserService oHIUserService, CohortService cohortService, AccountTokenRespository accountTokenRespository, OHIUserRepository oHIUserRepository, BCryptPasswordEncoder passwordEncoder) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
@@ -50,6 +50,9 @@ public class PersonController {
         this.imageRepository = imageRepository;
         this.studentRepository = studentRepository;
         this.oHIUserService = oHIUserService;
+        this.accountTokenRespository = accountTokenRespository;
+        this.oHIUserRepository = oHIUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/overview")
@@ -128,7 +131,7 @@ public class PersonController {
         return "person-detail";
     }
 
-    @PreAuthorize("#id == authentication.principal.person.id")
+    //@PreAuthorize("#id == authentication.principal.person.id")
     @GetMapping("/profile/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         personService.getPerson(id);
@@ -138,7 +141,7 @@ public class PersonController {
         return "person-profile-edit";
     }
 
-    //Save results of add/edit to about me information
+    //todo - something is wrong with this pre authorization
 //    @PreAuthorize("#id == authentication.principal.person.id")
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
@@ -156,20 +159,43 @@ public class PersonController {
     }
 
     //todo - add a page for editing login info for the user from the link
-//    @GetMapping("/account/setup")
-//    public String UserSetUpAccount(@RequestParam String token, Model model){
-//    //todo - load person
-//    // todo - show Thymeleaf page where user sets password + confirms details
-//    }
+    @GetMapping("/account/setup")
+    public String UserSetUpAccount(@PathVariable @RequestParam("token") String token, Model model){
+        AccountToken accountToken = accountTokenRespository.findByToken(token);
+                //.orElseThrow(() -> new IllegalArgumentException("Invalid token"));
+
+        if(accountToken.isUsed() || accountToken.getExpiresAt().isBefore(LocalDateTime.now())){
+            throw new IllegalArgumentException("token has expired");
+        }
+
+        OHIUser newUser = accountToken.getOhiUser();
+        model.addAttribute("newUser", newUser);
+        model.addAttribute("token", token);
+        return "user-account-setup";
+    }
 
     //todo - save/post user updated account info
-//    @PostMapping("/account/setup")
-//    public String finishSetup(@RequestParam String token,
-//                              @RequestParam String password) {
-//        // validate token again??
-//        // set password on Person
-//        // token = used
-//        // redirect to login front page
-//    }
+    @PostMapping("/account/setup")
+    public String finishSetup(@RequestParam String token,
+                              @RequestParam String password,
+                              @RequestParam String username,
+                              @ModelAttribute OHIUser newAccPerson) {
+        AccountToken accountToken = accountTokenRespository.findByToken(token);
+        //.orElseThrow(() -> new IllegalArgumentException("Invalid token"));
+
+        if(accountToken.isUsed() || accountToken.getExpiresAt().isBefore(LocalDateTime.now())){
+            throw new IllegalArgumentException("token has expired");
+        }
+
+        OHIUser user = accountToken.getOhiUser();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        oHIUserRepository.save(user);
+
+        accountToken.setUsed(true);
+        accountTokenRespository.save(accountToken);
+
+        return "redirect:/";
+    }
 
 }

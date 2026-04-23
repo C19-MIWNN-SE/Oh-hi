@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * PURPOSE GOES HERE
  */
 public interface AccountTokenRespository extends JpaRepository<AccountToken, Long> {
+    AccountToken findByToken(String token);
 }
