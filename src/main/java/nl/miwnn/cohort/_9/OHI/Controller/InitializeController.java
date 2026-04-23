@@ -2,8 +2,11 @@ package nl.miwnn.cohort._9.OHI.Controller;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.bean.HeaderColumnNameMappingStrategy;
+import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.OHIUser;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import org.slf4j.Logger;
@@ -37,16 +40,62 @@ public class InitializeController {
     private OHIUserRepository ohiUserRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private CohortRepository cohortRepository;
 
     public InitializeController(OHIUserRepository ohiUserRepository, BCryptPasswordEncoder passwordEncoder) {
         this.ohiUserRepository = ohiUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-   @EventListener(ContextRefreshedEvent.class)
-    public void seed(){
-        if(ohiUserRepository.count() == 0) {
+    @EventListener(ContextRefreshedEvent.class)
+    public void seed() {
+        if (cohortRepository.count() == 0) {
+            seedCohorts();
+        }
+        if (personRepository.count() == 0) {
+            seedPeople();
+        }
+        if (ohiUserRepository.count() == 0) {
             seedUsers();
+        }
+    }
+
+    private void seedCohorts() {
+        try {
+            ClassPathResource resource = new ClassPathResource("static/cohorts.csv");
+            Reader reader = new InputStreamReader(resource.getInputStream());
+
+            CsvToBean<Cohort> csvToBean = new CsvToBeanBuilder<Cohort>(reader)
+                    .withType(Cohort.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+
+            List<Cohort> cohorts = csvToBean.parse();
+
+            cohortRepository.saveAll(cohorts);
+
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
+    }
+
+
+    private void seedPeople() {
+        try {
+            ClassPathResource resource = new ClassPathResource("static/people.csv");
+            Reader reader = new InputStreamReader(resource.getInputStream());
+
+            CsvToBean<Person> csvToBean = new CsvToBeanBuilder<Person>(reader)
+                    .withType(Person.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+
+            List<Person> people = csvToBean.parse();
+
+            personRepository.saveAll(people);
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
         }
     }
 

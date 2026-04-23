@@ -1,5 +1,6 @@
 package nl.miwnn.cohort._9.OHI.Model;
 
+import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -49,6 +50,10 @@ public class Person {
     @ManyToOne
     @JoinColumn(name = "cohort_id")
     private Cohort cohort;
+
+//    @Transient
+//    @CsvBindByName(column = "cohort_id")
+//    private Long cohortId;
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private OHIUser account;
@@ -221,4 +226,5 @@ public class Person {
     public void setStudent(Student student) {
         this.student = student;
     }
+
 }
