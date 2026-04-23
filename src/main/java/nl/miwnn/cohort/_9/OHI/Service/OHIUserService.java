@@ -25,13 +25,20 @@ public class OHIUserService implements UserDetailsService {
     private final PersonRepository personRepository;
     private final AccountTokenRespository accountTokenRespository;
 
+//    Person testUser = new Person("Hans", "Hans");
+//            personRepository.save(testUser);
+//    OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT");
+//    OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
+//    OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
+
     public String createAccount (Person person, String role) {
-        OHIUser user = new OHIUser(usernameCreation(person),"password", role);
+        OHIUser user = new OHIUser(usernameCreation(person),"password", role, person);
+        //does Person/OhiUser still need link here?
+//        person.setAccount(user);
         ohiUserRepository.save(user);
 
         //todo - check this
-        //does Person/OhiUser still need link here?
-        person.setAccount(user);
+
 
         String token = UUID.randomUUID().toString();
         AccountToken accountToken = new AccountToken(token,user, LocalDateTime.now().plusDays(7));

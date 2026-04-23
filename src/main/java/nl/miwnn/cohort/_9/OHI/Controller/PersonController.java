@@ -131,7 +131,7 @@ public class PersonController {
         return "person-detail";
     }
 
-    //@PreAuthorize("#id == authentication.principal.person.id")
+    @PreAuthorize("#id == authentication.principal.person.id")
     @GetMapping("/profile/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         personService.getPerson(id);
