@@ -33,18 +33,13 @@ import java.util.List;
 @RequestMapping("/cohort")
 @Controller
 public class CohortController {
-
-    private final PersonRepository personRepository;
     private final PersonService personService;
-    private final CohortRepository cohortRepository;
     private final OHIUserService oHIUserService;
     private final CohortService cohortService;
     private Logger log;
 
-    public CohortController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, OHIUserService oHIUserService, CohortService cohortService) {
-        this.personRepository = personRepository;
+    public CohortController( PersonService personService, OHIUserService oHIUserService, CohortService cohortService) {
         this.personService = personService;
-        this.cohortRepository = cohortRepository;
         this.cohortService = cohortService;
         this.oHIUserService = oHIUserService;
     }
