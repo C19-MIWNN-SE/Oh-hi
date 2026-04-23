@@ -37,8 +37,7 @@ public class Cohort implements Comparable<Cohort>{
     @OneToMany (mappedBy = "cohort", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Person> members = new ArrayList<>();
 
-    public Cohort(Long id, Integer cohortNum, String discipline, LocalDate startDate, LocalDate endDate) {
-        this.id = id;
+    public Cohort(Integer cohortNum, String discipline, LocalDate startDate, LocalDate endDate) {
         this.cohortNum = cohortNum;
         this.discipline = discipline;
         this.startDate = startDate;
