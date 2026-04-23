@@ -89,12 +89,7 @@ public class PersonController {
             return "person-add-edit";
         }
 
-        if (cohortId != null) {
-            Cohort cohort = cohortService.findById(cohortId);
-            person.setCohort(cohort);
-        } else {
-            person.setCohort(null);
-        }
+        cohortService.addMemberToCohort(person, cohortId);
 
         try {
             personService.saveMemberToCohort(person);
@@ -103,9 +98,9 @@ public class PersonController {
         }
 
         String setupLink = oHIUserService.createAccount(person, "STUDENT");
-
         redirectAttributes.addFlashAttribute("setupLink", setupLink);
         redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
+
         return "redirect:/person/overview";
     }
 

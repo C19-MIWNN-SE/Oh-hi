@@ -35,6 +35,7 @@ public class CohortService {
     public List<Cohort> getAllCohorts(){
         return cohortRepository.findAll();
     }
+
     public Cohort findById(Long id) {
         return cohortRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Cohort %d niet gevonden", id)));
@@ -60,5 +61,14 @@ public class CohortService {
 
     public void saveCohort(Cohort cohort) {
         cohortRepository.save(cohort);
+    }
+
+    public void addMemberToCohort(Person person, Long cohortId){
+        if (cohortId != null) {
+            Cohort cohort = findById(cohortId);
+            person.setCohort(cohort);
+        } else {
+            person.setCohort(null);
+        }
     }
 }
