@@ -198,4 +198,22 @@ public class PersonController {
 
         return "redirect:/person/" + profilePerson.getId();
     }
+
+    //todo - add a page for editing login info for the user from the link
+//    @GetMapping("/account/setup")
+//    public String UserSetUpAccount(@RequestParam String token, Model model){
+//    //todo - load person
+//    // todo - show Thymeleaf page where user sets password + confirms details
+//    }
+
+    //todo - save/post user updated account info
+//    @PostMapping("/account/setup")
+//    public String finishSetup(@RequestParam String token,
+//                              @RequestParam String password) {
+//        // validate token again??
+//        // set password on Person
+//        // token = used
+//        // redirect to login front page
+//    }
+
 }

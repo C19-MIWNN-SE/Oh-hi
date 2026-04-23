@@ -17,7 +17,12 @@
 
     <div sec:authorize="hasRole('DOCENT')">
         <p>Setup link single person: <span th:text="${setupLink}"></span></p>
-        <p>Setup link cohort: <span th:text="${setupLinks}"></span></p>
+        <p>Setup link cohort: </p>
+        <ul>
+            <li th:each="link : ${setupLinks}">
+                <span th:text="${link}"></span>
+            </li>
+        </ul>
     </div>
     <button type="button"
             class="btn-close"

@@ -94,12 +94,11 @@ public class CohortController {
         }
 
         cohortRepository.save(cohort);
+        List<String> setupLinks = new ArrayList<>();
 
-        List<String> setupLinks = null;
         for (Person member : cohort.getMembers()) {
             member.setCohort(cohort);
             String setupLink = oHIUserService.createAccount(member, "STUDENT");
-            setupLinks = new ArrayList<>();
             setupLinks.add(member.getFullName() + ": " + setupLink);
         }
 
