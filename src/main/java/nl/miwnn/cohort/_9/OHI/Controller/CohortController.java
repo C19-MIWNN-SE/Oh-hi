@@ -61,7 +61,8 @@ public class CohortController {
 //    //todo - check if teacher or docent
 //    @PreAuthorize("hasRole('DOCENT')")
     @PostMapping("/save")
-    public String saveCohort(@Valid @ModelAttribute Cohort cohort, MultipartFile file, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String saveCohort(@Valid @ModelAttribute Cohort cohort, BindingResult bindingResult, MultipartFile file,
+                              Model model, RedirectAttributes redirectAttributes) {
 
         if (file.isEmpty()) {
             model.addAttribute("message", "Selecteer een csv van cohort leden informatie");
