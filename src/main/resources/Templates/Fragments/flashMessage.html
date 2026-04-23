@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:fragment="successMessage"
+         th:if="${successMessage}"
+         class="alert alert-success alert-dismissible fade show shadow-sm"
+         role="alert">
+         <i class="bi bi-check-circle-fill me-2"></i>
+         <span th:text="${successMessage}"></span>
+      <button type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close">
+      </button>
+    </div>
+
+    <div th:fragment="errorMessage"
+      th:if="${errorMessage}"
+      class="alert alert-danger alert-dismissible fade show shadow-sm"
+      role="alert">
+      <i class="bi bi-trash-fill me-2"></i>
+      <span th:text="${errorMessage}"></span>
+      <button type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close">
+      </button>
+    </div>
+
+    <div th:fragment="successMessageTeacher"
+         th:if="${successMessage}"
+         class="alert alert-success alert-dismissible fade show shadow-sm"
+         role="alert">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      <span th:text="${successMessage}"></span>
+
+      <div sec:authorize="hasRole('DOCENT')">
+        <p>Setup link single person: <span th:text="${setupLink}"></span></p>
+        <p>Setup link cohort:</p>
+        <ul>
+          <li th:each="link : ${setupLinks}">
+            <span th:text="${link}"></span>
+          </li>
+        </ul>
+      </div>
+
+      <button type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close">
+      </button>
+    </div>
+</body>
+</html>

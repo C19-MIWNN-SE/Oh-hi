@@ -11,6 +11,8 @@
 
 <div class="container mt-4">
 
+    <div th:replace="~{fragments/flashMessage :: successMessage}"></div>
+    <div th:replace="~{fragments/flashMessage :: errorMessage}"></div>
     <!--    kolom wordt hoger obv breedte card/col-x, row wordt groter obv van colommen, about me resized mee-->
     <div class="row mb-4">
         <div class="col-3">
@@ -52,13 +54,6 @@
             </div>
         </div>
 
-            <div th:if="${successMessage}" class="alert alert-success mt-3"
-                 th:text="${successMessage}">
-            </div>
-
-            <div th:if="${errorMessage}" class="alert alert-danger mt-3"
-                 th:text="${errorMessage}">
-            </div>
         </div>
     </div>
 
