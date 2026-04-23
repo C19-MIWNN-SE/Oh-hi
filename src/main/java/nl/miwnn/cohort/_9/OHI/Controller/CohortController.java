@@ -7,9 +7,11 @@ import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import nl.miwnn.cohort._9.OHI.Service.AccountTokenService;
 import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
 import nl.miwnn.cohort._9.OHI.Service.CohortService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -34,18 +36,20 @@ import java.util.List;
 @Controller
 public class CohortController {
     private final PersonService personService;
-    private final OHIUserService oHIUserService;
     private final CohortService cohortService;
+    private final AccountTokenService accountTokenService;
     private Logger log;
 
-    public CohortController( PersonService personService, OHIUserService oHIUserService, CohortService cohortService) {
+    public CohortController(PersonService personService,
+                            CohortService cohortService,
+                            AccountTokenService accountTokenService) {
         this.personService = personService;
         this.cohortService = cohortService;
-        this.oHIUserService = oHIUserService;
+        this.accountTokenService = accountTokenService;
     }
 
     @GetMapping("/add")
-    public String addCohort( Model model) {
+    public String addCohort(Model model) {
         model.addAttribute("cohort", new Cohort());
         List<Person> allMembers = personService.getAllPeople();
         model.addAttribute("allMembers", allMembers);
@@ -53,59 +57,37 @@ public class CohortController {
         return ("cohort-add-edit");
     }
 
-//    //todo - check if teacher or docent
+    //    //todo - check if teacher or docent
 //    @PreAuthorize("hasRole('DOCENT')")
     @PostMapping("/save")
-    public String saveCohort(@Valid @ModelAttribute Cohort cohort, BindingResult bindingResult, MultipartFile file,
-                              Model model, RedirectAttributes redirectAttributes) {
-
+    public String saveCohort(@Valid @ModelAttribute Cohort cohort,
+                             BindingResult bindingResult,
+                             MultipartFile file,
+                             Model model, RedirectAttributes redirectAttributes) {
         if (file.isEmpty()) {
             model.addAttribute("message", "Selecteer een csv van cohort leden informatie");
             model.addAttribute("status", false);
         } else {
-            try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-
-                CsvToBean<Person> csvToBean = new CsvToBeanBuilder<Person>(reader)
-                        .withType(Person.class)
-                        .withIgnoreLeadingWhiteSpace(true)
-                        .build();
-
-                List<Person> people = csvToBean.parse();
-                personService.saveAllPeople(people);
-                cohort.setMembers(people);
-
-                //todo - make more specific
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            cohortService.readCSV(cohort, file);
         }
         model.addAttribute("cohort", new Cohort());
         if (bindingResult.hasErrors()) {
             log.warn("Validatiefouten bij opslaan: {}",
                     bindingResult.getErrorCount());
-            List<Person> allMembers = personService.getAllPeople();
-
-            model.addAttribute("allMembers", allMembers);
+            model.addAttribute("allMembers", personService.getAllPeople());
             return "cohort-add-edit";
         }
-
-        cohortRepository.save(cohort);
-        List<String> setupLinks = new ArrayList<>();
-
-        for (Person member : cohort.getMembers()) {
-            member.setCohort(cohort);
-            String setupLink = oHIUserService.createAccount(member, "STUDENT");
-            setupLinks.add(member.getFullName() + ": " + setupLink);
-        }
-
+        cohortService.saveCohort(cohort);
+        List<String> setupLinks = accountTokenService.accountTokensSetup(cohort);
         model.addAttribute("setupLink", setupLinks.toString());
         redirectAttributes.addFlashAttribute("setupLinks", setupLinks);
-        redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
+        redirectAttributes.addFlashAttribute("successMessage",
+                "Het persoon is succesvol opgeslagen!");
         return ("redirect:/person/overview");
     }
 
     @GetMapping("/{id}")
-    public String showCohort(@PathVariable Long id, Model model){
+    public String showCohort(@PathVariable Long id, Model model) {
 
         Cohort cohort = cohortService.findById(id);
         model.addAttribute("cohort", cohort);
