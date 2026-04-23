@@ -89,7 +89,6 @@ public class PersonController {
             return "person-add-edit";
         }
 
-        // cohort instellen op de persoon
         if (cohortId != null) {
             Cohort cohort = cohortService.findById(cohortId);
             person.setCohort(cohort);
@@ -111,6 +110,8 @@ public class PersonController {
     }
 
 
+
+
     @GetMapping("/remove/{id}")
     public String deleteMemberFromCohort(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
@@ -126,19 +127,8 @@ public class PersonController {
     @GetMapping("/{id}")
     public String showProfile(@PathVariable Long id, Model model) {
 
-        Person person = personRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
-
-        log.info("De pagina wordt geladen");
-
-        model.addAttribute("name", String.format("Oh hi %s!", person.getFullName()));
-        model.addAttribute("aboutMe", person.getAboutMe());
-        model.addAttribute("location", person.getLocation());
-        model.addAttribute("age", person.getAge());
-        model.addAttribute("pronoun", person.getPronoun());
-        model.addAttribute("userRole", person.getEnumToLowerCase(person.getUserRole()));
-        model.addAttribute("employer", person.getStudent());
-        model.addAttribute("person", person);
+        Person person = personService.getPerson(id);
+        model.addAllAttributes(personService.getProfileInformation(person));
 
         return "person-detail";
     }
@@ -146,8 +136,7 @@ public class PersonController {
     @PreAuthorize("#id == authentication.principal.person.id")
     @GetMapping("/profile/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Person person = personRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Persoon bestaat niet " + id));
+        personService.getPerson(id);
         log.info("Bewerkformulier geopend voor: {}", id);
         model.addAttribute("person", personService.findById(id));
 
@@ -158,43 +147,15 @@ public class PersonController {
 //    @PreAuthorize("#id == authentication.principal.person.id")
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
-                              @RequestParam("imageFile") MultipartFile imageFile
+                              @RequestParam("imageFile") MultipartFile imageFile, RedirectAttributes redirectAttributes
     ) throws IOException {
 
         Person profilePerson = personService.findById(aboutPerson.getId());
+        personService.updateProfileImage(aboutPerson.getId(), imageFile);
+        personService.updatePersonInformation(aboutPerson.getId(), aboutPerson);
 
-        if (profilePerson == null) {
-            throw new IllegalStateException("No person found with ID " + aboutPerson.getId());
-        }
-
-        if (aboutPerson.getId() != null) {
-
-            if (!imageFile.isEmpty()) {
-                Image image = new Image();
-                image.setData(imageFile.getBytes());
-                image.setContentType(imageFile.getContentType());
-                imageRepository.save(image);
-                profilePerson.setImage(image);
-            }
-        }
-
-        profilePerson.setAboutMe(aboutPerson.getAboutMe());
-        profilePerson.setLocation(aboutPerson.getLocation());
-        profilePerson.setAge(aboutPerson.getAge());
-        profilePerson.setPronoun(aboutPerson.getPronoun());
-
-        if (profilePerson.getEmployerField() && aboutPerson.getStudent() != null) {
-            Student student = profilePerson.getStudent();
-
-            if (student == null) {
-                student = new Student();
-                profilePerson.setStudent(student);
-            }
-
-            student.setEmployer(aboutPerson.getStudent().getEmployer());
-        }
-
-        personService.savePerson(profilePerson);
+        redirectAttributes.addFlashAttribute("successMessage", "Je profiel is succesvol bijgewerkt!");
+        redirectAttributes.addFlashAttribute("errorMessage", "Je profiel kon niet bijgewerkt worden");
 
         return "redirect:/person/" + profilePerson.getId();
     }
