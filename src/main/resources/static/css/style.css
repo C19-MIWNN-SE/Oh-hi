@@ -4,10 +4,49 @@ body {
     background-size: cover;
     background-color: #FBFBFB;
     font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.loginBackground{
+    background-image: url("/static-images/LoginBackground_upscaled.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.loginTextContent {
+    padding: 25% 25% 0 5%;
+}
+
+.loginTextStyle{
+    padding: 2% 2% 2% 2%;
+    line-height: 2;
+}
+
+.headerLogin{
+    font-family: "DejaVu Sans Condensed";
+    padding: 0 2% 0 2%;
+
+}
+
+.loginForm{
+    margin-top: 6%;
+}
+
+.circleImage {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .background-color {
     background-color: #f0ECE1;
+}
+
+footer {
+    bottom: 0;
 }
 
 /*navigation bar*/

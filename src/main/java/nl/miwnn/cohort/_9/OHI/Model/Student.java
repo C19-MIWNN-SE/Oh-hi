@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 /**
  * Author: Mees Drenth
- * Model about a student that has a future employer and extends Person
+ * Model about a student that has a future employer
  */
 
 @Entity
