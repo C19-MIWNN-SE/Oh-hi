@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{Fragments/general :: baseheader(~{:: title})}">
+    <meta charset="UTF-8">
+    <title>Account Setup</title>
+</head>
+<body>
+<nav th:replace="~{fragments/general :: navbar}"></nav>
+
+<div class="container mt-5">
+    <h2>Oh Hi! Maak een nieuwe gebruikersnaam en wachtwoord aan om in te loggen!</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <form th:action="@{/person/account/setup}" method="post">
+
+                        <input type="hidden" name="token" th:value="${token}">
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label fw-bold">Maak een username</label>
+                            <input type="text" id="username"
+                                   name="username"
+                                   class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label fw-bold">Maak een wachtwoord</label>
+                            <input type="text" id="password"
+                                   name="password"
+                                   class="form-control">
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary btn-lg shadow-sm"
+                                    type="submit">
+                                <i class="bi bi-save"></i> Save Info
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{Fragments/general :: footer}"></footer>
+<div th:replace="~{Fragments/general :: scripts}"></div>
+</body>
+</html>

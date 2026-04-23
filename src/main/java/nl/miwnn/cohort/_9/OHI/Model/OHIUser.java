@@ -30,7 +30,7 @@ public class OHIUser implements UserDetails {
     private String role;
 
     @OneToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "id")
     private Person person;
 
     // Constructor voor docent en student testAccounts

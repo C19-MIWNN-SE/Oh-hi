@@ -31,14 +31,13 @@ public class OHIUserService implements UserDetailsService {
 
         //todo - check this
         //does Person/OhiUser still need link here?
-        //person.setUser(user)
+        person.setAccount(user);
 
         String token = UUID.randomUUID().toString();
         AccountToken accountToken = new AccountToken(token,user, LocalDateTime.now().plusDays(7));
         accountTokenRespository.save(accountToken);
 
-        //todo - see about this link
-        return "/account/setup?token=" + token;
+        return "http://localhost:8080/person/account/setup?token=" + token;
     }
 
     public String usernameCreation(Person person) {
