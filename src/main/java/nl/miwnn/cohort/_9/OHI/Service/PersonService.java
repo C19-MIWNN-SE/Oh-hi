@@ -5,7 +5,9 @@ import nl.miwnn.cohort._9.OHI.Model.Image;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Model.Student;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
+import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import nl.miwnn.cohort._9.OHI.Repository.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,11 +27,15 @@ import java.util.*;
 public class PersonService {
     private final PersonRepository personRepository;
     private final ImageRepository imageRepository;
+    private final StudentRepository studentRepository;
+    private final OHIUserRepository ohiUserRepository;
     private Person person;
 
-    public PersonService(PersonRepository personRepository, ImageRepository imageRepository) {
+    public PersonService(PersonRepository personRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserRepository ohiUserRepository) {
         this.personRepository = personRepository;
         this.imageRepository = imageRepository;
+        this.studentRepository = studentRepository;
+        this.ohiUserRepository = ohiUserRepository;
     }
 
     @Transactional(readOnly = true)
@@ -55,7 +61,21 @@ public class PersonService {
     }
 
     public void deleteMemberFromCohort(Long id){
+
+        // Verwijder gerelateerde user
+//        if (person.getOhiUser() != null) {
+//            ohiUserRepository.delete(person.getOhiUser());
+//        }
+        if (person.getStudent() != null) {
+            studentRepository.delete(person.getStudent());
+        }
+
+        if (person.getImage() != null) {
+            imageRepository.delete(person.getImage());
+        }
+
         personRepository.deleteById(id);
+
     }
 
     public void savePerson(Person person) { personRepository.save(person);}
