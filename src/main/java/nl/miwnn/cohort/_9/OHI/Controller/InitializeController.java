@@ -93,6 +93,14 @@ public class InitializeController {
 
             List<Person> people = csvToBean.parse();
 
+            for (Person person : people) {
+                Long cohortId = person.getCohortId();
+
+                Cohort cohort = cohortRepository.findById(cohortId)
+                        .orElseThrow(() -> new RuntimeException("Cohort niet gevonden"));
+
+                person.setCohort(cohort);
+            }
             personRepository.saveAll(people);
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
