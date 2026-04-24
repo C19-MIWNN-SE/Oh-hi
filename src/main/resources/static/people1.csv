@@ -1,0 +1,6 @@
+firstName, lastName, infix, userRole
+"Mark", "Sestero", "A", "STUDENT"
+"Lisa", "Danielle", "B", "STUDENT"
+"Johnny", "Wisseau",, "TEACHER"
+"Danny", "Haldiman",, "STUDENT"
+"Claudette", "Minnott",,"STUDENT"
