@@ -42,7 +42,7 @@ public class PersonController {
     private final OHIUserRepository oHIUserRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public PersonController(PersonRepository personRepository, PersonService personService, CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserService oHIUserService, CohortService cohortService, AccountTokenRespository accountTokenRespository, OHIUserRepository oHIUserRepository, BCryptPasswordEncoder passwordEncoder) {
+    public PersonController(PersonRepository personRepository, PersonService personService,  CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserService oHIUserService, CohortService cohortService, AccountTokenRespository accountTokenRespository, OHIUserRepository oHIUserRepository, BCryptPasswordEncoder passwordEncoder) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
