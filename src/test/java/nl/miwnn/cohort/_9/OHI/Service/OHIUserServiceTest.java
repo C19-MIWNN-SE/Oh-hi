@@ -60,4 +60,8 @@ class OHIUserServiceTest {
         // Assert
         assertEquals(expectedPerson, actualUser.getPerson());
     }
+
+    @Test
+    void updateCredentials() {
+    }
 }
