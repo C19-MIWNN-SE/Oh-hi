@@ -47,7 +47,7 @@
                  style="z-index: 5;"
                  sec:authorize="hasRole('DOCENT')">
                 <a th:href="@{/person/remove/{id}(id=${person.id})}"
-                   class="btn btn-sm btn-outline-danger border-0"
+                   class="btn btn-sm btn-outline-danger text-center"
                    onclick="return confirm('Weet je zeker?')">
                     <i class="bi bi-trash"></i>
                 </a>
