@@ -1,5 +1,6 @@
 package nl.miwnn.cohort._9.OHI.Service;
 
+import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Interest;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.InterestRepository;
@@ -24,6 +25,9 @@ public class InterestService {
     public InterestService(InterestRepository interestRepository, PersonRepository personRepository) {
         this.interestRepository = interestRepository;
         this.personRepository = personRepository;
+    }
+    public List<Interest> getAllInterests(){
+        return interestRepository.findAll();
     }
 
     public void saveAllInterests(List<Interest> interests) {

@@ -27,33 +27,26 @@ import java.util.List;
 @RequestMapping("person")
 public class PersonController {
     private static final Logger log = LoggerFactory.getLogger(PersonController.class);
-    private final PersonRepository personRepository;
     private final PersonService personService;
-    private final CohortRepository cohortRepository;
     private final CohortService cohortService;
     private final OHIUserService oHIUserService;
     private final AccountTokenService accountTokenService;
-    private final InterestRepository interestRepository;
     private final InterestService interestService;
 
-    public PersonController(PersonRepository personRepository, PersonService personService,
-                            CohortRepository cohortRepository, OHIUserService oHIUserService,
-                            CohortService cohortService, AccountTokenService accountTokenService,
-                            InterestRepository interestRepository, InterestService interestService) {
-        this.personRepository = personRepository;
+    public PersonController( PersonService personService, OHIUserService oHIUserService,
+                             CohortService cohortService, AccountTokenService accountTokenService,
+                             InterestService interestService) {
         this.personService = personService;
-        this.cohortRepository = cohortRepository;
         this.cohortService = cohortService;
         this.oHIUserService = oHIUserService;
         this.accountTokenService = accountTokenService;
-        this.interestRepository = interestRepository;
         this.interestService = interestService;
     }
 
     @GetMapping("/overview")
     public String showPeople(Model model) {
-        List<Person> people = personRepository.findAll();
-        List<Cohort> cohorts = cohortRepository.findAll();
+        List<Person> people = personService.getAllPeople();
+        List<Cohort> cohorts = cohortService.getAllCohorts();
 
         log.debug("person overview requested");
         model.addAttribute("people", people);
@@ -130,7 +123,7 @@ public class PersonController {
         log.info("Bewerkformulier geopend voor: {}", id);
 
         model.addAttribute("person", personService.findById(id));
-        model.addAttribute("allInterests", interestRepository.findAll());
+        model.addAttribute("allInterests", interestService.getAllInterests());
 
         return "person-profile-edit";
     }
