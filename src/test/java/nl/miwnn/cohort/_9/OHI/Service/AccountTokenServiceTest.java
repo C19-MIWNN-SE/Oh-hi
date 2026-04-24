@@ -9,8 +9,11 @@ import nl.miwnn.cohort._9.OHI.Repository.AccountTokenRespository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,8 +27,8 @@ import static org.mockito.Mockito.when;
  * @author Sara Omlor
  * PURPOSE GOES HERE
  */
+@ExtendWith(MockitoExtension.class)
 class AccountTokenServiceTest {
-    private AccountTokenService accountTokenService;
     private OHIUserService ohiUserService;
     private AccountToken accountToken;
     private Cohort cohort;
@@ -33,6 +36,9 @@ class AccountTokenServiceTest {
 
     @Mock
     private AccountTokenRespository accountTokenRespository;
+
+    @InjectMocks
+    private AccountTokenService accountTokenService;
 
     @BeforeEach
     void setUp(){
