@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import javax.management.relation.Role;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Author: INT-developers
@@ -85,6 +87,14 @@ public class Person {
 
     @CsvBindByName(column = "userRole")
     private Role userRole;
+
+    @ManyToMany
+    @JoinTable(
+            name = "person_interest",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "interest_id")
+    )
+    private List<Interest> interests = new ArrayList<>();
 
     public Person(String firstName, String infix, String lastName, Image image, String aboutMe, String location,
                   Integer age, String pronoun, Role userRole) {
@@ -236,5 +246,16 @@ public class Person {
 
     public void setCohortId(Long cohortId) {
         this.cohortId = cohortId;
+    }
+
+    public List<Interest> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<Interest> interests) {
+        this.interests.clear();
+        if (interests != null) {
+            this.interests.addAll(interests);
+        }
     }
 }

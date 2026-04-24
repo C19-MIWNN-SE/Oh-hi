@@ -67,6 +67,24 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="pronoun" class="form-label fw-bold">Interesses</label>
+                            <div class="row">
+                                <div th:each="interest : ${allInterests}" class="col-4 form-check mb-1">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           th:field="*{interests}"
+                                           th:value="${interest.id}"
+                                           th:id="${'interest_' + interest.id}">
+                                    <label class="form-check-label ms-2"
+                                           th:for="${'interest_' + interest.id}"
+                                           th:text="${interest.interest}">
+                                        Interesses
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="aboutMe" class="form-label fw-bold">About Me</label>
                             <textarea
                                     id="aboutMe"

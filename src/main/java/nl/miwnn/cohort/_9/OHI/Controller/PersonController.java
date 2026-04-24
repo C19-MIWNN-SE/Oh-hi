@@ -2,10 +2,7 @@ package nl.miwnn.cohort._9.OHI.Controller;
 import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.*;
 import nl.miwnn.cohort._9.OHI.Repository.*;
-import nl.miwnn.cohort._9.OHI.Service.AccountTokenService;
-import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
-import nl.miwnn.cohort._9.OHI.Service.CohortService;
-import nl.miwnn.cohort._9.OHI.Service.PersonService;
+import nl.miwnn.cohort._9.OHI.Service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.validation.BindingResult;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,13 +34,15 @@ public class PersonController {
     private final OHIUserService oHIUserService;
     private final AccountTokenRespository accountTokenRespository;
     private final AccountTokenService accountTokenService;
+    private final InterestRepository interestRepository;
+    private final InterestService interestService;
 
     public PersonController(PersonRepository personRepository, PersonService personService,
                             CohortRepository cohortRepository, ImageRepository imageRepository,
                             StudentRepository studentRepository, OHIUserService oHIUserService,
                             CohortService cohortService, AccountTokenRespository accountTokenRespository,
                             OHIUserRepository oHIUserRepository, BCryptPasswordEncoder passwordEncoder,
-                            AccountTokenService accountTokenService) {
+                            AccountTokenService accountTokenService, InterestRepository interestRepository, InterestService interestService) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
@@ -50,6 +50,8 @@ public class PersonController {
         this.oHIUserService = oHIUserService;
         this.accountTokenRespository = accountTokenRespository;
         this.accountTokenService = accountTokenService;
+        this.interestRepository = interestRepository;
+        this.interestService = interestService;
     }
 
     @GetMapping("/overview")
@@ -130,7 +132,9 @@ public class PersonController {
     public String showEditForm(@PathVariable Long id, Model model) {
         personService.getPerson(id);
         log.info("Bewerkformulier geopend voor: {}", id);
+
         model.addAttribute("person", personService.findById(id));
+        model.addAttribute("allInterests", interestRepository.findAll());
 
         return "person-profile-edit";
     }
@@ -143,11 +147,13 @@ public class PersonController {
     ) throws IOException {
 
         Person profilePerson = personService.findById(aboutPerson.getId());
-        personService.updateProfileImage(aboutPerson.getId(), imageFile);
-        personService.updatePersonInformation(aboutPerson.getId(), aboutPerson);
-
-        redirectAttributes.addFlashAttribute("successMessage", "Je profiel is succesvol bijgewerkt!");
-        redirectAttributes.addFlashAttribute("errorMessage", "Je profiel kon niet bijgewerkt worden");
+        try {
+            personService.updateProfileImage(aboutPerson.getId(), imageFile);
+            personService.updatePersonInformation(aboutPerson.getId(), aboutPerson);
+            redirectAttributes.addFlashAttribute("successMessage", "Je profiel is succesvol bijgewerkt!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Je profiel kon niet bijgewerkt worden");
+        }
 
         return "redirect:/person/" + profilePerson.getId();
     }

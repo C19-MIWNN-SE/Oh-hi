@@ -67,6 +67,7 @@ nav{
     text-align: center;
     align-items: center;
     justify-content: center;
+    margin-right: 42%;
 }
 
 .our-button:hover{
@@ -270,3 +271,15 @@ nav{
 button[aria-expanded="true"] .transition-icon {
     transform: rotate(-90deg);
 }
+
+.interestStyle {
+    background-color: #C9BEFF;
+    border-radius: 12px;
+    padding: 6px 14px;
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #3a3a3a;
+    margin: 4px;
+}
+
+

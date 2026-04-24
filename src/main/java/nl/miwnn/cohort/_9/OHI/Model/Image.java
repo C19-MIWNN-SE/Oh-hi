@@ -3,8 +3,8 @@ package nl.miwnn.cohort._9.OHI.Model;
 import jakarta.persistence.*;
 
 /**
- * Author: Mees Drenth
- * Uitleg
+ * Author: INT Developers
+ * Model about images pertaining to either the student or teacher
  */
 
 @Entity

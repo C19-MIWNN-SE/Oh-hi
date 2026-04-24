@@ -39,15 +39,13 @@
                          th:text="${person.location}">
                     </div>
                 </div>
-
-
             </div>
 
             <div class="position-absolute bottom-0 end-0 p-2 delete-button"
                  style="z-index: 5;"
                  sec:authorize="hasRole('DOCENT')">
                 <a th:href="@{/person/remove/{id}(id=${person.id})}"
-                   class="btn btn-sm btn-outline-danger text-center"
+                   class="btn btn-sm btn-outline-danger"
                    onclick="return confirm('Weet je zeker?')">
                     <i class="bi bi-trash"></i>
                 </a>

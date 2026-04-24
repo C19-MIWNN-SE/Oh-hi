@@ -8,29 +8,6 @@
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
 
-<!--<div th:if="${successMessage}"-->
-<!--     class="alert alert-success alert-dismissible fade show shadow-sm"-->
-<!--     role="alert">-->
-<!--    <i class="bi bi-check-circle-fill me-2"></i>-->
-<!--    <span th:text="${successMessage}"></span>-->
-
-<!--    <div sec:authorize="hasRole('DOCENT')">-->
-<!--        <p>Setup link single person: <span th:text="${setupLink}"></span></p>-->
-<!--        <p>Setup link cohort: </p>-->
-<!--        <ul>-->
-<!--            <li th:each="link : ${setupLinks}">-->
-<!--                <span th:text="${link}"></span>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-
-<!--    <button type="button"-->
-<!--            class="btn-close"-->
-<!--            data-bs-dismiss="alert"-->
-<!--            aria-label="Close">-->
-<!--    </button>-->
-<!--</div>-->
-
 <div th:replace="~{fragments/flashMessage :: successMessageTeacher}"></div>
 <div th:replace="~{fragments/flashMessage :: errorMessage}"></div>
 

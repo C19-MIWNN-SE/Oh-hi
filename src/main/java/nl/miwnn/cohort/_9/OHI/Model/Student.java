@@ -3,7 +3,7 @@ package nl.miwnn.cohort._9.OHI.Model;
 import jakarta.persistence.*;
 
 /**
- * Author: Mees Drenth
+ * Author: INT Developers
  * Model about a student that has a future employer
  */
 
