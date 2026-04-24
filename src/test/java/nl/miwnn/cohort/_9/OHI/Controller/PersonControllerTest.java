@@ -38,14 +38,6 @@ class PersonControllerTest {
     @MockitoBean
     private InterestService interestService;
 
-    //I think the personController class needs to be cleaned up, but doing tests for now
-    @Mock
-    private PersonRepository personRepository;
-    @Mock
-    private CohortRepository cohortRepository;
-    @Mock
-    private InterestRepository interestRepository;
-
 
     @Test
     void showPeople() {
