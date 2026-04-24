@@ -118,7 +118,6 @@ public class InitializeController {
             testUser.setCohort(testCohort);
             personRepository.save(testUser);
             OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT");
-            OHIUser admin = new OHIUser("admin", passwordEncoder.encode("admin"), "ADMIN");
             OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
             OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
             ohiUserRepository.save(docent);

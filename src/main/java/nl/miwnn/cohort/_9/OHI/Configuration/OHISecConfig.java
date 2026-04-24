@@ -25,15 +25,14 @@ public class OHISecConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/userlogin", "/webjars/**", "/css/**", "/js/**", "/static-images/**").permitAll()
-                        .requestMatchers("/person/add", "/person/remove", "/person/save").hasRole("DOCENT")
-                        .requestMatchers("/person/profile/**", "/cohort/**").hasAnyRole("DOCENT", "STUDENT", "ADMIN")
-                        .anyRequest().hasRole("ADMIN")
+                        .requestMatchers("/person/add", "person/add/**", "/person/remove", "/person/save", "/person/overview", "/account/**").hasRole("DOCENT")
+                        .requestMatchers("/person/**", "/cohort/**", "/login-redirect").hasAnyRole("DOCENT", "STUDENT")
                 )
                 // custom form voor login
                 .formLogin((form) -> form
                         .loginPage("/userlogin")
                         .loginProcessingUrl("/userlogin")
-                        .defaultSuccessUrl("/person/overview", true)
+                        .defaultSuccessUrl("/login-redirect", true)
                         .permitAll())
                 .logout(logout -> logout
                     .logoutSuccessUrl("/")
