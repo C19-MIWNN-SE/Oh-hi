@@ -37,6 +37,7 @@
                        sec:authorize="hasRole('DOCENT')">
                         <i class="bi bi-plus-circle me-1"></i> Lid
                     </a>
+
                 </div>
             </div>
             <div class="col-6">
@@ -44,17 +45,22 @@
                     <h1 th:text="${cohortName}"></h1>
                 </div>
             </div>
+            <div class="col-3">
+            <button class="btn btn-primary fp-btn-colour d-flex align-items-start gap-2"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#teachers"
+                    aria-expanded="false"
+                    aria-controls="teachers">
+                <!--            onclick="toggleTeachers()"-->
+                Docenten
+                <i class="bi bi-chevron-down     transition-icon"></i>
+            </button>
+            </div>
         </div>
     </div>
-    <button class="btn btn-primary fp-btn-colour d-flex align-items-center gap-2"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#teachers"
-            onclick="toggleTeachers()">
-        Docenten
-        <i class="bi bi-chevron-down     transition-icon"></i>
-    </button>
-    <div id="teachers" class="container">
+
+    <div id="teachers" class="collapse container">
         <div class="row row-cols-4 mt-1 g-4 justify-content-center">
             <div class="col" th:each="teacher : ${members}"
                  th:if="${teacher.userRole.name() == 'TEACHER'}">

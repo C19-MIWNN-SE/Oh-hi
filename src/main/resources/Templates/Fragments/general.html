@@ -43,19 +43,18 @@
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            const teachersDiv = document.getElementById("teachers");
             if (localStorage.getItem("teachersOpen") === "true") {
-                const el = document.getElementById("teachers");
-                const collapse = new bootstrap.Collapse(el, {
-                    toggle: false
-                });
-                collapse.show();
+                teachersDiv.classList.add("show");
+                teachersDiv.classList.remove("collapsing");
             }
+            teachersDiv.addEventListener("shown.bs.collapse", function() {
+                localStorage.setItem("teachersOpen", "true");
+            });
+            teachersDiv.addEventListener("hidden.bs.collapse", function() {
+                localStorage.setItem("teachersOpen", "false");
+            });
         });
-
-        function toggleTeachers() {
-            const isOpen = localStorage.getItem("teachersOpen") === "true";
-            localStorage.setItem("teachersOpen", String(!isOpen));
-        }
     </script>
 </div>
 
