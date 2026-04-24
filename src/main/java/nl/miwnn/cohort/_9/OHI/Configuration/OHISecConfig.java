@@ -24,27 +24,11 @@ public class OHISecConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/",
-                                "/person",
-                                "/person/**",
-                                "/userlogin",
-                                "/webjars/**",
-                                "/static/**",
-                                "/css/**",
-                                "/static-images/**",
-                                "/js/**",
-                                "/select2",
-                                "/select2/**",
-                                "/person/profile/save")
-                        .permitAll().requestMatchers(
-                                "/person/add",
-                                "/person/remove",
-                                "/person/save",
-                                "/cohort",
-                                "/cohort/**"
-                        ).hasAnyRole("DOCENT").anyRequest().authenticated()
-                        )
+                        .requestMatchers("/", "/userlogin", "/webjars/**", "/css/**", "/js/**", "/static-images/**").permitAll()
+                        .requestMatchers("/person/add", "/person/remove", "/person/save").hasRole("DOCENT")
+                        .requestMatchers("/person/profile/**", "/cohort/**").hasAnyRole("DOCENT", "STUDENT", "ADMIN")
+                        .anyRequest().hasRole("ADMIN")
+                )
                 // custom form voor login
                 .formLogin((form) -> form
                         .loginPage("/userlogin")

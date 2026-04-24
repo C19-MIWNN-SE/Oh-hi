@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -110,9 +111,14 @@ public class InitializeController {
     //todo
     private void seedUsers() {
         if (ohiUserRepository.count() == 0) {
+            Cohort testCohort = new Cohort(4, "Testing",
+            LocalDate.of(2026, 01, 01), LocalDate.of(2026, 02, 01));
+            cohortRepository.save(testCohort);
             Person testUser = new Person("Hans", "Hans");
+            testUser.setCohort(testCohort);
             personRepository.save(testUser);
             OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT");
+            OHIUser admin = new OHIUser("admin", passwordEncoder.encode("admin"), "ADMIN");
             OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
             OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
             ohiUserRepository.save(docent);
