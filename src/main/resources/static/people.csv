@@ -1,6 +1,36 @@
-firstName, lastName, infix, userRole
-"Mark", "Sestero", "A", "STUDENT"
-"Lisa", "Danielle", "B", "STUDENT"
-"Johnny", "Wisseau",, "TEACHER"
-"Danny", "Haldiman",, "STUDENT"
-"Claudette", "Minnott",,"STUDENT"
+firstName,infix,lastName,userRole,cohort_id
+Johnny,,Wiseau,TEACHER,1
+Lisa,,Smith,STUDENT,1
+Mark,,Johnson,STUDENT,1
+Denny,,Williams,STUDENT,1
+Chris-R,,Donavon,STUDENT,1
+Michelle,of,Thornfield,STUDENT,1
+Mike,,Peters,STUDENT,1
+Claudette,,Moore,TEACHER,1
+Peter,,Harris,STUDENT,1
+Steven,,Baker,STUDENT,1
+Tommy,,Clarke,STUDENT,2
+Sarah,the,Murphy,STUDENT,2
+Daniel,,Nguyen,STUDENT,2
+Emma,of,Galway,STUDENT,2
+James,,Taylor,STUDENT,2
+Olivia,,Martinez,STUDENT,2
+Liam,the,O'Brien,STUDENT,2
+Sophia,,Anderson,STUDENT,2
+Noah,,Thompson,TEACHER,2
+Aiden,,Cooper,STUDENT,2
+Isabella,,Wilson,STUDENT,2
+Ethan,,Davis,STUDENT,3
+Mia,of,Westbrook,STUDENT,3
+Lucas,,Robinson,STUDENT,3
+Amelia,of,Hartwell,STUDENT,3
+Mason,,Lewis,STUDENT,3
+Harper,,Walker,STUDENT,3
+Logan,of,Ashford,STUDENT,3
+Evelyn,,Hall,TEACHER,3
+Carter,,Allen,STUDENT,3
+Scarlett,of,Fairfax,STUDENT,3
+Sebastian,,Young,STUDENT,3
+Grace,,King,STUDENT,3
+Henry,of,Blackwood,STUDENT,3
+Chloe,,Scott,STUDENT,3

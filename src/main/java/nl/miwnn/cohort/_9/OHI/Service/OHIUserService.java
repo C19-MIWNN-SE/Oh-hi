@@ -9,6 +9,7 @@ import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class OHIUserService implements UserDetailsService {
     private final OHIUserRepository ohiUserRepository;
     private final PersonRepository personRepository;
     private final AccountTokenRespository accountTokenRespository;
+    private final PasswordEncoder encoder;
 
 //    Person testUser = new Person("Hans", "Hans");
 //            personRepository.save(testUser);
@@ -33,12 +35,7 @@ public class OHIUserService implements UserDetailsService {
 
     public String createAccount (Person person, String role) {
         OHIUser user = new OHIUser(usernameCreation(person),"password", role, person);
-        //does Person/OhiUser still need link here?
-//        person.setAccount(user);
         ohiUserRepository.save(user);
-
-        //todo - check this
-
 
         String token = UUID.randomUUID().toString();
         AccountToken accountToken = new AccountToken(token,user, LocalDateTime.now().plusDays(7));
@@ -52,10 +49,11 @@ public class OHIUserService implements UserDetailsService {
         return person.getFirstName() + newCountUsername;
     }
 
-    public OHIUserService(OHIUserRepository ohiUserRepository, PersonRepository personRepository, AccountTokenRespository accountTokenRespository) {
+    public OHIUserService(OHIUserRepository ohiUserRepository, PersonRepository personRepository, AccountTokenRespository accountTokenRespository, PasswordEncoder encoder) {
         this.ohiUserRepository = ohiUserRepository;
         this.personRepository = personRepository;
         this.accountTokenRespository = accountTokenRespository;
+        this.encoder = encoder;
     }
 
     @Override
@@ -65,6 +63,12 @@ public class OHIUserService implements UserDetailsService {
         return ohiUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "Gebruiker niet gevonden: " + username));
+    }
+
+    public void updateCredentials(OHIUser user, String username, String password){
+        user.setUsername(username);
+        user.setPassword(encoder.encode(password));
+        ohiUserRepository.save(user);
     }
 
 }

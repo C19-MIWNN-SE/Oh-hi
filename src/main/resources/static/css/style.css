@@ -251,3 +251,22 @@ nav{
     scale: 1.05;
 
 }
+
+.teacher {
+    max-height: 0%;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.teachers.open {
+    max-height: 100%; /* groot genoeg voor de inhoud */
+<i class="bi bi-chevron-down transition-icon"></i>
+}
+
+.transition-icon {
+    transition: transform 0.3s ease;
+}
+
+button[aria-expanded="true"] .transition-icon {
+    transform: rotate(-90deg);
+}

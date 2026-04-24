@@ -1,11 +1,14 @@
 package nl.miwnn.cohort._9.OHI.Model;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
 //import jakarta.persistence.Entity;
 //import jakarta.persistence.GeneratedValue;
 //import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,23 +21,29 @@ import java.time.LocalDate;
  */
 
 @Entity
-public class Cohort implements Comparable<Cohort>{
+public class Cohort implements Comparable<Cohort> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotNull(message = "Moet een cohortnummer bevatten")
+    //    @NotNull(message = "Moet een cohortnummer bevatten")
+    @CsvBindByName(column = "cohortNum")
     private Integer cohortNum;
 
-//    @NotNull(message = "Cohort moet een vak behandelen")
+    //    @NotNull(message = "Cohort moet een vak behandelen")
+    @CsvBindByName(column = "discipline")
     private String discipline;
 
+    @CsvDate("yyyy-MM-dd")
+    @CsvBindByName(column = "startDate")
     private LocalDate startDate;
 
+    @CsvDate("yyyy-MM-dd")
+    @CsvBindByName(column = "endDate")
     private LocalDate endDate;
 
-    @OneToMany (mappedBy = "cohort", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cohort", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Person> members = new ArrayList<>();
 
     public Cohort(Integer cohortNum, String discipline, LocalDate startDate, LocalDate endDate) {
@@ -44,7 +53,8 @@ public class Cohort implements Comparable<Cohort>{
         this.endDate = endDate;
     }
 
-    public Cohort(){}
+    public Cohort() {
+    }
 
     @Override
     public int compareTo(Cohort otherCohort) {

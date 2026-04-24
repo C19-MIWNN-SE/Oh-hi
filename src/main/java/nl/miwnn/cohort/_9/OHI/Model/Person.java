@@ -1,5 +1,6 @@
 package nl.miwnn.cohort._9.OHI.Model;
 
+import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,10 +32,12 @@ public class Person {
     private Long id;
 
     @NotBlank(message = "Moet een naam hebben")
+    @CsvBindByName(column = "firstName")
     private String firstName;
 
     private String infix;
 
+    @CsvBindByName(column = "lastName")
     @NotNull(message = "Achternaam kan niet leeg zijn")
     private String lastName;
 
@@ -49,6 +52,10 @@ public class Person {
     @ManyToOne
     @JoinColumn(name = "cohort_id")
     private Cohort cohort;
+
+    @Transient
+    @CsvBindByName(column = "cohort_id")
+    public Long cohortId;
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private OHIUser account;
@@ -76,6 +83,7 @@ public class Person {
     @OneToOne(cascade = CascadeType.ALL)
     private Student student;
 
+    @CsvBindByName(column = "userRole")
     private Role userRole;
 
     public Person(String firstName, String infix, String lastName, Image image, String aboutMe, String location,
@@ -220,5 +228,13 @@ public class Person {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Long getCohortId() {
+        return cohortId;
+    }
+
+    public void setCohortId(Long cohortId) {
+        this.cohortId = cohortId;
     }
 }
