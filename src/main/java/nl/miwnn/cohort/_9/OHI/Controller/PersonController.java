@@ -32,23 +32,19 @@ public class PersonController {
     private final CohortRepository cohortRepository;
     private final CohortService cohortService;
     private final OHIUserService oHIUserService;
-    private final AccountTokenRespository accountTokenRespository;
     private final AccountTokenService accountTokenService;
     private final InterestRepository interestRepository;
     private final InterestService interestService;
 
     public PersonController(PersonRepository personRepository, PersonService personService,
-                            CohortRepository cohortRepository, ImageRepository imageRepository,
-                            StudentRepository studentRepository, OHIUserService oHIUserService,
-                            CohortService cohortService, AccountTokenRespository accountTokenRespository,
-                            OHIUserRepository oHIUserRepository, BCryptPasswordEncoder passwordEncoder,
-                            AccountTokenService accountTokenService, InterestRepository interestRepository, InterestService interestService) {
+                            CohortRepository cohortRepository, OHIUserService oHIUserService,
+                            CohortService cohortService, AccountTokenService accountTokenService,
+                            InterestRepository interestRepository, InterestService interestService) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
         this.cohortService = cohortService;
         this.oHIUserService = oHIUserService;
-        this.accountTokenRespository = accountTokenRespository;
         this.accountTokenService = accountTokenService;
         this.interestRepository = interestRepository;
         this.interestService = interestService;
@@ -160,12 +156,7 @@ public class PersonController {
 
     @GetMapping("/account/setup")
     public String UserSetUpAccount(@PathVariable @RequestParam("token") String token, Model model){
-        AccountToken accountToken = accountTokenRespository.findByToken(token);
-
-        if(accountToken.isUsed() || accountToken.getExpiresAt().isBefore(LocalDateTime.now())){
-            throw new IllegalArgumentException("token has expired");
-        }
-
+        AccountToken accountToken = accountTokenService.validateAndGet(token);
         OHIUser newUser = accountToken.getOhiUser();
         model.addAttribute("newUser", newUser);
         model.addAttribute("token", token);
