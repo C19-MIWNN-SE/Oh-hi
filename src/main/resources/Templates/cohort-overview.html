@@ -1,71 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{Fragments/general :: baseheader(~{:: title})}">
-  <meta charset="UTF-8">
-  <title>Profiles</title>
+    <meta charset="UTF-8">
+    <title>Profiles</title>
 </head>
 <body>
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
 
 <div class="container text-center">
-  <div class="container mt-4">
-    <div class="row align-items-start">
-      <div class="col-3" sec:authorize="hasRole('DOCENT')">
-        <div class="dropdown">
-          <button class="btn btn-primary shadow-sm search-bg dropdown-toggle fp-btn-colour"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false">
-            Cohorts
-          </button>
-          <ul class="dropdown-menu">
-            <li th:each="cohort : ${allCohorts}">
-              <a class="dropdown-item"
-                 th:href="@{/cohort/{id}(id=${cohort.id})}"
-                 th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}">
-              </a>
-            </li>
-          </ul>
-          <a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour btn-spacing"
-             sec:authorize="hasRole('DOCENT')">
-            <i class="bi bi-plus-circle me-1"></i> Cohort
-          </a>
-          <a th:href="@{/person/add/{cohortId}(cohortId=${cohort.id})}" class="btn btn-success shadow-sm search-bg fp-btn-colour"
-             sec:authorize="hasRole('DOCENT')">
-            <i class="bi bi-plus-circle me-1"></i> Lid
-          </a>
+    <div class="container mt-4">
+        <div class="row align-items-start">
+            <div class="col-3" sec:authorize="hasRole('DOCENT')">
+                <div class="dropdown">
+                    <button class="btn btn-primary shadow-sm search-bg dropdown-toggle fp-btn-colour"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Cohorts
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li th:each="cohort : ${allCohorts}">
+                            <a class="dropdown-item"
+                               th:href="@{/cohort/{id}(id=${cohort.id})}"
+                               th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}">
+                            </a>
+                        </li>
+                    </ul>
+                    <a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour btn-spacing"
+                       sec:authorize="hasRole('DOCENT')">
+                        <i class="bi bi-plus-circle me-1"></i> Cohort
+                    </a>
+                    <a th:href="@{/person/add/{cohortId}(cohortId=${cohort.id})}"
+                       class="btn btn-success shadow-sm search-bg fp-btn-colour"
+                       sec:authorize="hasRole('DOCENT')">
+                        <i class="bi bi-plus-circle me-1"></i> Lid
+                    </a>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <h1 th:text="${cohortName}"></h1>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-6">
-        <div>
-          <h1 th:text="${cohortName}"></h1>
+    </div>
+    <button class="btn btn-primary fp-btn-colour d-flex align-items-center gap-2"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#teachers"
+            onclick="toggleTeachers()">
+        Docenten
+        <i class="bi bi-chevron-down     transition-icon"></i>
+    </button>
+    <div id="teachers" class="container">
+        <div class="row row-cols-4 mt-1 g-4 justify-content-center">
+            <div class="col" th:each="teacher : ${members}"
+                 th:if="${teacher.userRole.name() == 'TEACHER'}">
+                <a th:href="@{/person/{id}(id=${teacher.id})}"
+                   style="cursor: pointer;">
+                    <div th:replace="~{fragments/person :: personCard(${teacher}, null)}"></div>
+                </a>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-<div class="container">
-  <div class="row row-cols-4 mt-1 g-4 justify-content-center">
-    <div class="col" th:each="person : ${members}"
-         th:if="${person.userRole.name() == 'TEACHER'}">
-      <a th:href="@{/person/{id}(id=${person.id})}"
-         style="cursor: pointer;">
-        <div th:replace="~{fragments/person :: personCard(${person}, null)}"></div>
-      </a>
+    <div id="students" class="row row-cols-4 mt-1 g-4">
+        <div class="col" th:each="student : ${members}"
+             th:if="${student.userRole.name() == 'STUDENT'}">
+            <a th:href="@{/person/{id}(id=${student.id})}"
+               style="cursor: pointer;">
+                <div th:replace="~{fragments/person :: personCard(${student}, null)}"></div>
+            </a>
+        </div>
     </div>
-  </div>
-
-  <div class="row row-cols-4 mt-1 g-4">
-    <div class="col" th:each="person : ${members}"
-        th:if="${person.userRole.name() == 'STUDENT'}">
-      <a th:href="@{/person/{id}(id=${person.id})}"
-         style="cursor: pointer;">
-        <div th:replace="~{fragments/person :: personCard(${person}, null)}"></div>
-      </a>
-    </div>
-  </div>
+</div>
 </div>
 
 

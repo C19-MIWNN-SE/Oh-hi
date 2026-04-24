@@ -17,7 +17,7 @@
 
 
     <div class="container">
-        <a class="navbar-brand" href="/" >Oh, hi!</a>
+        <a class="navbar-brand" href="/">Oh, hi!</a>
         <div class="navbar-nav">
             <a class="nav-link"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
@@ -32,15 +32,33 @@
 </nav>
 <footer class="footer mt-auto py-3 bg-light"
         th:fragment="footer">
-            <div class="container">
+    <div class="container">
                 <span class="text-muted">
                     Oh, hi! &mdash; INT-Developers, Hanze Groningen
                 </span>
-            </div>
+    </div>
 </footer>
 <div th:fragment="scripts">
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("teachersOpen") === "true") {
+                const el = document.getElementById("teachers");
+                const collapse = new bootstrap.Collapse(el, {
+                    toggle: false
+                });
+                collapse.show();
+            }
+        });
+
+        function toggleTeachers() {
+            const isOpen = localStorage.getItem("teachersOpen") === "true";
+            localStorage.setItem("teachersOpen", String(!isOpen));
+        }
+    </script>
 </div>
+
+
 </body>
 </html>
