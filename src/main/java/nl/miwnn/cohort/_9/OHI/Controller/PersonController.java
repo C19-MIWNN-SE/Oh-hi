@@ -1,13 +1,11 @@
 package nl.miwnn.cohort._9.OHI.Controller;
-
-import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.*;
 import nl.miwnn.cohort._9.OHI.Repository.*;
+import nl.miwnn.cohort._9.OHI.Service.AccountTokenService;
 import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
 import nl.miwnn.cohort._9.OHI.Service.CohortService;
 import nl.miwnn.cohort._9.OHI.Service.PersonService;
-import org.hibernate.sql.ast.tree.expression.Collation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,24 +33,23 @@ public class PersonController {
     private final PersonService personService;
     private final CohortRepository cohortRepository;
     private final CohortService cohortService;
-    private final ImageRepository imageRepository;
-    private final StudentRepository studentRepository;
     private final OHIUserService oHIUserService;
     private final AccountTokenRespository accountTokenRespository;
-    private final OHIUserRepository oHIUserRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final AccountTokenService accountTokenService;
 
-    public PersonController(PersonRepository personRepository, PersonService personService,  CohortRepository cohortRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserService oHIUserService, CohortService cohortService, AccountTokenRespository accountTokenRespository, OHIUserRepository oHIUserRepository, BCryptPasswordEncoder passwordEncoder) {
+    public PersonController(PersonRepository personRepository, PersonService personService,
+                            CohortRepository cohortRepository, ImageRepository imageRepository,
+                            StudentRepository studentRepository, OHIUserService oHIUserService,
+                            CohortService cohortService, AccountTokenRespository accountTokenRespository,
+                            OHIUserRepository oHIUserRepository, BCryptPasswordEncoder passwordEncoder,
+                            AccountTokenService accountTokenService) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.cohortRepository = cohortRepository;
         this.cohortService = cohortService;
-        this.imageRepository = imageRepository;
-        this.studentRepository = studentRepository;
         this.oHIUserService = oHIUserService;
         this.accountTokenRespository = accountTokenRespository;
-        this.oHIUserRepository = oHIUserRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.accountTokenService = accountTokenService;
     }
 
     @GetMapping("/overview")
@@ -155,11 +152,9 @@ public class PersonController {
         return "redirect:/person/" + profilePerson.getId();
     }
 
-    //todo - add a page for editing login info for the user from the link
     @GetMapping("/account/setup")
     public String UserSetUpAccount(@PathVariable @RequestParam("token") String token, Model model){
         AccountToken accountToken = accountTokenRespository.findByToken(token);
-                //.orElseThrow(() -> new IllegalArgumentException("Invalid token"));
 
         if(accountToken.isUsed() || accountToken.getExpiresAt().isBefore(LocalDateTime.now())){
             throw new IllegalArgumentException("token has expired");
@@ -171,28 +166,20 @@ public class PersonController {
         return "user-account-setup";
     }
 
-    //todo - save/post user updated account info
-    @PostMapping("/account/setup")
+    @PostMapping("account/setup")
     public String finishSetup(@RequestParam String token,
                               @RequestParam String password,
-                              @RequestParam String username,
-                              @ModelAttribute OHIUser newAccPerson) {
-        AccountToken accountToken = accountTokenRespository.findByToken(token);
-        //.orElseThrow(() -> new IllegalArgumentException("Invalid token"));
+                              @RequestParam String username){
 
-        if(accountToken.isUsed() || accountToken.getExpiresAt().isBefore(LocalDateTime.now())){
-            throw new IllegalArgumentException("token has expired");
-        }
+        AccountToken accountToken = accountTokenService.validateAndGet(token);
 
         OHIUser user = accountToken.getOhiUser();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        oHIUserRepository.save(user);
+        oHIUserService.updateCredentials(user, username, password);
 
-        accountToken.setUsed(true);
-        accountTokenRespository.save(accountToken);
+        accountTokenService.markUsed(accountToken);
 
         return "redirect:/";
+
     }
 
 }
