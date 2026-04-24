@@ -1,9 +1,11 @@
 package nl.miwnn.cohort._9.OHI.Controller;
 
+import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.InterestRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Service.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 /**
  * @author Sara Omlor
@@ -40,7 +46,16 @@ class PersonControllerTest {
 
 
     @Test
+    @DisplayName("ShowPeople Should return ")
     void showPeople() {
+        List<Person> people = List.of(
+                new Person("Kat", "Dusk"),
+                new Person("Simone", "Reeves")
+        );
+        when(personService.getAllPeople()).thenReturn(people);
+
+        mockMvc.perform(get("person-overview"))
+                .andExpect()
     }
 
     @Test
