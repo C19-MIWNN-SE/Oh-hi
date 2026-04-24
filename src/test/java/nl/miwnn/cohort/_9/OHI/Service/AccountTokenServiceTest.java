@@ -16,8 +16,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Sara Omlor
@@ -27,7 +28,6 @@ class AccountTokenServiceTest {
     private AccountTokenService accountTokenService;
     private OHIUserService ohiUserService;
     private AccountToken accountToken;
-    //private Person person;
     private Cohort cohort;
     private String token = UUID.randomUUID().toString();
 
@@ -60,10 +60,66 @@ class AccountTokenServiceTest {
     }
 
     @Test
-    void validateAndGet() {
+    @DisplayName("validateAndGet check if a token value exists in the repository and return token if Valid")
+    void validateAndGetShouldCheckiftokeninAccountTokenRepoAndReturnTokenIfValid() {
+        //arrange
+        accountToken.setUsed(false);
+        accountToken.setExpiresAt(LocalDateTime.now().plusDays(3));
+
+        when(accountTokenRespository.findByToken("test")).thenReturn(accountToken);
+        //act
+        AccountToken result = accountTokenService.validateAndGet("test");
+
+        //assert
+        assertEquals(accountToken, result);
+
     }
 
     @Test
-    void markUsed() {
+    @DisplayName("validateAndGet should throw an exception when the token is not found")
+    void validateAndGetShouldThrowAnExceptionWhenTheTokenIsNotFound(){
+        when(accountTokenRespository.findByToken("test2")).thenReturn(null);
+
+        assertThrows(IllegalArgumentException.class, ()-> accountTokenService.validateAndGet("test2"));
     }
+
+    @Test
+    @DisplayName("validateAndGet should throw an exception if the token has already been used")
+    void validateAndGetShouldThrowExceptionIfTokenUsed(){
+        //arrange
+        accountToken.setUsed(true);
+        accountToken.setExpiresAt(LocalDateTime.now().plusDays(3));
+       //act
+        when(accountTokenRespository.findByToken("test3")).thenReturn(accountToken);
+        //assert
+        assertThrows(IllegalArgumentException.class, ()-> accountTokenService.validateAndGet("test3"));
+
+    }
+
+    @Test
+    @DisplayName("validateAndGet should throw an exception if the token is expired")
+    void validateAndGetShouldThrowExceptionifTokenExpired(){
+        //arrange
+        accountToken.setUsed(false);
+        accountToken.setExpiresAt(LocalDateTime.now());
+       //act
+        when(accountTokenRespository.findByToken("test4")).thenReturn(accountToken);
+        //assert
+        assertThrows(IllegalArgumentException.class, ()-> accountTokenService.validateAndGet("test4"));
+    }
+
+
+    @Test
+    @DisplayName("markUsed should mark a token as having been used and save it to the repository")
+    void markUsedShouldMarkATokenUsedAndSaveToAccountTokenRepo() {
+        //arrange
+        accountToken.setUsed(false);
+        //act
+        accountTokenService.markUsed(accountToken);
+        //assert
+        assertTrue(accountToken.isUsed(), "Token should be used");
+        verify(accountTokenRespository).save(accountToken);
+
+    }
+
 }
