@@ -76,7 +76,78 @@
     </div>
 
 
-</div>
+    <div class="containerComment">
+        <div class="head">
+            <h1>Plaats een bericht!</h1>
+        </div>
+        <div><span id="comment">0</span> Berichten</div>
+        <div class="text">Ik hoor graag van je!</div>
+        <div class="comments"></div>
+        <div class="commentBox">
+            <img src="/static-images/johnny.jpg" alt="profile">
+            <div class="content">
+                <h2>Schrijf een bericht als</h2>
+                <div class="commentInput">
+                    <input type="text" placeholder="schrijf een bericht" class="usercomment">
+                    <div class="buttonsComment">
+                        <button type="submit" disabled id="publish">Verstuur</button>
+                        <div class="notify">
+                            <input type="checkbox" class="notifyInput"><span>Bericht me</span>
+                        </div>
+
+                    </div>
+                </div>
+                <p></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const userId = {
+            name: /*[[${person.fullName}]]*/ null,
+            image: /*[[${person.image}]]*/ null,
+            message: null,
+            date: null
+        }
+
+        const usercomment = document.querySelector(".usercomment");
+        const publishBtn = document.querySelector("#publish");
+        const comments = document.querySelector(".comments");
+        const userName = document.querySelector(".user");
+
+        usercomment.addEventListener("input", e=> {
+            if (!usercomment.value){
+                publishBtn.setAttribute("disabled", "disabled");
+                publishBtn.classList.remove("abled");
+            } else {
+                publishBtn.removeAttribute("disabled");
+                publishBtn.classList.add("abled");
+            }
+        })
+        
+        function addPost(){
+            
+            userId.message = usercomment.value;
+            userId.date = new Date().toLocaleString();
+            let  published = 
+                `<div class="parents">
+                    <img src="${userId.image}">
+                    <div>
+                    <h1>${userId.name}</h1>
+                    <p>${userId.message}</p>
+                    <span class="date"> ${userId.date}</span>
+                    </div>
+                </div>`
+
+            comments.innerHTML += published;
+            usercomment.value = "";
+
+            let commentsNum = document.querySelectorAll(".parents").length;
+            document.getElementById("comment").textContent = commentsNum;
+        }
+        publishBtn.addEventListener("click", addPost)
+    </script>
     <footer th:replace="~{Fragments/general :: footer}"></footer>
     <div th:replace="~{Fragments/general :: scripts}"></div>
 </body>

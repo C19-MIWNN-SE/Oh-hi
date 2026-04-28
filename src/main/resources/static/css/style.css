@@ -365,4 +365,112 @@ button[aria-expanded="true"] .transition-icon {
 }
 
 
+/*Comments*/
+.containerComment{
+    background: white;
+    padding: 20px;
+    width: 500px;
+    box-shadow: 0 0 5px black;
+}
+
+.head{
+    margin-bottom: 20px;
+}
+
+.text{
+    margin: 10px 0;
+    font-size: 0.9em;
+}
+
+.commentBox{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.commentBox > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.content {
+    width: 100%;
+}
+
+.user{
+    border: none;
+    outline: none;
+    margin: 5px 0 20px;
+    color: #C9BEFF;
+    padding: 10px;
+}
+
+.commentInput > input{
+    border: none;
+    padding: 10px;
+    padding-left: 0;
+    outline: none;
+    border-bottom: 2px solid blue;
+    margin-bottom: 10px;
+    width: 95%;
+}
+
+.buttonsComment{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #C9BEFF;
+}
+
+.buttonsComment button{
+    padding: 5px 10px;
+    background: lightgray;
+    color: black;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.buttonsComment button.abled{
+    background: #C9BEFF;
+    color: white;
+
+}
+
+.parents{
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.parent h1{
+    font-size: 0.9em;
+}
+
+.parents p{
+    margin: 10px 0;
+    font-size: 0.9em;
+
+}
+
+.parents > img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.date {
+    color: #808080;
+    font-size: 0.8em;
+}
+
+
+
 
