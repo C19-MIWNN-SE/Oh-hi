@@ -129,25 +129,6 @@ nav{
     margin-top: 20%;
 }
 
-/*about the members' cards'*/
-.background-content-card {
-    box-shadow: 10px 2px 5px #888888;
-    max-height: 380px;
-}
-
-.background-style-card {
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 25%;
-    text-decoration: none;
-}
-
-.background-content-card:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    transition: 0.3s;
-    scale: 1.02;
-}
 
 .background-style-card, .background-style-card a {
     text-decoration: none !important;
@@ -157,9 +138,8 @@ nav{
     text-decoration: none;
 }
 
-.background-content-card-profile{
-    max-height: 400px !important;
-
+.background-content-card-profile {
+    min-height: 280px !important;
 }
 
 .location-text{
@@ -281,5 +261,216 @@ button[aria-expanded="true"] .transition-icon {
     color: #3a3a3a;
     margin: 4px;
 }
+
+.card-overview-page{
+    min-height: 150px;
+}
+
+.card-background{
+    background-image: url("/static-images/card-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+}
+
+.card-background:hover{
+    transition: 0.3s;
+    background-color: rgba(201, 190, 255, 1);
+    scale: 1.03;
+    border-radius: 5px;
+}
+
+.card-background, .card-background a {
+    text-decoration: none !important;
+}
+
+.card-background .fw-bold {
+    text-decoration: none;
+}
+
+.docent-card {
+    background-image: url("/static-images/background-card-teacher.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/*Drop and drag*/
+
+.drop-zone {
+    min-height: 120px;
+    border: 1.5px dashed #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    transition: background 0.15s;
+}
+.drop-zone.dragover {
+    background: #e8f0fe;
+    border-color: #6c8ebf;
+}
+.student-drag-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 6px 0;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    user-select: none;
+}
+
+.student-drag-card:active { cursor: grabbing; opacity: 0.5; }
+
+.student-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.pool-avatar   { background: #e8f0fe; color: black; }
+.groep-a-avatar { background: #EEEDFE; color: #534AB7; }
+.groep-b-avatar { background: #E1F5EE; color: #0F6E56; }
+.groep-c-avatar { background: #FAECE7; color: #993C1D; }
+.groep-c-avatar { background: #FAECE7; color: #993C1D; }
+.groep-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 8px;
+    text-align: left;
+}
+.groep-a-label { color: #C9BEFF; }
+.groep-b-label { color: #C9BEFF; }
+.groep-c-label { color: #C9BEFF; }
+.groep-c-label { color: #C9BEFF; }
+.groep-d-label {color: #C9BEFF; }
+
+.groep-count {
+    font-size: 11px;
+    color: #aaa;
+    margin-left: 4px;
+}
+
+.groupList {
+    margin: 100px 0 100px 0 !important;
+}
+
+
+/*Comments*/
+.containerComment{
+    background: white;
+    padding: 20px;
+    width: 500px;
+    box-shadow: 0 0 5px black;
+}
+
+.head{
+    margin-bottom: 20px;
+}
+
+.text{
+    margin: 10px 0;
+    font-size: 0.9em;
+}
+
+.commentBox{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.commentBox > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.content {
+    width: 100%;
+}
+
+.user{
+    border: none;
+    outline: none;
+    margin: 5px 0 20px;
+    color: #C9BEFF;
+    padding: 10px;
+}
+
+.commentInput > input{
+    border: none;
+    padding: 10px;
+    padding-left: 0;
+    outline: none;
+    border-bottom: 2px solid blue;
+    margin-bottom: 10px;
+    width: 95%;
+}
+
+.buttonsComment{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #C9BEFF;
+}
+
+.buttonsComment button{
+    padding: 5px 10px;
+    background: lightgray;
+    color: black;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.buttonsComment button.abled{
+    background: #C9BEFF;
+    color: white;
+
+}
+
+.parents{
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.parent h1{
+    font-size: 0.9em;
+}
+
+.parents p{
+    margin: 10px 0;
+    font-size: 0.9em;
+
+}
+
+.parents > img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.date {
+    color: #808080;
+    font-size: 0.8em;
+}
+
+
 
 
