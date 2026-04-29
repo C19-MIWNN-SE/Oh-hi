@@ -4,6 +4,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import jakarta.persistence.EntityNotFoundException;
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
+import nl.miwnn.cohort._9.OHI.Model.Image;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author INT Development
@@ -70,5 +73,14 @@ public class CohortService {
         } else {
             person.setCohort(null);
         }
+    }
+
+    public Set<Image> getCohortImages(Long cohortId) {
+        Cohort cohort = cohortRepository.findById(cohortId)
+                .orElseThrow(() -> new RuntimeException("Cohort not found"));
+
+        return cohort.getMembers().stream()
+                .flatMap(p -> p.getImages().stream())
+                .collect(Collectors.toSet());
     }
 }

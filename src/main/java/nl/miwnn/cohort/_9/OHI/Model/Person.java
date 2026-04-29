@@ -6,8 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import javax.management.relation.Role;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Author: INT-developers
@@ -44,8 +43,8 @@ public class Person {
     private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id")
-    private Image image;
+    @JoinColumn(name = "profile_image_id")
+    private Image profileImage;
 
     @Lob
     @Column(name = "about_me")
@@ -62,10 +61,19 @@ public class Person {
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private OHIUser account;
 
+    @ManyToMany
+    @JoinTable(
+            name = "person_images",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id")
+    )
+    private Set<Image> images = new HashSet<>();
+
     //todo review this - separate enum roles from a method to format the text
     public enum Role {
         STUDENT("Student"),
-        TEACHER("Docent");
+        TEACHER("Docent"),
+        ADMIN("Admin");
 
         private final String displayName;
 
@@ -96,12 +104,12 @@ public class Person {
     )
     private List<Interest> interests = new ArrayList<>();
 
-    public Person(String firstName, String infix, String lastName, Image image, String aboutMe, String location,
+    public Person(String firstName, String infix, String lastName, Image profileImage, String aboutMe, String location,
                   Integer age, String pronoun, Role userRole) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
-        this.image = image;
+        this.profileImage = profileImage;
         this.aboutMe = aboutMe;
         this.userRole = userRole;
         this.location = location;
@@ -161,12 +169,12 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Image getImage() {
-        return image;
+    public Image getProfileImage() {
+        return profileImage;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImage(Image profileImage) {
+        this.profileImage = profileImage;
     }
 
     public String getAboutMe() {
@@ -250,6 +258,9 @@ public class Person {
 
     public List<Interest> getInterests() {
         return interests;
+    }
+
+    public Set<Image> getImages() { return images;
     }
 
     public void setInterests(List<Interest> interests) {

@@ -74,6 +74,43 @@
             </div>
 
         </div>
+        <!-- trying something for group images -->
+<div id="cohortCarousel" class="carousel slide" data-bs-ride="carousel">
+
+    <div class="carousel-indicators" th:if="${#lists.size(images) > 1}">
+        <button th:each="img, iter : ${images}"
+                type="button"
+                data-bs-target="#cohortCarousel"
+                th:data-bs-slide-to="${iter.index}"
+                th:classappend="${iter.index == 0} ? 'active'">
+        </button>
+    </div>
+    <div class="carousel-inner">
+        <div th:each="img, iter : ${images}"
+             th:class="'carousel-item ' + (${iter.index == 0} ? 'active' : '')">
+
+            <img th:src="@{'/images/' + ${img.id}}"
+                 class="d-block w-100"
+                 th:alt="${img.alttxt}">
+
+            <div class="carousel-caption d-none d-md-block">
+                <h5 th:text="${img.alttxt}"></h5>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#cohortCarousel" data-bs-slide="prev"
+            th:if="${#lists.size(images) > 1}">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#cohortCarousel" data-bs-slide="next"
+            th:if="${#lists.size(images) > 1}">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+
+</div>
+
+
     </div>
     <!-- Docenten collapse -->
     <div id="teachers" class="collapse container">

@@ -116,7 +116,7 @@ public class PersonController {
         return "person-detail";
     }
 
-    @PreAuthorize("#id == authentication.principal.person.id")
+   // @PreAuthorize("#id == authentication.principal.person.id")
     @GetMapping("/profile/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         personService.getPerson(id);
@@ -132,12 +132,12 @@ public class PersonController {
 //    @PreAuthorize("#id == authentication.principal.person.id")
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
-                              @RequestParam("imageFile") MultipartFile imageFile, RedirectAttributes redirectAttributes
+                              @RequestParam("profileImageFile") MultipartFile profileImageFile, RedirectAttributes redirectAttributes
     ) throws IOException {
 
         Person profilePerson = personService.findById(aboutPerson.getId());
         try {
-            personService.updateProfileImage(aboutPerson.getId(), imageFile);
+            personService.updateProfileImage(aboutPerson.getId(), profileImageFile);
             personService.updatePersonInformation(aboutPerson.getId(), aboutPerson);
             redirectAttributes.addFlashAttribute("successMessage", "Je profiel is succesvol bijgewerkt!");
         } catch (Exception exception) {
