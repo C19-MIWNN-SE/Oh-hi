@@ -9,6 +9,12 @@
 <body>
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
 
+<!-- Midden: Cohort naam -->
+<div class="col text-center">
+    <h1 th:text="${cohortName}"></h1>
+</div>
+
+
 <div class="container text-center">
     <div class="container mt-4">
         <div class="row align-items-center">
@@ -43,10 +49,6 @@
                 </button>
             </div>
 
-            <!-- Midden: Cohort naam -->
-            <div class="col text-center">
-                <h1 th:text="${cohortName}"></h1>
-            </div>
 
             <!-- Rechts: alle knoppen naast elkaar -->
             <div class="col-auto d-flex gap-2 align-items-center">
@@ -62,6 +64,11 @@
                     <i class="bi bi-plus-circle me-1"></i> Lid
                 </a>
 
+                <a th:href="@{/cohort/{cohortId}/group-photos(cohortId=${cohort.id})}"
+                   class="btn btn-success shadow-sm fp-btn-colour">
+                    <i class="bi bi-plus-circle me-1"></i> Group photo
+                </a>
+
                 <a id="groepjesBtn"
                    class="btn btn-primary fp-btn-colour"
                    data-bs-toggle="collapse"
@@ -74,7 +81,7 @@
             </div>
 
         </div>
-        <!-- trying something for group images -->
+
 <div id="cohortCarousel" class="carousel slide" data-bs-ride="carousel">
 
     <div class="carousel-indicators" th:if="${#lists.size(images) > 1}">
@@ -93,9 +100,10 @@
                  class="d-block w-100"
                  th:alt="${img.alttxt}">
 
-            <div class="carousel-caption d-none d-md-block">
-                <h5 th:text="${img.alttxt}"></h5>
-            </div>
+            <!-- todo - perhaps display names of people in photo instead? -->
+<!--            <div class="carousel-caption d-none d-md-block">-->
+<!--                <h5 th:text="${img.alttxt}"></h5>-->
+<!--            </div>-->
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#cohortCarousel" data-bs-slide="prev"

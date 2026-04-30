@@ -19,7 +19,16 @@
     <div class="container">
         <a class="navbar-brand" href="/">Oh, hi!</a>
         <div class="navbar-nav">
+            <!-- todo - link to customize user's own profile -->
             <a class="nav-link"
+               sec:authorize="isAuthenticated()"
+               th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
+               href="/person/overview">
+                <i class="bi bi-people"></i> Edit Profile
+            </a>
+            <!-- todo - this should link to the cohort of the user -->
+            <a class="nav-link"
+               sec:authorize="isAuthenticated()"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
                href="/person/overview">
                 <i class="bi bi-people"></i> Overzicht

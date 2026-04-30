@@ -42,6 +42,8 @@ public class ImageService {
         img.setContentType(file.getContentType());
         img.setAlttxt(filename);
 
+        img.setData(file.getBytes());
+
         return imageRepository.save(img);
     }
 

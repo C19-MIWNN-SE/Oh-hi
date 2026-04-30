@@ -472,5 +472,9 @@ button[aria-expanded="true"] .transition-icon {
 }
 
 
-
+.carousel-inner{
+    height: auto;
+    width: 30%;
+    margin: auto;
+}
 
