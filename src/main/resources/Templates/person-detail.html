@@ -47,17 +47,18 @@
                     <h5 class="aboutMeHeader">Voornaamwoorden</h5>
                     <p class="aboutMeContent" th:text="${pronoun}"></p>
                 </div>
+                <div class="col mx-auto info-background-content" th:if="${person.getEmployerField()}">
+                    <h5 class="aboutMeHeader">Toekomstig werkgever</h5>
+                    <p class="aboutMeContent" th:text="${person.student?.employer}"></p>
+                </div>
             </div>
         </div>
 
         <div class="col-4">
 
 
-            <div class="col mx-auto info-background-content" th:if="${person.getEmployerField()}">
-                <h5 class="aboutMeHeader">Toekomstig werkgever</h5>
-                <p class="aboutMeContent" th:text="${person.student?.employer}"></p>
-            </div>
-            <div class="col mx-auto info-background-content">
+
+            <div class="col mx-auto info-background-content profile-content-large">
                 <h5 class="aboutMeHeader">Mijn interesses</h5>
                 <div class="d-flex flex-wrap gap-2 justify-content-center">
     <span th:each="interest : ${interests}"
@@ -66,47 +67,52 @@
     </span>
                 </div>
             </div>
-            <div class="col mx-auto info-background-content">
+            <div class="col mx-auto info-background-content profile-content-large">
                 <h5 class=" aboutMeHeader">Over mij</h5>
                 <p class="aboutMeContent" th:text="${aboutMe}"></p>
             </div>
-        </div>
 
-        </div>
-    </div>
+            <div class="containerComment profile-content-large">
+                <div class="row align-items-center">
+                    <h5 class="aboutMeHeader col-auto">Plaats een bericht!</h5>
+                    <div class="commentcount col-auto"><span id="comment">0</span> Berichten</div>
+                </div>
 
+                <div class="comments"></div>
+                <div class="commentBox">
+                    <img th:src="${loggedIn.image != null} ? '/images/' + ${loggedIn.image.id} : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'">
+                    <div class="content">
+                        <h2 th:text="${commentWriter}" class="commentWriter">Schrijf een bericht als</h2>
+                        <div class="commentInput">
+                            <input type="text" placeholder="schrijf een bericht" class="usercomment">
+                            <div class="buttonsComment">
+                                <button type="submit" disabled id="publish">Verstuur</button>
 
-    <div class="containerComment">
-        <div class="head">
-            <h1>Plaats een bericht!</h1>
-        </div>
-        <div><span id="comment">0</span> Berichten</div>
-        <div class="text">Ik hoor graag van je!</div>
-        <div class="comments"></div>
-        <div class="commentBox">
-            <img src="/static-images/johnny.jpg" alt="profile">
-            <div class="content">
-                <h2>Schrijf een bericht als</h2>
-                <div class="commentInput">
-                    <input type="text" placeholder="schrijf een bericht" class="usercomment">
-                    <div class="buttonsComment">
-                        <button type="submit" disabled id="publish">Verstuur</button>
-                        <div class="notify">
-                            <input type="checkbox" class="notifyInput"><span>Bericht me</span>
+                            </div>
                         </div>
-
+                        <p></p>
                     </div>
                 </div>
-                <p></p>
+
             </div>
         </div>
 
+        </div>
     </div>
 
+<span id="loggedInName" th:text="${loggedIn.fullName}" style="display:none"></span>
+<span id="loggedInImage" th:text="${loggedIn.image?.id}" style="display:none"></span>
+
+
+
+
     <script>
+
+        const imageId = document.getElementById("loggedInImage").textContent;
+
         const userId = {
-            name: /*[[${person.fullName}]]*/ null,
-            image: /*[[${person.image}]]*/ null,
+            name: document.getElementById("loggedInName").textContent,
+            image: imageId ? '/images/' + imageId : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg',
             message: null,
             date: null
         }
@@ -134,7 +140,7 @@
                 `<div class="parents">
                     <img src="${userId.image}">
                     <div>
-                    <h1>${userId.name}</h1>
+                    <h1 class="commentContributer">${userId.name}</h1>
                     <p>${userId.message}</p>
                     <span class="date"> ${userId.date}</span>
                     </div>

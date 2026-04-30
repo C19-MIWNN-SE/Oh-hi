@@ -6,6 +6,8 @@ import nl.miwnn.cohort._9.OHI.Service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,10 +110,15 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public String showProfile(@PathVariable Long id, Model model) {
+    public String showProfile(@PathVariable Long id, Model model,
+                              @AuthenticationPrincipal OHIUser loggedInUser) {
 
         Person person = personService.getPerson(id);
         model.addAllAttributes(personService.getProfileInformation(person));
+
+        model.addAttribute("commentWriter", String.format("Schrijf een bericht als %s",
+                loggedInUser.getPerson().getFullName()));
+        model.addAttribute("loggedIn", loggedInUser.getPerson());
 
         return "person-detail";
     }
