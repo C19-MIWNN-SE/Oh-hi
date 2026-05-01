@@ -2,6 +2,7 @@ package nl.miwnn.cohort._9.OHI.Controller;
 
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.Student;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.InterestRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
@@ -11,19 +12,23 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -36,13 +41,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PersonControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc mockMvc;  // verwijder static
 
     @MockitoBean
     private PersonService personService;
 
-    @Autowired
-    @MockitoBean
+    @MockitoBean  // verwijder @Autowired hier
     private CohortService cohortService;
 
     @MockitoBean
@@ -128,4 +132,81 @@ class PersonControllerTest {
     @Test
     void finishSetup() {
     }
-}
+
+    @Test
+    @DisplayName("Student should see employer field on edit form")
+    void studentShouldSeeEmployerFieldOnEditForm() throws Exception {
+            // arrange
+            Student student = new Student();
+            student.setEmployer("Hema");
+
+            Person person = new Person("Kat", "Dusk");
+            person.setId(1L);
+            person.setUserRole(Person.Role.STUDENT);
+            person.setStudent(student);
+
+            CustomUserDetails userDetails = new CustomUserDetails(person);
+
+            when(personService.findById(1L)).thenReturn(person);
+
+            // act & assert
+            mockMvc.perform(get("/person/profile/edit/{id}", 1L)
+                            .with(user(userDetails)))
+                    .andExpect(status().isOk())
+                    .andExpect(view().name("person-profile-edit"))
+                    .andExpect(model().attribute("person", hasProperty("student",
+                            hasProperty("employer", is("Hema")))));
+        }
+
+
+        /*Om toegang te krijgen tot de profile edit*/
+        static class CustomUserDetails implements UserDetails {
+                private final Person person;
+
+                public CustomUserDetails(Person person) {
+                    this.person = person;
+                }
+
+                public Person getPerson() {
+                    return person;
+                }
+
+                @Override
+                public Collection<? extends GrantedAuthority> getAuthorities() {
+                    return List.of(new SimpleGrantedAuthority("ROLE_STUDENT"));
+                }
+
+                @Override
+                public String getPassword() {
+                    return "password";
+                }
+
+                @Override
+                public String getUsername() {
+                    return "user";
+                }
+
+                @Override
+                public boolean isAccountNonExpired() {
+                    return true;
+                }
+
+                @Override
+                public boolean isAccountNonLocked() {
+                    return true;
+                }
+
+                @Override
+                public boolean isCredentialsNonExpired() {
+                    return true;
+                }
+
+                @Override
+                public boolean isEnabled() {
+                    return true;
+                }
+        }
+
+
+    }
+

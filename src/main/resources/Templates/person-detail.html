@@ -102,58 +102,72 @@
 
 <span id="loggedInName" th:text="${loggedIn.fullName}" style="display:none"></span>
 <span id="loggedInImage" th:text="${loggedIn.image?.id}" style="display:none"></span>
+<span id="profileId" th:text="${person.id}" style="display:none"></span>
 
 
 
 
-    <script>
+<script>
+    const imageId = document.getElementById("loggedInImage").textContent;
 
-        const imageId = document.getElementById("loggedInImage").textContent;
+    const userId = {
+        name: document.getElementById("loggedInName").textContent,
+        image: imageId ? '/images/' + imageId : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg',
+        message: null,
+        date: null
+    }
 
-        const userId = {
-            name: document.getElementById("loggedInName").textContent,
-            image: imageId ? '/images/' + imageId : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg',
-            message: null,
-            date: null
+    const profileId = document.getElementById("profileId").textContent;
+    const storageKey = "comments_" + profileId;
+
+    const usercomment = document.querySelector(".usercomment");
+    const publishBtn = document.querySelector("#publish");
+    const comments = document.querySelector(".comments");
+
+    // ✅ Laad meteen (script staat al onderaan body)
+    comments.innerHTML = localStorage.getItem(storageKey) || "";
+    let commentsNum = document.querySelectorAll(".parents").length;
+    document.getElementById("comment").textContent = commentsNum;
+
+    usercomment.addEventListener("input", checkInput);
+    usercomment.addEventListener("keyup", checkInput);
+
+    function checkInput() {
+        if (!usercomment.value.trim()) {
+            publishBtn.setAttribute("disabled", "disabled");
+            publishBtn.classList.remove("abled");
+        } else {
+            publishBtn.removeAttribute("disabled");
+            publishBtn.classList.add("abled");
         }
+    }
 
-        const usercomment = document.querySelector(".usercomment");
-        const publishBtn = document.querySelector("#publish");
-        const comments = document.querySelector(".comments");
-        const userName = document.querySelector(".user");
+    function addPost() {
+        userId.message = usercomment.value;
+        userId.date = new Date().toLocaleString();
 
-        usercomment.addEventListener("input", e=> {
-            if (!usercomment.value){
-                publishBtn.setAttribute("disabled", "disabled");
-                publishBtn.classList.remove("abled");
-            } else {
-                publishBtn.removeAttribute("disabled");
-                publishBtn.classList.add("abled");
-            }
-        })
-        
-        function addPost(){
-            
-            userId.message = usercomment.value;
-            userId.date = new Date().toLocaleString();
-            let  published = 
-                `<div class="parents">
-                    <img src="${userId.image}">
-                    <div>
-                    <h1 class="commentContributer">${userId.name}</h1>
-                    <p>${userId.message}</p>
-                    <span class="date"> ${userId.date}</span>
-                    </div>
-                </div>`
+        let published =
+            `<div class="parents">
+            <img src="${userId.image}">
+            <div>
+                <h1 class="commentContributer">${userId.name}</h1>
+                <p>${userId.message}</p>
+                <span class="date">${userId.date}</span>
+            </div>
+        </div>`
 
-            comments.innerHTML += published;
-            usercomment.value = "";
+        comments.innerHTML += published;
+        usercomment.value = "";
+        checkInput(); // knop weer disablen na versturen
 
-            let commentsNum = document.querySelectorAll(".parents").length;
-            document.getElementById("comment").textContent = commentsNum;
-        }
-        publishBtn.addEventListener("click", addPost)
-    </script>
+        localStorage.setItem(storageKey, comments.innerHTML);
+
+        commentsNum = document.querySelectorAll(".parents").length;
+        document.getElementById("comment").textContent = commentsNum;
+    }
+
+    publishBtn.addEventListener("click", addPost);
+</script>
     <footer th:replace="~{Fragments/general :: footer}"></footer>
     <div th:replace="~{Fragments/general :: scripts}"></div>
 </body>
