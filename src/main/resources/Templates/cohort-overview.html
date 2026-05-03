@@ -227,6 +227,12 @@
             section.removeEventListener('shown.bs.collapse', scrollDown);
         });
     });
+
+    localStorage.setItem(storageKey, comments.innerHTML);
+
+    // nog opslaan
+    // commentsNum = document.querySelectorAll(".parents").length;
+    // document.getElementById("comment").textContent = commentsNum;
 </script>
 
 </body>

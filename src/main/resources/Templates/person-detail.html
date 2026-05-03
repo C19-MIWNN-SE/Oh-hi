@@ -80,7 +80,7 @@
 
                 <div class="comments"></div>
                 <div class="commentBox">
-                    <img th:src="${loggedIn.image != null} ? '/images/' + ${loggedIn.image.id} : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg'">
+                    <img th:src="${loggedIn.image != null} ? '/images/' + ${loggedIn.image.id} : '/static-images/noImage.jpg'">
                     <div class="content">
                         <h2 th:text="${commentWriter}" class="commentWriter">Schrijf een bericht als</h2>
                         <div class="commentInput">
@@ -104,15 +104,12 @@
 <span id="loggedInImage" th:text="${loggedIn.image?.id}" style="display:none"></span>
 <span id="profileId" th:text="${person.id}" style="display:none"></span>
 
-
-
-
 <script>
     const imageId = document.getElementById("loggedInImage").textContent;
 
     const userId = {
         name: document.getElementById("loggedInName").textContent,
-        image: imageId ? '/images/' + imageId : '/static-images/teaspoon-steel-isolated-picture-id520537085.jpg',
+        image: imageId ? '/images/' + imageId : '/static-images/noImage.jpg',
         message: null,
         date: null
     }
@@ -124,7 +121,6 @@
     const publishBtn = document.querySelector("#publish");
     const comments = document.querySelector(".comments");
 
-    // ✅ Laad meteen (script staat al onderaan body)
     comments.innerHTML = localStorage.getItem(storageKey) || "";
     let commentsNum = document.querySelectorAll(".parents").length;
     document.getElementById("comment").textContent = commentsNum;
