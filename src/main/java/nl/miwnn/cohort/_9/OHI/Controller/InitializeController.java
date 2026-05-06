@@ -136,9 +136,11 @@ public class InitializeController {
     //todo
     private void seedUsers() {
         if (ohiUserRepository.count() == 0) {
-            Person testUser = new Person("Hans", "Hans");
+            Person testUser = new Person("Hans", "Hoeven");
+            Person testUser2 = new Person("Mark", "van Dijk ");
             personRepository.save(testUser);
-            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT");
+            personRepository.save(testUser2);
+            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT", testUser2);
             OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
             OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
             ohiUserRepository.save(docent);
