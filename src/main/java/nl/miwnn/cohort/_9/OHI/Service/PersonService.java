@@ -71,8 +71,8 @@ public class PersonService {
             studentRepository.delete(person.getStudent());
         }
 
-        if (person.getImage() != null) {
-            imageRepository.delete(person.getImage());
+        if (person.getProfileImage() != null) {
+            imageRepository.delete(person.getProfileImage());
         }
 
         personRepository.deleteById(id);

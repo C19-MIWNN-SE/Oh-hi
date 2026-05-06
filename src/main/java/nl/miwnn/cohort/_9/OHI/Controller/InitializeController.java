@@ -142,7 +142,7 @@ public class InitializeController {
             personRepository.save(testUser2);
             OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT", testUser2);
             OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
-            OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
+            OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT");
             ohiUserRepository.save(docent);
             ohiUserRepository.save(student);
             ohiUserRepository.save(hans);

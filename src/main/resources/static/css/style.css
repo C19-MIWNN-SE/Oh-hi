@@ -510,5 +510,9 @@ a {
     padding-right: 40px;
 }
 
-
+.carousel-inner{
+    height: auto;
+    width: 30%;
+    margin: auto;
+}
 
