@@ -11,6 +11,10 @@ body {
     flex-direction: column;
 }
 
+.outlining{
+    margin-bottom: 5%;
+}
+
 .loginBackground {
     background-image: url("/static-images/LoginBackground_upscaled.png");
     background-repeat: no-repeat;
@@ -133,6 +137,11 @@ nav{
 .fp-btn-colour:hover{
     background-color: rgb(255, 219, 253);
     border-color: rgb(255, 219, 253);
+}
+
+.fp-btn-colour-nav{
+    background: none;
+    border: none;
 }
 
 .fp-btn-content{

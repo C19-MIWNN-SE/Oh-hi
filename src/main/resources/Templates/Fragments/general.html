@@ -33,8 +33,24 @@
                href="/person/overview">
                 <i class="bi bi-people"></i> Overzicht
             </a>
+            <div class="dropdown">
+                <button class=" search-bg dropdown-toggle nav-link"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Cohorts
+                </button>
+                <ul class="dropdown-menu">
+                    <li th:each="cohort : ${allCohorts}">
+                        <a class="dropdown-item"
+                           th:href="@{/cohort/{id}(id=${cohort.id})}"
+                           th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <form class="nav-link" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-                <button class="btn btn-outline-light btn-sm" type="submit">Uitloggen</button>
+                <button class="btn btn-outline-light btn-sm outlining" type="submit">Uitloggen</button>
             </form>
         </div>
     </div>

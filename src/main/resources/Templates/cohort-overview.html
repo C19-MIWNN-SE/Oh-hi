@@ -21,22 +21,6 @@
 
             <!-- Links: Cohorts dropdown + Docenten knop -->
             <div class="col-auto d-flex gap-2 align-items-center" sec:authorize="hasRole('DOCENT')">
-                <div class="dropdown">
-                    <button class="btn btn-primary shadow-sm search-bg dropdown-toggle fp-btn-colour"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Cohorts
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li th:each="cohort : ${allCohorts}">
-                            <a class="dropdown-item"
-                               th:href="@{/cohort/{id}(id=${cohort.id})}"
-                               th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
 
                 <button class="btn btn-primary fp-btn-colour d-flex align-items-center gap-2"
                         type="button"
