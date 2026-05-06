@@ -11,14 +11,17 @@ body {
     flex-direction: column;
 }
 
-.loginBackground{
+.loginBackground {
     background-image: url("/static-images/LoginBackground_upscaled.png");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    background-attachment: fixed;
 }
 
 .loginTextContent {
-    padding: 25% 25% 0 5%;
+    padding: 17% 25% 0 5%;
 }
 
 .loginTextStyle{
