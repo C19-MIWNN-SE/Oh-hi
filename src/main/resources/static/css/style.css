@@ -16,36 +16,42 @@ body {
 }
 
 .loginBackground {
-    background-image: url("/static-images/LoginBackground_upscaled.png");
+    background-image: url("/static-images/inlogBackground.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-attachment: fixed;
     background-position: center;
     min-height: 100vh;
-    background-attachment: fixed;
+
 }
 
-.loginTextContent {
-    padding-top: clamp(8rem, 17vh, 20rem);
-    padding-right: clamp(8rem, 15vw, 20rem);
-    padding-bottom: 0;
-    padding-left: clamp(1rem, 3vw, 5rem);
+.loginTextBackground {
+    background-color: white;
+    border-radius: 15px;
+    padding: 3rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
 }
 
-.loginTextContent h1 {
-    font-size: clamp(1.5rem, 3vw, 2rem);
+
+.headerLogin {
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #333;
 }
 
-.loginTextContent h2 {
-    font-size: clamp(1.2rem, 2vw, 2rem);
+.loginTextStyle {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 2rem;
 }
 
-.loginTextContent p {
-    font-size: clamp(0.9rem, 1.2vw, 0.7rem);
-}
-
-.loginTextStyle{
-    padding: 2% 2% 2% 2%;
-    line-height: 2;
+.circleImage {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #C9BEFF;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .card-name-style{
@@ -56,22 +62,20 @@ body {
     border-style: solid;
 }
 
-.headerLogin{
-    font-family: "DejaVu Sans Condensed";
-    padding: 0 2% 0 2%;
 
-}
 
 .loginForm{
-    margin-top: 6%;
+    margin-left: 110px;
 }
 
-.circleImage {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
+.loginForm .form-control {
+    background-color: #f0f4f8;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+
 }
+
 
 .background-color {
     background-color: #f0ECE1;
