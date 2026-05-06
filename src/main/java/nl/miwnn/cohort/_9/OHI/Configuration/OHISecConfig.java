@@ -42,6 +42,7 @@ public class OHISecConfig {
                                 "/person/remove",
                                 "/person/save",
                                 "/cohort",
+                                        "/images/upload-group",
                                 "/cohort/**"
                         ).hasAnyRole("DOCENT").anyRequest().authenticated()
                         )

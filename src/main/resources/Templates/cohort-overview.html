@@ -9,6 +9,12 @@
 <body>
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
 
+<!-- Midden: Cohort naam -->
+<div class="col text-center">
+    <h1 th:text="${cohortName}"></h1>
+</div>
+
+
 <div class="container text-center">
     <div class="container mt-4">
         <div class="row align-items-center">
@@ -43,10 +49,6 @@
                 </button>
             </div>
 
-            <!-- Midden: Cohort naam -->
-            <div class="col text-center">
-                <h1 th:text="${cohortName}"></h1>
-            </div>
 
             <!-- Rechts: alle knoppen naast elkaar -->
             <div class="col-auto d-flex gap-2 align-items-center">
@@ -62,6 +64,11 @@
                     <i class="bi bi-plus-circle me-1"></i> Lid
                 </a>
 
+                <a th:href="@{/cohort/{cohortId}/group-photos(cohortId=${cohort.id})}"
+                   class="btn btn-success shadow-sm fp-btn-colour">
+                    <i class="bi bi-plus-circle me-1"></i> Group photo
+                </a>
+
                 <a id="groepjesBtn"
                    class="btn btn-primary fp-btn-colour"
                    data-bs-toggle="collapse"
@@ -74,6 +81,44 @@
             </div>
 
         </div>
+
+<div id="cohortCarousel" class="carousel slide" data-bs-ride="carousel">
+
+    <div class="carousel-indicators" th:if="${#lists.size(images) > 1}">
+        <button th:each="img, iter : ${images}"
+                type="button"
+                data-bs-target="#cohortCarousel"
+                th:data-bs-slide-to="${iter.index}"
+                th:classappend="${iter.index == 0} ? 'active'">
+        </button>
+    </div>
+    <div class="carousel-inner">
+        <div th:each="img, iter : ${images}"
+             th:class="'carousel-item ' + (${iter.index == 0} ? 'active' : '')">
+
+            <img th:src="@{'/images/' + ${img.id}}"
+                 class="d-block w-100"
+                 th:alt="${img.alttxt}">
+
+            <!-- todo - perhaps display names of people in photo instead? -->
+<!--            <div class="carousel-caption d-none d-md-block">-->
+<!--                <h5 th:text="${img.alttxt}"></h5>-->
+<!--            </div>-->
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#cohortCarousel" data-bs-slide="prev"
+            th:if="${#lists.size(images) > 1}">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#cohortCarousel" data-bs-slide="next"
+            th:if="${#lists.size(images) > 1}">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+
+</div>
+
+
     </div>
     <!-- Docenten collapse -->
     <div id="teachers" class="collapse container">
