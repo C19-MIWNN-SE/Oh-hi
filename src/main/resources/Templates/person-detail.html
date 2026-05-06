@@ -80,7 +80,8 @@
 
                 <div class="comments"></div>
                 <div class="commentBox">
-                    <img th:src="${loggedIn.image != null} ? '/images/' + ${loggedIn.image.id} : '/static-images/noImage.jpg'">
+
+                    <img th:src="${loggedIn.image != null ? '/images/' + loggedIn.image.id : '/static-images/noImage.jpg'}">
                     <div class="content">
                         <h2 th:text="${commentWriter}" class="commentWriter">Schrijf een bericht als</h2>
                         <div class="commentInput">

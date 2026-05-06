@@ -177,6 +177,10 @@ public class Person {
         this.profileImage = profileImage;
     }
 
+    public Image getImage() {
+        return profileImage;
+    }
+
     public String getAboutMe() {
         return aboutMe;
     }
