@@ -44,6 +44,12 @@ public class PersonService {
         return personRepository.findAll();
     }
 
+    public List<Person> getAllPeopleSortedByCohortAvailability() {
+        return getAllPeople().stream()
+                .sorted(Comparator.comparing(p -> p.getCohort() == null))
+                .toList();
+    }
+
     public void saveMemberToCohort(Person person){
         personRepository.save(person);
     }

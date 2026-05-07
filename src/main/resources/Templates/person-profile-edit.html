@@ -7,9 +7,13 @@
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
 
-<div class="container mt-5">
+<div th:replace="~{fragments/general :: form-title(
+'Profiel bewerken')}">
+</div>
+
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card shadow-sm border-0">
                 <div class="card-body p-4">
                     <form th:action="@{/person/profile/save}"
@@ -25,11 +29,24 @@
                                    th:field="*{age}"
                                    class="form-control"
                                    th:classappend="${#fields.hasErrors('age')} ? 'is-invalid'"
-                                   placeholder="leeftijd...">
+                                   placeholder="Wat is je leeftijd?">
 
                             <div class="invalid-feedback"
                                  th:if="${#fields.hasErrors('age')}"
                                  th:errors="*{age}"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="pronoun" class="form-label fw-bold">Voornaamwoorden</label>
+                            <input type="text" id="pronoun"
+                                   th:field="*{pronoun}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('pronoun')} ? 'is-invalid'"
+                                   placeholder="Wat zijn je pronouns?">
+
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('pronoun')}"
+                                 th:errors="*{pronoun}"></div>
                         </div>
 
                         <div class="mb-3">
@@ -38,7 +55,7 @@
                                    th:field="*{location}"
                                    class="form-control"
                                    th:classappend="${#fields.hasErrors('location')} ? 'is-invalid'"
-                                   placeholder="woonplaats">
+                                   placeholder="Waar woon je?">
 
                             <div class="invalid-feedback"
                                  th:if="${#fields.hasErrors('location')}"
@@ -50,26 +67,16 @@
                             <input type="text" id="employer"
                                    th:field="*{student.employer}"
                                    class="form-control"
-                                   placeholder="Werknemer">
+                                   placeholder="Waar ga jij werken?">
                         </div>
 
-                        <div class="mb-3">
-                            <label for="pronoun" class="form-label fw-bold">Voornaamwoorden</label>
-                            <input type="text" id="pronoun"
-                                   th:field="*{pronoun}"
-                                   class="form-control"
-                                   th:classappend="${#fields.hasErrors('pronoun')} ? 'is-invalid'"
-                                   placeholder="Hoe je wordt aangesproken:">
 
-                            <div class="invalid-feedback"
-                                 th:if="${#fields.hasErrors('pronoun')}"
-                                 th:errors="*{pronoun}"></div>
-                        </div>
 
                         <div class="mb-3">
-                            <label for="pronoun" class="form-label fw-bold">Interesses</label>
-                            <div class="row">
-                                <div th:each="interest : ${allInterests}" class="col-4 form-check mb-1">
+                            <label class="form-label fw-bold">Interesses</label>
+
+                            <div class="row p-3">
+                                <div th:each="interest : ${allInterests}" class="col-3 form-check mb-1">
                                     <input class="form-check-input"
                                            type="checkbox"
                                            th:field="*{interests}"
@@ -85,12 +92,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="aboutMe" class="form-label fw-bold">About Me</label>
+                            <label for="aboutMe" class="form-label fw-bold">Over mij</label>
                             <textarea
                                     id="aboutMe"
                                     th:field="*{aboutMe}"
                                     class="form-control"
-                                    placeholder="About Me"
+                                    placeholder="Hoe zouden familie en vrienden jou omschrijven?"
                                     rows="4"></textarea>
                         </div>
 

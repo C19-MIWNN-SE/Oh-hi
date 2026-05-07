@@ -15,10 +15,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark my-nav-background"
      th:fragment="navbar">
 
-
     <div class="container">
+
         <a class="navbar-brand" href="/">Oh, hi!</a>
-        <div class="navbar-nav">
+
+        <div class="d-flex align-items-center gap-2">
+
             <!-- todo - link to customize user's own profile -->
             <a class="nav-link"
                sec:authorize="isAuthenticated()"
@@ -55,6 +57,13 @@
         </div>
     </div>
 </nav>
+
+<div th:fragment="form-title(title)">
+    <div class="container text-center my-4">
+        <h1 th:text="${title}"></h1>
+    </div>
+</div>
+
 <footer class="footer mt-auto py-3 bg-light"
         th:fragment="footer">
     <div class="container">
@@ -67,16 +76,16 @@
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const teachersDiv = document.getElementById("teachers");
             if (localStorage.getItem("teachersOpen") === "true") {
                 teachersDiv.classList.add("show");
                 teachersDiv.classList.remove("collapsing");
             }
-            teachersDiv.addEventListener("shown.bs.collapse", function() {
+            teachersDiv.addEventListener("shown.bs.collapse", function () {
                 localStorage.setItem("teachersOpen", "true");
             });
-            teachersDiv.addEventListener("hidden.bs.collapse", function() {
+            teachersDiv.addEventListener("hidden.bs.collapse", function () {
                 localStorage.setItem("teachersOpen", "false");
             });
         });

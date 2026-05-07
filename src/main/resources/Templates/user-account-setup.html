@@ -7,8 +7,11 @@
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
 
-<div class="container mt-5">
-    <h2>Oh Hi! Maak een nieuwe gebruikersnaam en wachtwoord aan om in te loggen!</h2>
+<div th:replace="~{fragments/general :: form-title(
+'Account aanmaken')}">
+</div>
+
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-sm border-0">
@@ -18,14 +21,14 @@
                         <input type="hidden" name="token" th:value="${token}">
 
                         <div class="mb-3">
-                            <label for="username" class="form-label fw-bold">Maak een username</label>
+                            <label for="username" class="form-label fw-bold">Gebruikersnaam</label>
                             <input type="text" id="username"
                                    name="username"
                                    class="form-control">
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label fw-bold">Maak een wachtwoord</label>
+                            <label for="password" class="form-label fw-bold">Wachtwoord</label>
                             <input type="text" id="password"
                                    name="password"
                                    class="form-control">
