@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{Fragments/general :: baseheader(~{:: title})}">
     <title>Welkom</title>
 </head>
@@ -7,9 +7,12 @@
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
 
 <div class="container mt-5 mb-5">
-    <div class="row">
+    <!-- align-items-center zorgt voor verticale uitlijning tussen links en rechts -->
+    <div class="row align-items-center">
 
-        <div class="col-7 loginTextBackground">
+        <!-- Linker kolom: Wit blok met tekst -->
+        <!-- offset-md-1 zorgt voor de marge aan de linkerkant van het scherm -->
+        <div class="col-md-5 offset-md-1 loginTextBackground">
             <div class="loginTextContent">
                 <h1 class="headerLogin">Oh hi, gebruiker!</h1>
                 <p class="loginTextStyle">
@@ -23,39 +26,39 @@
                     <img th:src="@{/static-images/johnny.jpg}" class="circleImage" alt="foto3">
                 </div>
             </div>
-        </div> <!-- ✅ col-7 gesloten -->
-
-        <div class="col-5 loginForm">
-                    <div class="text-center">
-                        <h1>Login</h1>
-                    </div>
-                    <div th:if="${param.error}">
-                        Invalid username and password.
-                    </div>
-                    <div th:if="${param.logout}">
-                        You have been logged out.
-                    </div>
-
-                    <form th:action="@{/userlogin}" method="post">
-                        <div class="">
-                            <label for="username" class="form-label"></label>
-                            <input type="text" class="form-control d-block" id="username" name="username"
-                                   placeholder="Gebruikersnaam"/>
-                        </div>
-                        <div>
-                            <label for="password" class="form-label"></label>
-                            <input type="password" class="form-control d-block" id="password" name="password"
-                                   placeholder="Wachtwoord"/>
-                        </div>
-                        <div class="">
-                            <label for="submitbtn" class=""></label>
-                            <input type="submit" id="submitbtn" class="btn btn-primary form-control d-block" value="Log in"/>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
 
+        <!-- Rechter kolom: Login formulier -->
+        <!-- ps-md-5 zorgt voor de witruimte tussen het witte blok en de login -->
+        <div class="col-md-5 ps-md-10 loginForm">
+            <div class="text-center mb-6">
+                <h1>Login</h1>
+            </div>
+
+            <div th:if="${param.error}" class="alert alert-danger p-2 small">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-info p-2 small">
+                You have been logged out.
+            </div>
+
+            <form th:action="@{/userlogin}" method="post">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="username" name="username"
+                           placeholder="Gebruikersnaam" required/>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="Wachtwoord" required/>
+                </div>
+                <div class="mt-4">
+                    <input type="submit" id="submitbtn" class="btn btn-primary w-100" value="Log in"/>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>
