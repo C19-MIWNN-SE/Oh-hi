@@ -133,8 +133,8 @@ nav{
 }
 
 .fp-btn-colour{
-    background-color: #C9BEFF;
-    border-color: #C9BEFF;
+    background-color: cornflowerblue;
+    border-color: cornflowerblue;
     transition: 0.3s;
 }
 
@@ -153,8 +153,10 @@ nav{
 }
 
 .btn-spacing {
-    margin: 0 5px 0 5px ;
+    margin: 0 2px 0 2px ;
 }
+
+
 /*Cohort lijst opmaak*/
 .cohort-dropdown {
     width: 100%;
@@ -558,6 +560,22 @@ a {
     background-color: #C9BEFF;
 }
 
+.img-text{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(29, 106, 154, 0.72);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+}
+.image-wrap-text:hover .img-text{
+    visibility:visible;
+    opacity:1;
+}
+
 .cohortCard{
     height: 100%;
     width: auto;
@@ -565,5 +583,4 @@ a {
 }
 .CohortInfo{
     background: #C9BEFF;
-
 }

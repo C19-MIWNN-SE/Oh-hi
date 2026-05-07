@@ -9,61 +9,6 @@
 <body>
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
 
-
-<div class="container text-center">
-    <div class="container mt-4">
-        <div class="row align-items-center">
-
-            <!-- Links: Cohorts dropdown + Docenten knop -->
-            <div class="col-auto d-flex gap-2 align-items-center" sec:authorize="hasRole('DOCENT')">
-
-                <button class="btn btn-primary fp-btn-colour d-flex align-items-center gap-2"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#teachers"
-                        aria-expanded="false"
-                        aria-controls="teachers">
-                    Docenten
-                    <i class="bi bi-chevron-down transition-icon"></i>
-                </button>
-            </div>
-
-
-            <!-- Rechts: alle knoppen naast elkaar -->
-            <div class="col-auto d-flex gap-2 align-items-center">
-                <a th:href="@{/cohort/add}"
-                   class="btn btn-success shadow-sm fp-btn-colour"
-                   sec:authorize="hasRole('DOCENT')">
-                    <i class="bi bi-plus-circle me-1"></i> Cohort
-                </a>
-
-                <a th:href="@{/person/add/{cohortId}(cohortId=${cohort.id})}"
-                   class="btn btn-success shadow-sm fp-btn-colour"
-                   sec:authorize="hasRole('DOCENT')">
-                    <i class="bi bi-plus-circle me-1"></i> Lid
-                </a>
-
-                <a th:href="@{/cohort/{cohortId}/group-photos(cohortId=${cohort.id})}"
-                   class="btn btn-success shadow-sm fp-btn-colour">
-                    <i class="bi bi-plus-circle me-1"></i> Group photo
-                </a>
-
-                <a id="groepjesBtn"
-                   class="btn btn-primary fp-btn-colour"
-                   data-bs-toggle="collapse"
-                   data-bs-target="#groupSection"
-                   aria-expanded="false"
-                   aria-controls="groupSection"
-                   sec:authorize="hasRole('DOCENT')">
-                    <i class="bi bi-people me-1"></i> Groepjes
-                </a>
-            </div>
-        </div>
-</div>
-
-
-
-
     <div class="row">
         <!-- Cohort Overview - left-cohort info, right-students -->
         <div class="col-4">
@@ -77,7 +22,7 @@
                     <div class="name-style" th:text="Docenten"></div>
                     <!-- Docenten -->
                     <div id="teachers" class="collapse mt-3">
-                        <div class="row row-cols-2 g-3">
+                        <div class="row g-3">
                             <div class="col" th:each="teacher : ${members}"
                                  th:if="${teacher.userRole.name() == 'TEACHER'}">
                                 <a th:href="@{/person/{id}(id=${teacher.id})}" style="cursor: pointer;">
@@ -86,15 +31,37 @@
                             </div>
                         </div>
                     </div>
+                    <br/>
+<div class="CohortButtons d-flex">
+                    <a th:href="@{/person/add/{cohortId}(cohortId=${cohort.id})}"
+                       class="btn btn-success shadow-sm fp-btn-colour btn-spacing"
+                       sec:authorize="hasRole('DOCENT')">
+                        <i class="bi bi-plus-circle me-1"></i> Lid
+                    </a>
+
+                    <a th:href="@{/cohort/{cohortId}/group-photos(cohortId=${cohort.id})}"
+                       class="btn btn-success shadow-sm fp-btn-colour btn-spacing">
+                        <i class="bi bi-plus-circle me-1"></i> Group photo
+                    </a>
+
+                    <a id="groepjesBtn"
+                       href="#"
+                       class="btn btn-success shadow-sm fp-btn-colour btn-spacing"
+                       data-bs-toggle="collapse"
+                       data-bs-target="#groupSection"
+                       aria-expanded="false"
+                       aria-controls="groupSection"
+                       sec:authorize="hasRole('DOCENT')">
+                        <i class="bi bi-people me-1"></i> Groepjes
+                    </a>
+
                 </div>
 
-
-
-
+</div>
             </div>
         </div>
 
-        <!--Students -->
+        <!--Students and Group Photos from the Cohort -->
         <div class="col-8">
             <!-- Carosel of group photos of cohort -->
             <div id="cohortCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -107,7 +74,7 @@
                             th:classappend="${iter.index == 0} ? 'active'">
                     </button>
                 </div>
-
+                <div class="image-wrap-text">
                 <div class="carousel-inner">
                     <div th:each="img, iter : ${images}"
                          th:class="'carousel-item ' + (${iter.index == 0} ? 'active' : '')">
@@ -115,7 +82,9 @@
                         <img th:src="@{'/images/' + ${img.id}}"
                              class="d-block w-100"
                              th:alt="${img.alttxt}">
+                        <p class="img-text">this is where I will add the names of people in this photo</p>
                     </div>
+                </div>
                 </div>
 
                 <button class="carousel-control-prev" type="button"
@@ -130,7 +99,7 @@
                     <span class="carousel-control-next-icon"></span>
                 </button>
             </div>
-            <div id="students" class="row row-cols-4 mt-1 g-4">
+            <div id="students" class="row row-cols-3 mt-1 g-4">
                 <div class="col" th:each="student : ${members}"
                      th:if="${student.userRole.name() == 'STUDENT'}">
                     <a th:href="@{/person/{id}(id=${student.id})}" style="cursor: pointer;">
