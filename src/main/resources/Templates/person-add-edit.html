@@ -7,7 +7,7 @@
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
 
-<div th:replace="~{fragments/general :: form-title(
+<div th:replace="~{fragments/general :: formTitle(
 'Persoon toevoegen')}">
 </div>
 
@@ -85,10 +85,7 @@
                         </div>
 
                         <div class="d-grid gap-2 mt-4">
-                            <button class="btn btn-primary btn-lg shadow-sm"
-                                    type="submit">
-                                <i class="bi bi-save"></i> Lid opslaan
-                            </button>
+                            <div th:replace="~{Fragments/general :: saveButton}"></div>
                             <a href="/person/overview"
                                class="btn btn-link text-secondary text-decoration-none text-center">Annuleren</a>
                         </div>

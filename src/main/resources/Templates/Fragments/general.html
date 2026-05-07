@@ -58,10 +58,17 @@
     </div>
 </nav>
 
-<div th:fragment="form-title(title)">
+<div th:fragment="formTitle(title)">
     <div class="container text-center my-4">
         <h1 th:text="${title}"></h1>
     </div>
+</div>
+
+<div th:fragment="saveButton">
+    <button class="btn btn-primary btn-lg shadow-sm w-100"
+            type="submit">
+        <i class="bi bi-floppy me-2"></i>Opslaan
+    </button>
 </div>
 
 <footer class="footer mt-auto py-3 bg-light"

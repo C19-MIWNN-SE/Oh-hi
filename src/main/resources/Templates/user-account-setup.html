@@ -7,13 +7,13 @@
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
 
-<div th:replace="~{fragments/general :: form-title(
+<div th:replace="~{fragments/general :: formTitle(
 'Account aanmaken')}">
 </div>
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card shadow-sm border-0">
                 <div class="card-body p-4">
                     <form th:action="@{/person/account/setup}" method="post">
@@ -35,10 +35,7 @@
                         </div>
 
                         <div class="d-grid gap-2 mt-4">
-                            <button class="btn btn-primary btn-lg shadow-sm"
-                                    type="submit">
-                                <i class="bi bi-save"></i> Save Info
-                            </button>
+                            <div th:replace="~{Fragments/general :: saveButton}"></div>
                         </div>
 
                     </form>

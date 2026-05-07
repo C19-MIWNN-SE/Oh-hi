@@ -7,7 +7,7 @@
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
 
-<div th:replace="~{fragments/general :: form-title(
+<div th:replace="~{fragments/general :: formTitle(
 'Profiel bewerken')}">
 </div>
 
@@ -114,11 +114,7 @@
                                    class="form-control">
                         </div>
                         <div class="d-grid gap-2 mt-4">
-                            <button class="btn btn-primary btn-lg shadow-sm"
-                                    type="submit">
-                                <i class="bi bi-save"></i> Save Info
-                            </button>
-
+                            <div th:replace="~{Fragments/general :: saveButton}"></div>
                             <a th:href="@{/person/{id}(id=${person.id})}"
                                class="btn btn-link text-secondary text-decoration-none text-center">
                                 Annuleren
