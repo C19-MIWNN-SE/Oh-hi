@@ -34,17 +34,15 @@ public class CohortController {
     private final CohortService cohortService;
     private final AccountTokenService accountTokenService;
     private final ImageService imageService;
-    private final CohortRepository cohortRepository;
     private Logger log;
 
     public CohortController(PersonService personService,
                             CohortService cohortService,
-                            AccountTokenService accountTokenService, ImageService imageService, CohortRepository cohortRepository) {
+                            AccountTokenService accountTokenService, ImageService imageService) {
         this.personService = personService;
         this.cohortService = cohortService;
         this.accountTokenService = accountTokenService;
         this.imageService = imageService;
-        this.cohortRepository = cohortRepository;
     }
 
     @GetMapping("/add")
@@ -105,8 +103,7 @@ public class CohortController {
 
     @GetMapping("/{id}/group-photos")
     public String showGroupUploadForm(@PathVariable Long id, Model model) {
-        Cohort cohort = cohortRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cohort not found"));
+        Cohort cohort = cohortService.findById(id);
 
         model.addAttribute("cohort", cohort);
         model.addAttribute("people", cohort.getMembers());

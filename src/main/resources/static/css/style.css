@@ -547,7 +547,19 @@ a {
 
 .carousel-inner{
     height: auto;
-    width: 30%;
+    width: 60%;
     margin: auto;
 }
+.carousel-control-next-icon, .carousel-control-prev-icon{
+    background-color: #C9BEFF;
+}
 
+.cohortCard{
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}
+.CohortInfo{
+    background: #C9BEFF;
+
+}

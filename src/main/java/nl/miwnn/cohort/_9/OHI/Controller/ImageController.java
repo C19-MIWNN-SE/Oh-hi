@@ -2,6 +2,7 @@ package nl.miwnn.cohort._9.OHI.Controller;
 
 import nl.miwnn.cohort._9.OHI.Model.Image;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
+import nl.miwnn.cohort._9.OHI.Service.ImageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +17,16 @@ import org.springframework.web.server.ResponseStatusException;
  */
 @Controller
 public class ImageController {
-    private final ImageRepository imageRepository;
+    private final ImageService imageService;
 
 
-    public ImageController(ImageRepository imageRepository) {
-        this.imageRepository = imageRepository;
+    public ImageController(ImageService imageService) {
+        this.imageService = imageService;
     }
 
     @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> showImage(@PathVariable Long id) {
-        Image image = imageRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Afbeelding niet gevonden"));
+        Image image = imageService.findById(id);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(image.getContentType()))
                 .body(image.getData());

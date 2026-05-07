@@ -9,11 +9,6 @@
 <body>
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
 
-<!-- Midden: Cohort naam -->
-<div class="col text-center">
-    <h1 th:text="${cohortName}"></h1>
-</div>
-
 
 <div class="container text-center">
     <div class="container mt-4">
@@ -63,68 +58,86 @@
                     <i class="bi bi-people me-1"></i> Groepjes
                 </a>
             </div>
-
         </div>
-
-<div id="cohortCarousel" class="carousel slide" data-bs-ride="carousel">
-
-    <div class="carousel-indicators" th:if="${#lists.size(images) > 1}">
-        <button th:each="img, iter : ${images}"
-                type="button"
-                data-bs-target="#cohortCarousel"
-                th:data-bs-slide-to="${iter.index}"
-                th:classappend="${iter.index == 0} ? 'active'">
-        </button>
-    </div>
-    <div class="carousel-inner">
-        <div th:each="img, iter : ${images}"
-             th:class="'carousel-item ' + (${iter.index == 0} ? 'active' : '')">
-
-            <img th:src="@{'/images/' + ${img.id}}"
-                 class="d-block w-100"
-                 th:alt="${img.alttxt}">
-
-            <!-- todo - perhaps display names of people in photo instead? -->
-<!--            <div class="carousel-caption d-none d-md-block">-->
-<!--                <h5 th:text="${img.alttxt}"></h5>-->
-<!--            </div>-->
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#cohortCarousel" data-bs-slide="prev"
-            th:if="${#lists.size(images) > 1}">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-
-    <button class="carousel-control-next" type="button" data-bs-target="#cohortCarousel" data-bs-slide="next"
-            th:if="${#lists.size(images) > 1}">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-
 </div>
 
 
-    </div>
-    <!-- Docenten collapse -->
-    <div id="teachers" class="collapse container">
-        <div class="row row-cols-4 mt-1 g-4 justify-content-center">
-            <div class="col" th:each="teacher : ${members}"
-                 th:if="${teacher.userRole.name() == 'TEACHER'}">
-                <a th:href="@{/person/{id}(id=${teacher.id})}"
-                   style="cursor: pointer;">
-                    <div th:replace="~{fragments/person :: personCard(${teacher}, null)}"></div>
-                </a>
+
+
+    <div class="row">
+        <!-- Cohort Overview - left-cohort info, right-students -->
+        <div class="col-4">
+
+            <div class="cohortCard shadow-sm background-content-card p-3 position-relative">
+                <div class="CohortInfo card-name-style">
+                    <div class="name-style fw-bold" th:text="${cohortName}"></div>
+                </div>
+                <br />
+                <div class="CohortInfo card-name-style">
+                    <div class="name-style" th:text="Docenten"></div>
+                    <!-- Docenten -->
+                    <div id="teachers" class="collapse mt-3">
+                        <div class="row row-cols-2 g-3">
+                            <div class="col" th:each="teacher : ${members}"
+                                 th:if="${teacher.userRole.name() == 'TEACHER'}">
+                                <a th:href="@{/person/{id}(id=${teacher.id})}" style="cursor: pointer;">
+                                    <div th:replace="~{fragments/person :: personCard(${teacher}, null)}"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
             </div>
         </div>
-    </div>
 
-    <!-- Studenten grid -->
-    <div id="students" class="row row-cols-4 mt-1 g-4">
-        <div class="col" th:each="student : ${members}"
-             th:if="${student.userRole.name() == 'STUDENT'}">
-            <a th:href="@{/person/{id}(id=${student.id})}"
-               style="cursor: pointer;">
-                <div th:replace="~{fragments/person :: personCard(${student}, null)}"></div>
-            </a>
+        <!--Students -->
+        <div class="col-8">
+            <!-- Carosel of group photos of cohort -->
+            <div id="cohortCarousel" class="carousel slide" data-bs-ride="carousel">
+
+                <div class="carousel-indicators" th:if="${#lists.size(images) > 1}">
+                    <button th:each="img, iter : ${images}"
+                            type="button"
+                            data-bs-target="#cohortCarousel"
+                            th:data-bs-slide-to="${iter.index}"
+                            th:classappend="${iter.index == 0} ? 'active'">
+                    </button>
+                </div>
+
+                <div class="carousel-inner">
+                    <div th:each="img, iter : ${images}"
+                         th:class="'carousel-item ' + (${iter.index == 0} ? 'active' : '')">
+
+                        <img th:src="@{'/images/' + ${img.id}}"
+                             class="d-block w-100"
+                             th:alt="${img.alttxt}">
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button"
+                        data-bs-target="#cohortCarousel" data-bs-slide="prev"
+                        th:if="${#lists.size(images) > 1}">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+
+                <button class="carousel-control-next" type="button"
+                        data-bs-target="#cohortCarousel" data-bs-slide="next"
+                        th:if="${#lists.size(images) > 1}">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+            <div id="students" class="row row-cols-4 mt-1 g-4">
+                <div class="col" th:each="student : ${members}"
+                     th:if="${student.userRole.name() == 'STUDENT'}">
+                    <a th:href="@{/person/{id}(id=${student.id})}" style="cursor: pointer;">
+                        <div th:replace="~{fragments/person :: personCard(${student}, null)}"></div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

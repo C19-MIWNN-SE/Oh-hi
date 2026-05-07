@@ -1,5 +1,6 @@
 package nl.miwnn.cohort._9.OHI.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import nl.miwnn.cohort._9.OHI.Model.Image;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
@@ -14,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -66,4 +68,8 @@ public class ImageService {
         personRepository.saveAll(people);
     }
 
+    public Image findById(Long id) {
+        return imageRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Foto %d niet gevonden", id)));
+    }
 }
