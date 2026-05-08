@@ -6,6 +6,7 @@ import nl.miwnn.cohort._9.OHI.Service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -128,10 +129,10 @@ public class PersonController {
     @PreAuthorize("#id == authentication.principal.person.id")
     @GetMapping("/profile/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        personService.getPerson(id);
+        Person person = personService.findById(id);
         log.info("Bewerkformulier geopend voor: {}", id);
 
-        model.addAttribute("person", personService.findById(id));
+        model.addAttribute("person", person);
         model.addAttribute("allInterests", interestService.getAllInterests());
 
         return "person-profile-edit";

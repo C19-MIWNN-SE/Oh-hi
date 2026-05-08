@@ -39,6 +39,17 @@ nav{
 .cohort-dropdown {
     width: 100%;
 }
+.nav-btn {
+    color: white;
+    border-color: white;
+    outline: 2px;
+    border-radius: 5px;
+    margin: 0 4px 0 4px ;
+}
+
+.nav-btn:hover {
+    color:  rgb(255, 219, 253);
+}
 
 /*--------------------------------------related to login------------------------------------------*/
 .loginBackground {
@@ -124,13 +135,7 @@ button[aria-expanded="true"] .transition-icon {
     transform: rotate(-90deg);
 }
 
-.nav-btn {
-    color: white;
-}
 
-.nav-btn:hover {
-    color:  rgb(255, 219, 253);
-}
 
 /*--------------------------------------Profile of Person------------------------------------------*/
 .PersonProfile{
