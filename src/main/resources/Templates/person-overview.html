@@ -17,10 +17,7 @@
         <div class="row align-items-start">
             <div class="col-4" sec:authorize="hasRole('DOCENT')">
                 <div class="dropdown">
-                    <a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour btn-spacing"
-                       sec:authorize="hasRole('DOCENT')">
-                        <i class="bi bi-plus-circle me-1"></i> Cohort
-                    </a>
+
                     <a th:href="@{/person/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour"
                        sec:authorize="hasRole('DOCENT')">
                         <i class="bi bi-plus-circle me-1"></i> Persoon

@@ -124,6 +124,14 @@ button[aria-expanded="true"] .transition-icon {
     transform: rotate(-90deg);
 }
 
+.nav-btn {
+    color: white;
+}
+
+.nav-btn:hover {
+    color:  rgb(255, 219, 253);
+}
+
 /*--------------------------------------Profile of Person------------------------------------------*/
 .PersonProfile{
     height: 130px;

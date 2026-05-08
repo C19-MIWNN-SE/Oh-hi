@@ -19,17 +19,20 @@
 
         <a class="navbar-brand" href="/">Oh, hi!</a>
 
-        <div class="d-flex align-items-center gap-2">
-
+        <div class="nav nav-underline d-flex align-items-center gap-2">
+            <a th:href="@{/cohort/add}" class="nav-link nav-btn"
+               sec:authorize="hasRole('DOCENT')">
+                <i class="bi bi-plus-circle me-1"></i> Cohort
+            </a>
             <!-- todo - link to customize user's own profile -->
-            <a class="nav-link"
+            <a class="nav-link nav-btn"
                sec:authorize="isAuthenticated()"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
                href="/person/overview">
                 <i class="bi bi-people"></i> Edit Profile
             </a>
             <!-- todo - this should link to the cohort of the user -->
-            <a class="nav-link"
+            <a class="nav-link nav-btn"
                sec:authorize="hasRole('DOCENT')"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
                href="/person/overview">
@@ -37,7 +40,7 @@
             </a>
             <div class="dropdown"
                  sec:authorize="hasRole('DOCENT')">
-                <button class=" search-bg dropdown-toggle nav-link"
+                <button class=" search-bg dropdown-toggle nav-link nav-btn"
                         type="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -52,8 +55,8 @@
                     </li>
                 </ul>
             </div>
-            <form class="nav-link" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-                <button class="btn btn-outline-light btn-sm" type="submit">Uitloggen</button>
+            <form class="nav-link nav-btn" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button class="btn btn-outline-light btn-sm outlining" type="submit">Uitloggen</button>
             </form>
         </div>
     </div>
