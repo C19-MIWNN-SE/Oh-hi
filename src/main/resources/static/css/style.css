@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
+/*------------------------------------------base elements---------------------------------------*/
 body {
     background-image: url("/static-images/background.jpg");
     background-repeat: no-repeat;
@@ -10,94 +10,71 @@ body {
     display: flex;
     flex-direction: column;
 }
-
-.outlining{
-    margin-bottom: 5%;
+a {
+    text-decoration: none;
+}
+footer {
+    bottom: 0;
+}
+.head{
+    margin-bottom: 20px;
+}
+.text{
+    margin-left: 10px;
+    padding: 0 60px 10px 0;
+    font-size: 0.9em;
+    font-style: italic;
 }
 
+/*--------------------------------------navigation bar------------------------------------------*/
+nav{
+    background-image: url("/static-images/navbar.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.my-nav-background {
+    color: white;
+}
+/*Cohort lijst opmaak*/
+.cohort-dropdown {
+    width: 100%;
+}
+
+/*--------------------------------------related to login------------------------------------------*/
 .loginBackground {
     background-image: url("/static-images/inlogBackground.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     min-height: 100vh;
-
 }
-
 .loginTextBackground {
     background-color: white;
     border-radius: 15px;
     padding: 3rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-
 }
-
-
 .headerLogin {
     font-weight: 500;
     margin-bottom: 1.5rem;
     color: #333;
 }
-
 .loginTextStyle {
     color: #666;
     line-height: 1.6;
     margin-bottom: 2rem;
 }
-
-.circleImage {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #C9BEFF;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
-
-.card-name-style{
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 5% 3% 1% 3%;
-    border-radius: 10px;
-    border-color: white;
-    border-style: solid;
-}
-
-
-
 .loginForm{
     margin-left: 110px;
 }
-
 .loginForm .form-control {
     background-color: #f0f4f8;
     border: none;
     padding: 0.75rem 1rem;
     border-radius: 8px;
-
 }
 
-
-.background-color {
-    background-color: #f0ECE1;
-}
-
-footer {
-    bottom: 0;
-}
-
-/*navigation bar*/
-nav{
-    background-image: url("/static-images/navbar.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.our-button{
-    background-color: cornflowerblue;
-    margin-top: 30px;
-    margin-left: 1300px;
-}
-
+/*--------------------------------------buttons------------------------------------------*/
 /*Deleting member*/
 .delete-button {
     text-align: center;
@@ -105,11 +82,6 @@ nav{
     justify-content: center;
     margin-right: 42%;
 }
-
-.our-button:hover{
-    background-color: mediumpurple;
-}
-
 /*Button for both add cohort and add member*/
 .add-cohort-member-buttons{
     margin: 2% 2% 2% 2%;
@@ -119,111 +91,52 @@ nav{
     border-color: #C9BEFF;
     transition: 0.3s;
 }
-
 .add-cohort-member-buttons:hover{
     background-color: rgba(255, 219, 253, 0.5);
     border-color: rgba(255, 219, 253, 0.5);
 }
-
 .edit-cohort-member-button{
     background-color: #C9BEFF;
     width: 20%;
     border-color: #C9BEFF;
     transition: 0.3s;
 }
-
 .fp-btn-colour{
     background-color: cornflowerblue;
     border-color: cornflowerblue;
     transition: 0.3s;
 }
-
 .fp-btn-colour:hover{
     background-color: rgb(255, 219, 253);
     border-color: rgb(255, 219, 253);
 }
-
 .fp-btn-colour-nav{
     background: none;
     border: none;
 }
-
 .fp-btn-content{
     margin-top: 15px;
 }
-
 .btn-spacing {
     margin: 0 2px 0 2px ;
 }
-
-
-/*Cohort lijst opmaak*/
-.cohort-dropdown {
-    width: 100%;
-
+button[aria-expanded="true"] .transition-icon {
+    transform: rotate(-90deg);
 }
 
-.image-content {
-    margin-top: 15%;
-    border-radius: 50% !important;
+/*--------------------------------------Profile of Person------------------------------------------*/
+.PersonProfile{
+    height: 130px;
+    width: 130px;
+    object-fit: cover;
+    border: 2px solid white;"
 }
-
-.img-spacing-card {
-    margin-top: 20%;
+.ProfileLineDivider{
+    width: 1px;
+    height: 80px;
+    background-color: #333;
+    opacity: 0.6;
 }
-
-
-.background-style-card, .background-style-card a {
-    text-decoration: none !important;
-}
-
-.background-style-card .fw-bold {
-    text-decoration: none;
-}
-
-.background-content-card-profile {
-    min-height: 280px !important;
-}
-
-.location-text{
-    padding-bottom: 10px;
-    color: black;
-    font-size: 13px;
-}
-
-.name-style{
-    font-size: 18px !important;
-    color: black;
-    padding-bottom: 5px;
-}
-
-.roleDisplay {
-    color: mediumpurple;
-    text-decoration: none;
-    padding-bottom: 15px;
-}
-
-.person-image {
-    box-shadow: 1px 1px 3px #888888;
-}
-
-.delete-button{
-    justify-content: center;
-}
-
-/*hide the headers of the table*/
-.PersonTable thead{
-    display:none;
-}
-
-.PersonTable td {
-    transition: all 0.2s ease;
-}
-
-.my-nav-background {
-    color: white;
-}
-
 .ProfilePic{
     height: 400px;
     width: auto;
@@ -235,13 +148,11 @@ nav{
     width: 90%;
     object-fit: cover;
 }
-
 .aboutMeText{
     height: 100%;
     width: 100%;
     border-radius: 10px;
 }
-
 .aboutMeHeader{
     padding: 3% 2% 1% 3%;
     text-align: left;
@@ -250,18 +161,11 @@ nav{
     font-style: left;
     color: #C9BEFF
 }
-
 .aboutMeContent {
     word-wrap: break-word;
     line-height: 1.6;
     padding: 0 20% 1% 3%;
-
 }
-
-.white-background{
-    /*background-color: #C9BEFF;*/
-}
-
 .info-background-content {
     background-color: white;
     border-radius: 10px;
@@ -270,35 +174,45 @@ nav{
     box-shadow: 1px 1px 1px #C9BEFF;
     transition: 0.3s;
 }
-
 .profile-content-large{
     width: 600px;
 }
-
 .info-background-content:hover{
     scale: 1.05;
-
 }
-
+.background-content-card-profile {
+    min-height: 280px !important;
+}
+.location-text{
+    padding-bottom: 10px;
+    color: black;
+    font-size: 13px;
+}
+.name-style{
+    font-size: 18px !important;
+    color: black;
+    padding-bottom: 5px;
+}
+.roleDisplay {
+    color: mediumpurple;
+    text-decoration: none;
+    padding-bottom: 15px;
+}
+.person-image {
+    box-shadow: 1px 1px 3px #888888;
+}
 .teacher {
     max-height: 0%;
     overflow: hidden;
     transition: max-height 0.3s ease;
 }
-
 .teachers.open {
     max-height: 100%; /* groot genoeg voor de inhoud */
 <i class="bi bi-chevron-down transition-icon"></i>
 }
-
 .transition-icon {
     transition: transform 0.3s ease;
 }
-
-button[aria-expanded="true"] .transition-icon {
-    transform: rotate(-90deg);
-}
-
 .interestStyle {
     background-color: #C9BEFF;
     border-radius: 12px;
@@ -309,48 +223,66 @@ button[aria-expanded="true"] .transition-icon {
     margin: 4px;
 }
 
+/*--------------------------------------related to cards------------------------------------------*/
 .card-overview-page{
     min-height: 150px;
 }
-
 .card-background{
     background-image: url("/static-images/card-background.png");
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 10px;
 }
-
 .card-background:hover{
     transition: 0.3s;
     background-color: rgba(201, 190, 255, 1);
     scale: 1.03;
     border-radius: 5px;
 }
-
 .card-background, .card-background a {
     text-decoration: none !important;
 }
-
 .card-background .fw-bold {
     text-decoration: none;
 }
-
 .card-text{
     color: black;
 }
-
-a {
-    text-decoration: none;
-}
-
 .docent-card {
     background-image: url("/static-images/background-card-teacher.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
+.circleImage {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #C9BEFF;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+.card-name-style{
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 5% 3% 1% 3%;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+}
+.cohortCard{
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}
+.CohortInfo{
+    background: #C9BEFF;
+}
+/*--------------------------------------related to forms------------------------------------------*/
+.FormInfo{
+    max-height: 200px;
+    overflow-y: auto;
+}
 
-/*Drop and drag*/
-
+/*--------------------------------------drag and drop------------------------------------------*/
 .drop-zone {
     min-height: 120px;
     border: 1.5px dashed #ccc;
@@ -376,9 +308,9 @@ a {
     font-size: 14px;
     user-select: none;
 }
-
-.student-drag-card:active { cursor: grabbing; opacity: 0.5; }
-
+.student-drag-card:active {
+    cursor: grabbing; opacity: 0.5;
+}
 .student-avatar {
     width: 32px;
     height: 32px;
@@ -390,7 +322,6 @@ a {
     font-weight: 500;
     flex-shrink: 0;
 }
-
 .pool-avatar   { background: #e8f0fe; color: black; }
 .groep-a-avatar { background: #EEEDFE; color: #534AB7; }
 .groep-b-avatar { background: #E1F5EE; color: #0F6E56; }
@@ -408,48 +339,29 @@ a {
 .groep-c-label { color: #C9BEFF; }
 .groep-c-label { color: #C9BEFF; }
 .groep-d-label {color: #C9BEFF; }
-
 .groep-count {
     font-size: 11px;
     color: #aaa;
     margin-left: 4px;
 }
-
 .groupList {
     margin: 100px 0 100px 0 !important;
 }
-
-
-/*Comments*/
+/*--------------------------------------Comments------------------------------------------*/
 .containerComment{
-
     background: white;
     padding-left: 10px;
     box-shadow: 1px 1px 1px #C9BEFF;
     border-radius: 8px;
 }
-
 .commentHeader{
     font-size: 1em;
 }
-
-.head{
-    margin-bottom: 20px;
-}
-
-.text{
-    margin-left: 10px;
-    padding: 0 60px 10px 0;
-    font-size: 0.9em;
-    font-style: italic;
-}
-
 .commentBox{
     display: flex;
     justify-content: center;
     padding: 10px;
 }
-
 .commentBox > img {
     width: 40px;
     height: 40px;
@@ -458,11 +370,9 @@ a {
     object-fit: cover;
     object-position: center;
 }
-
 .content {
     width: 100%;
 }
-
 .user{
     border: none;
     outline: none;
@@ -470,7 +380,6 @@ a {
     color: #C9BEFF;
     padding: 10px;
 }
-
 .commentInput > input{
     border: none;
     padding: 10px;
@@ -480,14 +389,12 @@ a {
     margin-bottom: 10px;
     width: 95%;
 }
-
 .buttonsComment{
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #C9BEFF;
 }
-
 .buttonsComment button{
     padding: 5px 10px;
     background: lightgray;
@@ -498,30 +405,23 @@ a {
     cursor: pointer;
     opacity: 0.2;
 }
-
 .buttonsComment button.abled{
     background: #C9BEFF;
     color: white;
     opacity: 1;
     transition: 0.3s;
-
 }
-
 .parents{
     display: flex;
     margin-bottom: 30px;
 }
-
 .parent h1{
     font-size: 0.9em;
 }
-
 .parents p{
     margin: 10px 0;
     font-size: 0.9em;
-
 }
-
 .parents > img{
     width: 40px;
     height: 40px;
@@ -530,27 +430,24 @@ a {
     object-fit: cover;
     object-position: center;
 }
-
 .date {
     color: #808080;
     font-size: 0.8em;
 }
-
 .commentWriter{
     font-size: 1em;
     font-style: oblique;
 }
-
 .commentContributer{
     font-size: 1em;
     font-weight: 700;
 }
-
 .commentcount {
     margin-left: auto;
     padding-right: 40px;
 }
 
+/*--------------------------------------carousel group photos------------------------------------------*/
 .carousel-inner{
     height: auto;
     width: 60%;
@@ -559,7 +456,6 @@ a {
 .carousel-control-next-icon, .carousel-control-prev-icon{
     background-color: #C9BEFF;
 }
-
 .img-text{
     position: absolute;
     top: 0;
@@ -574,13 +470,4 @@ a {
 .image-wrap-text:hover .img-text{
     visibility:visible;
     opacity:1;
-}
-
-.cohortCard{
-    height: 100%;
-    width: auto;
-    object-fit: cover;
-}
-.CohortInfo{
-    background: #C9BEFF;
 }

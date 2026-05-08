@@ -25,7 +25,7 @@
                         <div class="row g-3">
                             <div class="col" th:each="teacher : ${members}"
                                  th:if="${teacher.userRole.name() == 'TEACHER'}">
-                                <a th:href="@{/person/{id}(id=${teacher.id})}" style="cursor: pointer;">
+                                <a th:href="@{/person/{id}(id=${teacher.id})}">
                                     <div th:replace="~{fragments/person :: personCard(${teacher}, null)}"></div>
                                 </a>
                             </div>
@@ -102,7 +102,7 @@
             <div id="students" class="row row-cols-3 mt-1 g-4">
                 <div class="col" th:each="student : ${members}"
                      th:if="${student.userRole.name() == 'STUDENT'}">
-                    <a th:href="@{/person/{id}(id=${student.id})}" style="cursor: pointer;">
+                    <a th:href="@{/person/{id}(id=${student.id})}">
                         <div th:replace="~{fragments/person :: personCard(${student}, null)}"></div>
                     </a>
                 </div>

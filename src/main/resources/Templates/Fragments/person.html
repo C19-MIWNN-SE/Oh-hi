@@ -14,9 +14,8 @@
 
         <div th:if="${extraClass != null && extraClass.contains('background-content-card-profile')}"
              class="d-flex flex-column align-items-center text-center w-100 py-3 ">
-            <img class="rounded-circle mb-3"
+            <img class="PersonProfile rounded-circle mb-3"
                  th:src="${person.profileImage != null} ? '/images/' + ${person.profileImage.id} : '/static-images/noImage.jpg'"
-                 style="height: 130px; width: 130px; object-fit: cover; border: 2px solid white;"
                  alt="profile image">
             <div class="roleDisplay" th:text="${person.userRole.displayName}"></div>
 
@@ -34,12 +33,11 @@
         <div th:if="${extraClass == null || !extraClass.contains('background-content-card-profile')}"
              class="row align-items-center g-0 card-overview-page ">
             <div class="col-auto">
-                <img class="rounded-circle"
+                <img class="PersonProfile rounded-circle"
                      th:src="${person.profileImage != null} ? '/images/' + ${person.profileImage.id} : '/static-images/noImage.jpg'"
-                     style="height: 100px; width: 100px; object-fit: cover; border: 2px solid white;"
                      alt="profile image">
             </div>
-            <div class="col-auto mx-3" style="width: 1px; height: 80px; background-color: #333; opacity: 0.6;"></div>
+            <div class="ProfileLineDivider col-auto mx-3"></div>
             <div class="col card-text card-name-style">
                 <div class="card-text " th:text="${person.fullName}"></div>
                 <div class="roleDisplay" th:text="${person.location}"></div>

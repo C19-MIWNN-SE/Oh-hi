@@ -39,8 +39,7 @@
         <div class="row row-cols-4 mt-1 g-4 justify-content-center">
             <div class="col" th:each="person : ${people}"
                  th:if="${person.userRole.name() == 'TEACHER'}">
-                <a th:href="@{/person/{id}(id=${person.id})}"
-                   style="cursor: pointer;">
+                <a th:href="@{/person/{id}(id=${person.id})}">
                     <div th:replace="~{fragments/person :: personCard(${person}, null)}"></div>
                 </a>
             </div>
@@ -49,8 +48,7 @@
         <div class="row row-cols-4 mt-1 g-4">
             <div class="col" th:each="person : ${people}"
                  th:if="${person.userRole.name() == 'STUDENT'}">
-                <a th:href="@{/person/{id}(id=${person.id})}"
-                   style="cursor: pointer;">
+                <a th:href="@{/person/{id}(id=${person.id})}">
                     <div th:replace="~{fragments/person :: personCard(${person}, null)}"></div>
                 </a>
             </div>
