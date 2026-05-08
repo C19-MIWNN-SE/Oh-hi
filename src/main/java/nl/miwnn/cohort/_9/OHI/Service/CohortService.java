@@ -4,10 +4,13 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import jakarta.persistence.EntityNotFoundException;
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
+import nl.miwnn.cohort._9.OHI.Model.OHIUser;
 import nl.miwnn.cohort._9.OHI.Model.Image;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
+import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,10 +32,12 @@ import java.util.stream.Collectors;
 public class CohortService {
     private final CohortRepository cohortRepository;
     private final PersonRepository personRepository;
+    private final OHIUserRepository oHIUserRepository;
 
-    public CohortService(CohortRepository cohortRepository, PersonRepository personRepository) {
+    public CohortService(CohortRepository cohortRepository, PersonRepository personRepository, OHIUserRepository oHIUserRepository) {
         this.cohortRepository = cohortRepository;
         this.personRepository = personRepository;
+        this.oHIUserRepository = oHIUserRepository;
     }
 
 //    @Transactional(readOnly = true)
@@ -73,6 +79,11 @@ public class CohortService {
         } else {
             person.setCohort(null);
         }
+    }
+
+    public boolean isMemberOfCohort (Long cohortId, Authentication authentication) {
+        OHIUser user = (OHIUser) authentication.getPrincipal();
+        return cohortRepository.existsByIdAndMembers_Id(cohortId, user.getPerson().getId());
     }
 
     public Set<Image> getCohortImages(Long cohortId) {

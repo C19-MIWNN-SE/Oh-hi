@@ -71,4 +71,8 @@ public class OHIUserService implements UserDetailsService {
         ohiUserRepository.save(user);
     }
 
+    public void saveUser (OHIUser user) {
+        ohiUserRepository.save(user);
+    }
+
 }

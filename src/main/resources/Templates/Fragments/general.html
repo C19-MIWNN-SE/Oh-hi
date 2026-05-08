@@ -30,12 +30,13 @@
             </a>
             <!-- todo - this should link to the cohort of the user -->
             <a class="nav-link"
-               sec:authorize="isAuthenticated()"
+               sec:authorize="hasRole('DOCENT')"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
                href="/person/overview">
                 <i class="bi bi-people"></i> Overzicht
             </a>
-            <div class="dropdown">
+            <div class="dropdown"
+                 sec:authorize="hasRole('DOCENT')">
                 <button class=" search-bg dropdown-toggle nav-link"
                         type="button"
                         data-bs-toggle="dropdown"
