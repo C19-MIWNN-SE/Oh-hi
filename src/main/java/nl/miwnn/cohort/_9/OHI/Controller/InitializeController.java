@@ -11,6 +11,7 @@ import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.InterestRepository;
 import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,8 @@ public class InitializeController {
     private CohortRepository cohortRepository;
     @Autowired
     private InterestRepository interestRepository;
+
+    OHIUserService ohiUserService;
 
     public InitializeController(OHIUserRepository ohiUserRepository, BCryptPasswordEncoder passwordEncoder) {
         this.ohiUserRepository = ohiUserRepository;
@@ -151,10 +154,11 @@ public class InitializeController {
             ohiUserRepository.save(docent);
             ohiUserRepository.save(student);
             ohiUserRepository.save(hans);
-            testUser.setAccount(hans);
-            personRepository.save(testUser);
+            ohiUserService.linkAccountToPerson(testUser, hans);
 
 
         }
     }
+
+
 }

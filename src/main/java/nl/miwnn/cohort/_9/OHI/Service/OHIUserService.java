@@ -71,4 +71,9 @@ public class OHIUserService implements UserDetailsService {
         ohiUserRepository.save(user);
     }
 
+    public void linkAccountToPerson(Person person, OHIUser user) {
+        person.setAccount(user);
+        personRepository.save(person);
+    }
+
 }
