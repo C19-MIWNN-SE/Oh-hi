@@ -37,7 +37,7 @@
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
                href="/person/overview">
                 <i class="bi bi-people"></i> Overzicht
-            </button>
+            </a>
             <div class="dropdown"
                  sec:authorize="hasAnyRole('DOCENT', 'ADMIN')">
                 <button class=" search-bg dropdown-toggle nav-link nav-btn"
