@@ -112,6 +112,7 @@ nav{
     transition: 0.3s;
 }
 .fp-btn-colour{
+    color: #ffffff;
     background-color: rgb(160, 135, 235);
     border-color: rgb(160, 135, 235);
     transition: 0.3s;
