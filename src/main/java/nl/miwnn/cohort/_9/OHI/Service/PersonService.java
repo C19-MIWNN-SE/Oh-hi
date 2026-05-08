@@ -1,10 +1,7 @@
 package nl.miwnn.cohort._9.OHI.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import nl.miwnn.cohort._9.OHI.Model.Image;
-import nl.miwnn.cohort._9.OHI.Model.Interest;
-import nl.miwnn.cohort._9.OHI.Model.Person;
-import nl.miwnn.cohort._9.OHI.Model.Student;
+import nl.miwnn.cohort._9.OHI.Model.*;
 import nl.miwnn.cohort._9.OHI.Repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -159,6 +156,11 @@ public class PersonService {
                 .map(Interest::getId)
                 .collect(Collectors.toList()));
 
+    }
+
+    public void linkAccountToPerson(Person person, OHIUser user) {
+        person.setAccount(user);
+        personRepository.save(person);
     }
 
 
