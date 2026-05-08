@@ -24,10 +24,35 @@ public class OHISecConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/userlogin", "/webjars/**", "/css/**", "/js/**", "/static-images/**").permitAll()
-                        .requestMatchers("/person/add", "person/add/**", "/person/remove", "/person/save", "/person/overview", "/account/**").hasRole("DOCENT")
-                        .requestMatchers("/person/**", "/cohort/**", "/login-redirect").hasAnyRole("DOCENT", "STUDENT")
-                )
+//<<<<<<< HEAD
+//                        .requestMatchers("/", "/userlogin", "/webjars/**", "/css/**", "/js/**", "/static-images/**").permitAll()
+//                        .requestMatchers("/person/add", "person/add/**", "/person/remove", "/person/save", "/person/overview", "/account/**").hasRole("DOCENT")
+//                        .requestMatchers("/person/**", "/cohort/**", "/login-redirect").hasAnyRole("DOCENT", "STUDENT")
+//                )
+//=======
+                        .requestMatchers(
+                                "/",
+                                "/person",
+                                "/person/**",
+                                "/userlogin",
+                                "/webjars/**",
+                                "/static/**",
+                                "/css/**",
+                                "/static-images/**",
+                                "/js/**",
+                                "/select2",
+                                "/select2/**",
+                                "/person/profile/save")
+                        .permitAll().requestMatchers(
+                                "/person/add",
+                                "/person/remove",
+                                "/person/save",
+                                "/cohort",
+                                        "/images/upload-group",
+                                "/cohort/**"
+                        ).hasAnyRole("DOCENT").anyRequest().authenticated()
+                        )
+//>>>>>>> main
                 // custom form voor login
                 .formLogin((form) -> form
                         .loginPage("/userlogin")

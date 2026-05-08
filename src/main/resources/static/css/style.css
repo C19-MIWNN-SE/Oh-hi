@@ -1,45 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 body {
     background-image: url("/static-images/background.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-attachment: fixed;
     background-color: #FBFBFB;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Poppins', sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-.loginBackground{
-    background-image: url("/static-images/LoginBackground_upscaled.png");
+.outlining{
+    margin-bottom: 5%;
+}
+
+.loginBackground {
+    background-image: url("/static-images/inlogBackground.png");
     background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.loginTextContent {
-    padding: 25% 25% 0 5%;
-}
-
-.loginTextStyle{
-    padding: 2% 2% 2% 2%;
-    line-height: 2;
-}
-
-.headerLogin{
-    font-family: "DejaVu Sans Condensed";
-    padding: 0 2% 0 2%;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
 
 }
 
-.loginForm{
-    margin-top: 6%;
+.loginTextBackground {
+    background-color: white;
+    border-radius: 15px;
+    padding: 3rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+}
+
+
+.headerLogin {
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.loginTextStyle {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 2rem;
 }
 
 .circleImage {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid #C9BEFF;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
+
+.card-name-style{
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 5% 3% 1% 3%;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+}
+
+
+
+.loginForm{
+    margin-left: 110px;
+}
+
+.loginForm .form-control {
+    background-color: #f0f4f8;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+
+}
+
 
 .background-color {
     background-color: #f0ECE1;
@@ -67,6 +103,7 @@ nav{
     text-align: center;
     align-items: center;
     justify-content: center;
+    margin-right: 42%;
 }
 
 .our-button:hover{
@@ -96,8 +133,8 @@ nav{
 }
 
 .fp-btn-colour{
-    background-color: #C9BEFF;
-    border-color: #C9BEFF;
+    background-color: cornflowerblue;
+    border-color: cornflowerblue;
     transition: 0.3s;
 }
 
@@ -106,13 +143,20 @@ nav{
     border-color: rgb(255, 219, 253);
 }
 
+.fp-btn-colour-nav{
+    background: none;
+    border: none;
+}
+
 .fp-btn-content{
-    margin: 0 0 2% 8%;
+    margin-top: 15px;
 }
 
 .btn-spacing {
-    margin: 0 5px 0px 5px ;
+    margin: 0 2px 0 2px ;
 }
+
+
 /*Cohort lijst opmaak*/
 .cohort-dropdown {
     width: 100%;
@@ -128,25 +172,6 @@ nav{
     margin-top: 20%;
 }
 
-/*about the members' cards'*/
-.background-content-card {
-    box-shadow: 10px 2px 5px #888888;
-    max-height: 380px;
-}
-
-.background-style-card {
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 25%;
-    text-decoration: none;
-}
-
-.background-content-card:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    transition: 0.3s;
-    scale: 1.02;
-}
 
 .background-style-card, .background-style-card a {
     text-decoration: none !important;
@@ -156,9 +181,8 @@ nav{
     text-decoration: none;
 }
 
-.background-content-card-profile{
-    max-height: 400px !important;
-
+.background-content-card-profile {
+    min-height: 280px !important;
 }
 
 .location-text{
@@ -247,6 +271,10 @@ nav{
     transition: 0.3s;
 }
 
+.profile-content-large{
+    width: 600px;
+}
+
 .info-background-content:hover{
     scale: 1.05;
 
@@ -269,4 +297,290 @@ nav{
 
 button[aria-expanded="true"] .transition-icon {
     transform: rotate(-90deg);
+}
+
+.interestStyle {
+    background-color: #C9BEFF;
+    border-radius: 12px;
+    padding: 6px 14px;
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #3a3a3a;
+    margin: 4px;
+}
+
+.card-overview-page{
+    min-height: 150px;
+}
+
+.card-background{
+    background-image: url("/static-images/card-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+}
+
+.card-background:hover{
+    transition: 0.3s;
+    background-color: rgba(201, 190, 255, 1);
+    scale: 1.03;
+    border-radius: 5px;
+}
+
+.card-background, .card-background a {
+    text-decoration: none !important;
+}
+
+.card-background .fw-bold {
+    text-decoration: none;
+}
+
+.card-text{
+    color: black;
+}
+
+a {
+    text-decoration: none;
+}
+
+.docent-card {
+    background-image: url("/static-images/background-card-teacher.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/*Drop and drag*/
+
+.drop-zone {
+    min-height: 120px;
+    border: 1.5px dashed #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    transition: background 0.15s;
+}
+.drop-zone.dragover {
+    background: #e8f0fe;
+    border-color: #6c8ebf;
+}
+.student-drag-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 6px 0;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    user-select: none;
+}
+
+.student-drag-card:active { cursor: grabbing; opacity: 0.5; }
+
+.student-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.pool-avatar   { background: #e8f0fe; color: black; }
+.groep-a-avatar { background: #EEEDFE; color: #534AB7; }
+.groep-b-avatar { background: #E1F5EE; color: #0F6E56; }
+.groep-c-avatar { background: #FAECE7; color: #993C1D; }
+.groep-c-avatar { background: #FAECE7; color: #993C1D; }
+.groep-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 8px;
+    text-align: left;
+}
+.groep-a-label { color: #C9BEFF; }
+.groep-b-label { color: #C9BEFF; }
+.groep-c-label { color: #C9BEFF; }
+.groep-c-label { color: #C9BEFF; }
+.groep-d-label {color: #C9BEFF; }
+
+.groep-count {
+    font-size: 11px;
+    color: #aaa;
+    margin-left: 4px;
+}
+
+.groupList {
+    margin: 100px 0 100px 0 !important;
+}
+
+
+/*Comments*/
+.containerComment{
+
+    background: white;
+    padding-left: 10px;
+    box-shadow: 1px 1px 1px #C9BEFF;
+    border-radius: 8px;
+}
+
+.commentHeader{
+    font-size: 1em;
+}
+
+.head{
+    margin-bottom: 20px;
+}
+
+.text{
+    margin-left: 10px;
+    padding: 0 60px 10px 0;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.commentBox{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.commentBox > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.content {
+    width: 100%;
+}
+
+.user{
+    border: none;
+    outline: none;
+    margin: 5px 0 20px;
+    color: #C9BEFF;
+    padding: 10px;
+}
+
+.commentInput > input{
+    border: none;
+    padding: 10px;
+    padding-left: 0;
+    outline: none;
+    border-bottom: 2px solid blue;
+    margin-bottom: 10px;
+    width: 95%;
+}
+
+.buttonsComment{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #C9BEFF;
+}
+
+.buttonsComment button{
+    padding: 5px 10px;
+    background: lightgray;
+    color: black;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    cursor: pointer;
+    opacity: 0.2;
+}
+
+.buttonsComment button.abled{
+    background: #C9BEFF;
+    color: white;
+    opacity: 1;
+    transition: 0.3s;
+
+}
+
+.parents{
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.parent h1{
+    font-size: 0.9em;
+}
+
+.parents p{
+    margin: 10px 0;
+    font-size: 0.9em;
+
+}
+
+.parents > img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.date {
+    color: #808080;
+    font-size: 0.8em;
+}
+
+.commentWriter{
+    font-size: 1em;
+    font-style: oblique;
+}
+
+.commentContributer{
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.commentcount {
+    margin-left: auto;
+    padding-right: 40px;
+}
+
+.carousel-inner{
+    height: auto;
+    width: 60%;
+    margin: auto;
+}
+.carousel-control-next-icon, .carousel-control-prev-icon{
+    background-color: #C9BEFF;
+}
+
+.img-text{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(29, 106, 154, 0.72);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+}
+.image-wrap-text:hover .img-text{
+    visibility:visible;
+    opacity:1;
+}
+
+.cohortCard{
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}
+.CohortInfo{
+    background: #C9BEFF;
 }

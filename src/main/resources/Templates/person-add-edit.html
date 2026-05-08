@@ -7,9 +7,13 @@
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
 
-<div class="container mt-5">
+<div th:replace="~{fragments/general :: formTitle(
+'Persoon toevoegen')}">
+</div>
+
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card shadow-sm border-0">
 
                 <div class="card-body p-4">
@@ -17,8 +21,10 @@
                           method="post"
                           enctype="multipart/form-data">
 
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label fw-bold">Voornaam</label>
+                        <label class="form-label fw-bold mb-1">Naam</label>
+                        <div class="row g-2 mb-3">
+                        <div class="col-4">
+                            <label class="visually-hidden" for="firstName">Voornaam</label>
                             <input type="text" id="firstName"
                                    th:field="*{firstName}"
                                    class="form-control"
@@ -30,18 +36,18 @@
                                  th:errors="*{firstName}"></div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="infix" class="form-label fw-bold">Tussenvoegsel</label>
+                        <div class="col-4">
+                            <label class="visually-hidden" for="infix">Tussenvoegsel</label>
                             <input type="text" id="infix" th:field="*{infix}"
                                    class="form-control" placeholder="Tussenvoegsel">
                         </div>
 
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label fw-bold">Achternaam</label>
+                        <div class="col-4">
+                            <label class="visually-hidden" for="lastName">Achternaam</label>
                             <input type="text" id="lastName" th:field="*{lastName}"
                                    class="form-control" placeholder="Achternaam">
                         </div>
-
+                        </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold d-block">Rol</label>
                             <div class="card bg-light border-0 shadow-sm rounded">
@@ -73,16 +79,13 @@
                                 <option th:each="cohort : ${allCohorts}"
                                         th:value="${cohort.id}"
                                         th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}"
-<!--                                    th:selected="${person.cohort != null and person.cohort.id == cohort.id}">-->
+                                <!--                                    th:selected="${person.cohort != null and person.cohort.id == cohort.id}">-->
                                 </option>
                             </select>
                         </div>
 
                         <div class="d-grid gap-2 mt-4">
-                            <button class="btn btn-primary btn-lg shadow-sm"
-                                    type="submit">
-                                <i class="bi bi-save"></i> Lid opslaan
-                            </button>
+                            <div th:replace="~{Fragments/general :: saveButton}"></div>
                             <a href="/person/overview"
                                class="btn btn-link text-secondary text-decoration-none text-center">Annuleren</a>
                         </div>

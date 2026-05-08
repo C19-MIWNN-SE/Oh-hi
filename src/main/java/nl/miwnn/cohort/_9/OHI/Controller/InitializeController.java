@@ -4,9 +4,11 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
+import nl.miwnn.cohort._9.OHI.Model.Interest;
 import nl.miwnn.cohort._9.OHI.Model.OHIUser;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
+import nl.miwnn.cohort._9.OHI.Repository.InterestRepository;
 import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import org.slf4j.Logger;
@@ -43,6 +45,8 @@ public class InitializeController {
     private PersonRepository personRepository;
     @Autowired
     private CohortRepository cohortRepository;
+    @Autowired
+    private InterestRepository interestRepository;
 
     public InitializeController(OHIUserRepository ohiUserRepository, BCryptPasswordEncoder passwordEncoder) {
         this.ohiUserRepository = ohiUserRepository;
@@ -59,6 +63,28 @@ public class InitializeController {
         }
         if (ohiUserRepository.count() == 0) {
             seedUsers();
+        }
+        if (interestRepository.count() == 0) {
+            seedInterests();
+        }
+    }
+
+    private void seedInterests() {
+        try {
+            ClassPathResource resource = new ClassPathResource("static/interests.csv");
+            Reader reader = new InputStreamReader(resource.getInputStream());
+
+            CsvToBean<Interest> csvToBean = new CsvToBeanBuilder<Interest>(reader)
+                    .withType(Interest.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+
+            List<Interest> interests = csvToBean.parse();
+
+            interestRepository.saveAll(interests);
+
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
         }
     }
 
@@ -114,12 +140,14 @@ public class InitializeController {
             Cohort testCohort = new Cohort(4, "Testing",
             LocalDate.of(2026, 01, 01), LocalDate.of(2026, 02, 01));
             cohortRepository.save(testCohort);
-            Person testUser = new Person("Hans", "Hans");
+            Person testUser = new Person("Hans", "Hoeven");
+            Person testUser2 = new Person("Mark", "van Dijk ");
             testUser.setCohort(testCohort);
             personRepository.save(testUser);
-            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT");
+            personRepository.save(testUser2);
+            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT", testUser2);
             OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
-            OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
+            OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT");
             ohiUserRepository.save(docent);
             ohiUserRepository.save(student);
             ohiUserRepository.save(hans);

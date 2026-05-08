@@ -4,13 +4,11 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
+import nl.miwnn.cohort._9.OHI.Model.Image;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
-import nl.miwnn.cohort._9.OHI.Service.AccountTokenService;
-import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
-import nl.miwnn.cohort._9.OHI.Service.CohortService;
-import nl.miwnn.cohort._9.OHI.Service.PersonService;
+import nl.miwnn.cohort._9.OHI.Service.*;
 import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author INT Development
@@ -38,14 +33,16 @@ public class CohortController {
     private final PersonService personService;
     private final CohortService cohortService;
     private final AccountTokenService accountTokenService;
+    private final ImageService imageService;
     private Logger log;
 
     public CohortController(PersonService personService,
                             CohortService cohortService,
-                            AccountTokenService accountTokenService) {
+                            AccountTokenService accountTokenService, ImageService imageService) {
         this.personService = personService;
         this.cohortService = cohortService;
         this.accountTokenService = accountTokenService;
+        this.imageService = imageService;
     }
 
     @GetMapping("/add")
@@ -99,6 +96,30 @@ public class CohortController {
         Collections.sort(cohorts);
         model.addAttribute("allCohorts", cohorts);
 
+        Set<Image> images = cohortService.getCohortImages(id);
+        model.addAttribute("images", images);
+
         return "cohort-overview";
     }
+
+    @GetMapping("/{id}/group-photos")
+    public String showGroupUploadForm(@PathVariable Long id, Model model) {
+        Cohort cohort = cohortService.findById(id);
+
+        model.addAttribute("cohort", cohort);
+        model.addAttribute("people", cohort.getMembers());
+
+        return "cohort-upload-group-photo";
+    }
+
+    @PostMapping("/{id}/group-photos")
+    public String uploadGroupImage(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("personIds") List<Long> personIds) throws IOException {
+
+        imageService.groupImageUpload(file, personIds);
+        //todo return the link to active cohort based on id
+        return "redirect:/person/overview";
+    }
+
 }

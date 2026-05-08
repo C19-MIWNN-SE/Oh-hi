@@ -2,12 +2,10 @@ package nl.miwnn.cohort._9.OHI.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import nl.miwnn.cohort._9.OHI.Model.Image;
+import nl.miwnn.cohort._9.OHI.Model.Interest;
 import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Model.Student;
-import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
-import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
-import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
-import nl.miwnn.cohort._9.OHI.Repository.StudentRepository;
+import nl.miwnn.cohort._9.OHI.Repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -18,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author INT Developers
@@ -30,17 +29,25 @@ public class PersonService {
     private final StudentRepository studentRepository;
     private final OHIUserRepository ohiUserRepository;
     private Person person;
+    private final InterestRepository interestRepository;
 
-    public PersonService(PersonRepository personRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserRepository ohiUserRepository) {
+    public PersonService(PersonRepository personRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserRepository ohiUserRepository, InterestRepository interestRepository) {
         this.personRepository = personRepository;
         this.imageRepository = imageRepository;
         this.studentRepository = studentRepository;
         this.ohiUserRepository = ohiUserRepository;
+        this.interestRepository = interestRepository;
     }
 
     @Transactional(readOnly = true)
     public List<Person> getAllPeople(){
         return personRepository.findAll();
+    }
+
+    public List<Person> getAllPeopleSortedByCohortAvailability() {
+        return getAllPeople().stream()
+                .sorted(Comparator.comparing(p -> p.getCohort() == null))
+                .toList();
     }
 
     public void saveMemberToCohort(Person person){
@@ -70,8 +77,8 @@ public class PersonService {
             studentRepository.delete(person.getStudent());
         }
 
-        if (person.getImage() != null) {
-            imageRepository.delete(person.getImage());
+        if (person.getProfileImage() != null) {
+            imageRepository.delete(person.getProfileImage());
         }
 
         personRepository.deleteById(id);
@@ -95,6 +102,7 @@ public class PersonService {
         information.put("pronoun", person.getPronoun());
         information.put("userRole", person.getEnumToLowerCase(person.getUserRole()));
         information.put("employer", person.getStudent());
+        information.put("interests", person.getInterests());
         information.put("person", person);
 
         return information;
@@ -135,14 +143,23 @@ public class PersonService {
 
     public void updatePersonInformation(Long personId, Person aboutPerson){
         Person profilePerson = getPerson(personId);
-
         profilePerson.setAboutMe(aboutPerson.getAboutMe());
         profilePerson.setLocation(aboutPerson.getLocation());
         profilePerson.setAge(aboutPerson.getAge());
         profilePerson.setPronoun(aboutPerson.getPronoun());
+        profilePerson.setInterests(getSelectedInterests(aboutPerson));
 
         checkIfPersonIsStudent(profilePerson, aboutPerson);
 
         personRepository.save(profilePerson);
     }
+
+    public List<Interest> getSelectedInterests(Person aboutPerson){
+        return interestRepository.findAllById(aboutPerson.getInterests().stream()
+                .map(Interest::getId)
+                .collect(Collectors.toList()));
+
+    }
+
+
 }

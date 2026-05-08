@@ -9,83 +9,242 @@
 <body>
 <nav th:replace="~{Fragments/general :: navbar}"></nav>
 
-<div class="container text-center">
-    <div class="container mt-4">
-        <div class="row align-items-start">
-            <div class="col-3" sec:authorize="hasRole('DOCENT')">
-                <div class="dropdown">
-                    <button class="btn btn-primary shadow-sm search-bg dropdown-toggle fp-btn-colour"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Cohorts
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li th:each="cohort : ${allCohorts}">
-                            <a class="dropdown-item"
-                               th:href="@{/cohort/{id}(id=${cohort.id})}"
-                               th:text="${cohort.cohortNum} + ' - ' + ${cohort.discipline}">
-                            </a>
-                        </li>
-                    </ul>
-                    <a th:href="@{/cohort/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour btn-spacing"
-                       sec:authorize="hasRole('DOCENT')">
-                        <i class="bi bi-plus-circle me-1"></i> Cohort
-                    </a>
+    <div class="row">
+        <!-- Cohort Overview - left-cohort info, right-students -->
+        <div class="col-4">
+
+            <div class="cohortCard shadow-sm background-content-card p-3 position-relative">
+                <div class="CohortInfo card-name-style">
+                    <div class="name-style fw-bold" th:text="${cohortName}"></div>
+                </div>
+                <br />
+                <div class="CohortInfo card-name-style">
+                    <div class="name-style" th:text="Docenten"></div>
+                    <!-- Docenten -->
+                    <div id="teachers" class="collapse mt-3">
+                        <div class="row g-3">
+                            <div class="col" th:each="teacher : ${members}"
+                                 th:if="${teacher.userRole.name() == 'TEACHER'}">
+                                <a th:href="@{/person/{id}(id=${teacher.id})}" style="cursor: pointer;">
+                                    <div th:replace="~{fragments/person :: personCard(${teacher}, null)}"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+<div class="CohortButtons d-flex">
                     <a th:href="@{/person/add/{cohortId}(cohortId=${cohort.id})}"
-                       class="btn btn-success shadow-sm search-bg fp-btn-colour"
+                       class="btn btn-success shadow-sm fp-btn-colour btn-spacing"
                        sec:authorize="hasRole('DOCENT')">
                         <i class="bi bi-plus-circle me-1"></i> Lid
                     </a>
 
+                    <a th:href="@{/cohort/{cohortId}/group-photos(cohortId=${cohort.id})}"
+                       class="btn btn-success shadow-sm fp-btn-colour btn-spacing">
+                        <i class="bi bi-plus-circle me-1"></i> Group photo
+                    </a>
+
+                    <a id="groepjesBtn"
+                       href="#"
+                       class="btn btn-success shadow-sm fp-btn-colour btn-spacing"
+                       data-bs-toggle="collapse"
+                       data-bs-target="#groupSection"
+                       aria-expanded="false"
+                       aria-controls="groupSection"
+                       sec:authorize="hasRole('DOCENT')">
+                        <i class="bi bi-people me-1"></i> Groepjes
+                    </a>
+
+                </div>
+
+</div>
+            </div>
+        </div>
+
+        <!--Students and Group Photos from the Cohort -->
+        <div class="col-8">
+            <!-- Carosel of group photos of cohort -->
+            <div id="cohortCarousel" class="carousel slide" data-bs-ride="carousel">
+
+                <div class="carousel-indicators" th:if="${#lists.size(images) > 1}">
+                    <button th:each="img, iter : ${images}"
+                            type="button"
+                            data-bs-target="#cohortCarousel"
+                            th:data-bs-slide-to="${iter.index}"
+                            th:classappend="${iter.index == 0} ? 'active'">
+                    </button>
+                </div>
+                <div class="image-wrap-text">
+                <div class="carousel-inner">
+                    <div th:each="img, iter : ${images}"
+                         th:class="'carousel-item ' + (${iter.index == 0} ? 'active' : '')">
+
+                        <img th:src="@{'/images/' + ${img.id}}"
+                             class="d-block w-100"
+                             th:alt="${img.alttxt}">
+                        <p class="img-text">this is where I will add the names of people in this photo</p>
+                    </div>
+                </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button"
+                        data-bs-target="#cohortCarousel" data-bs-slide="prev"
+                        th:if="${#lists.size(images) > 1}">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+
+                <button class="carousel-control-next" type="button"
+                        data-bs-target="#cohortCarousel" data-bs-slide="next"
+                        th:if="${#lists.size(images) > 1}">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+            <div id="students" class="row row-cols-3 mt-1 g-4">
+                <div class="col" th:each="student : ${members}"
+                     th:if="${student.userRole.name() == 'STUDENT'}">
+                    <a th:href="@{/person/{id}(id=${student.id})}" style="cursor: pointer;">
+                        <div th:replace="~{fragments/person :: personCard(${student}, null)}"></div>
+                    </a>
                 </div>
             </div>
-            <div class="col-6">
-                <div>
-                    <h1 th:text="${cohortName}"></h1>
-                </div>
-            </div>
-            <div class="col-3">
-            <button class="btn btn-primary fp-btn-colour d-flex align-items-start gap-2"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#teachers"
-                    aria-expanded="false"
-                    aria-controls="teachers">
-                <!--            onclick="toggleTeachers()"-->
-                Docenten
-                <i class="bi bi-chevron-down     transition-icon"></i>
+        </div>
+    </div>
+
+    <!-- Groepjes drag and drop sectie (alleen voor docenten) -->
+    <div id="groupSection" class="collapse container mt-4 groupList" sec:authorize="hasRole('DOCENT')">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>Studenten indelen in groepjes</h4>
+            <button class="btn btn-sm btn-outline-secondary add-cohort-member-buttons" onclick="resetGroepen()">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Herstel
             </button>
+        </div>
+
+        <div class="row g-3">
+            <!-- Niet ingedeeld -->
+            <div class="col-4">
+                <div class="groep-label">Niet ingedeeld <span class="groep-count" id="count-pool"></span></div>
+                <div class="drop-zone" id="pool" data-zone="pool">
+                    <!-- Studenten worden hier ingeladen via Thymeleaf + JS -->
+                    <div th:each="student : ${members}"
+                         th:if="${student.userRole.name() == 'STUDENT'}"
+                         class="student-drag-card"
+                         draggable="true"
+                         th:data-id="${student.id}"
+                         th:data-name="${student.firstName + ' ' + student.lastName}"
+                         th:data-initials="${#strings.substring(student.firstName,0,1) + #strings.substring(student.lastName,0,1)}">
+                        <div class="student-avatar pool-avatar"
+                             th:text="${#strings.substring(student.firstName,0,1) + #strings.substring(student.lastName,0,1)}">
+                        </div>
+                        <span th:text="${student.firstName + ' ' + student.lastName}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Groepen -->
+            <div class="col-2">
+                <div class="groep-label groep-a-label">Groep A <span class="groep-count" id="count-a"></span></div>
+                <div class="drop-zone" id="group-a" data-zone="a"></div>
+            </div>
+
+            <div class="col-2">
+                <div class="groep-label groep-b-label">Groep B <span class="groep-count" id="count-b"></span></div>
+                <div class="drop-zone" id="group-b" data-zone="b"></div>
+            </div>
+
+            <div class="col-2">
+                <div class="groep-label groep-c-label">Groep C <span class="groep-count" id="count-c"></span></div>
+                <div class="drop-zone" id="group-c" data-zone="c"></div>
+            </div>
+
+            <div class="col-2">
+                <div class="groep-label groep-d-label">Groep D <span class="groep-count" id="count-d"></span></div>
+                <div class="drop-zone" id="group-d" data-zone="d"></div>
             </div>
         </div>
     </div>
-
-    <div id="teachers" class="collapse container">
-        <div class="row row-cols-4 mt-1 g-4 justify-content-center">
-            <div class="col" th:each="teacher : ${members}"
-                 th:if="${teacher.userRole.name() == 'TEACHER'}">
-                <a th:href="@{/person/{id}(id=${teacher.id})}"
-                   style="cursor: pointer;">
-                    <div th:replace="~{fragments/person :: personCard(${teacher}, null)}"></div>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div id="students" class="row row-cols-4 mt-1 g-4">
-        <div class="col" th:each="student : ${members}"
-             th:if="${student.userRole.name() == 'STUDENT'}">
-            <a th:href="@{/person/{id}(id=${student.id})}"
-               style="cursor: pointer;">
-                <div th:replace="~{fragments/person :: personCard(${student}, null)}"></div>
-            </a>
-        </div>
-    </div>
 </div>
-</div>
-
 
 <footer th:replace="~{Fragments/general :: footer}"></footer>
 <div th:replace="~{Fragments/general :: scripts}"></div>
+
+
+<script>
+    let dragSrc = null;
+
+    const avatarClasses = {
+        pool: 'pool-avatar',
+        a: 'groep-a-avatar',
+        b: 'groep-b-avatar',
+        c: 'groep-c-avatar',
+        d: 'groep-d-avatar'
+    };
+
+    function updateCounts() {
+        const zones = { pool: 'pool', a: 'group-a', b: 'group-b', c: 'group-c', d: 'group-d' };
+        Object.entries(zones).forEach(([key, id]) => {
+            const zone = document.getElementById(id);
+            const count = zone ? zone.querySelectorAll('.student-drag-card').length : 0;
+            const el = document.getElementById('count-' + key);
+            if (el) el.textContent = count > 0 ? `(${count})` : '';
+        });
+    }
+
+    function setupCard(card) {
+        card.addEventListener('dragstart', e => {
+            dragSrc = card;
+            e.dataTransfer.effectAllowed = 'move';
+        });
+    }
+
+    function setupZone(zone) {
+        zone.addEventListener('dragover', e => {
+            e.preventDefault();
+            zone.classList.add('dragover');
+        });
+        zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+        zone.addEventListener('drop', e => {
+            e.preventDefault();
+            zone.classList.remove('dragover');
+            if (dragSrc && dragSrc.parentNode !== zone) {
+                const zoneKey = zone.dataset.zone;
+                const avatar = dragSrc.querySelector('.student-avatar');
+                avatar.className = 'student-avatar ' + avatarClasses[zoneKey];
+                zone.appendChild(dragSrc);
+                updateCounts();
+            }
+        });
+    }
+
+    function resetGroepen() {
+        const pool = document.getElementById('pool');
+        ['group-a', 'group-b', 'group-c', 'group-d'].forEach(id => {
+            document.getElementById(id).querySelectorAll('.student-drag-card').forEach(card => {
+                const avatar = card.querySelector('.student-avatar');
+                avatar.className = 'student-avatar pool-avatar';
+                pool.appendChild(card);
+            });
+        });
+        updateCounts();
+    }
+
+    document.querySelectorAll('.drop-zone').forEach(setupZone);
+    document.querySelectorAll('.student-drag-card').forEach(setupCard);
+    updateCounts();
+
+    document.getElementById('groepjesBtn').addEventListener('click', function () {
+        const section = document.getElementById('groupSection');
+        section.addEventListener('shown.bs.collapse', function scrollDown() {
+            section.scrollIntoView({ behavior: 'smooth' });
+            section.removeEventListener('shown.bs.collapse', scrollDown);
+        });
+    });
+
+    localStorage.setItem(storageKey, comments.innerHTML);
+
+    // nog opslaan
+    // commentsNum = document.querySelectorAll(".parents").length;
+    // document.getElementById("comment").textContent = commentsNum;
+</script>
+
 </body>
 </html>

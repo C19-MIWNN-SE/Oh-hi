@@ -17,9 +17,17 @@
     <div class="row mb-4">
         <div class="col-3">
             <div th:replace="~{fragments/person :: personCard(${person}, 'background-content-card-profile')}"></div>
+            <div>
+                <a th:href="@{/person/profile/edit/{id}(id=${person.id})}"
+                   class="btn btn-success shadow-sm search-bg fp-btn-colour fp-btn-content"
+                   sec:authorize="hasRole('STUDENT')">
+                    <i class="bi bi-gear me-1"></i> Profiel bewerken
+                </a>
+            </div>
         </div>
 
         <div class="col-4">
+
             <div class="aboutMeText">
                 <div class="col mx-auto info-background-content">
                     <h5 class="aboutMeHeader">Naam</h5>
@@ -35,36 +43,127 @@
                     <h5 class="aboutMeHeader">Leeftijd</h5>
                     <p class="aboutMeContent" th:text="${age}"></p>
                 </div>
+                <div class="col mx-auto info-background-content">
+                    <h5 class="aboutMeHeader">Voornaamwoorden</h5>
+                    <p class="aboutMeContent" th:text="${pronoun}"></p>
+                </div>
+                <div class="col mx-auto info-background-content" th:if="${person.getEmployerField()}">
+                    <h5 class="aboutMeHeader">Toekomstig werkgever</h5>
+                    <p class="aboutMeContent" th:text="${person.student?.employer}"></p>
+                </div>
             </div>
         </div>
 
         <div class="col-4">
 
-            <div class="col mx-auto info-background-content">
-                <h5 class="aboutMeHeader">Voornaamwoorden</h5>
-                <p class="aboutMeContent" th:text="${pronoun}"></p>
+
+
+            <div class="col mx-auto info-background-content profile-content-large">
+                <h5 class="aboutMeHeader">Mijn interesses</h5>
+                <div class="d-flex flex-wrap gap-2 justify-content-center">
+    <span th:each="interest : ${interests}"
+          class="interestStyle"
+          th:text="${interest.interest}">
+    </span>
+                </div>
             </div>
-            <div class="col mx-auto info-background-content" th:if="${person.getEmployerField()}">
-                <h5 class="aboutMeHeader">Toekomstig werkgever</h5>
-                <p class="aboutMeContent" th:text="${person.student?.employer}"></p>
-            </div>
-            <div class="col mx-auto info-background-content">
+            <div class="col mx-auto info-background-content profile-content-large">
                 <h5 class=" aboutMeHeader">Over mij</h5>
                 <p class="aboutMeContent" th:text="${aboutMe}"></p>
             </div>
+
+            <div class="containerComment profile-content-large">
+                <div class="row align-items-center">
+                    <h5 class="aboutMeHeader col-auto">Plaats een bericht!</h5>
+                    <div class="commentcount col-auto"><span id="comment">0</span> Berichten</div>
+                </div>
+
+                <div class="comments"></div>
+                <div class="commentBox">
+                    <img th:src="${loggedIn.image != null} ? '/images/' + ${loggedIn.image.id} : '/static-images/noImage.jpg'">
+                    <div class="content">
+                        <h2 th:text="${commentWriter}" class="commentWriter">Schrijf een bericht als</h2>
+                        <div class="commentInput">
+                            <input type="text" placeholder="schrijf een bericht" class="usercomment">
+                            <div class="buttonsComment">
+                                <button type="submit" disabled id="publish">Verstuur</button>
+
+                            </div>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
         </div>
     </div>
 
-    <div>
-        <a th:href="@{/person/profile/edit/{id}(id=${person.id})}"
-           class="btn btn-success shadow-sm search-bg fp-btn-colour fp-btn-content"
-           sec:authorize="hasRole('STUDENT')">
-            <i class="bi bi-gear me-1"></i> Profiel bewerken
-        </a>
-    </div>
-</div>
+<span id="loggedInName" th:text="${loggedIn.fullName}" style="display:none"></span>
+<span id="loggedInImage" th:text="${loggedIn.image?.id}" style="display:none"></span>
+<span id="profileId" th:text="${person.id}" style="display:none"></span>
+
+<script>
+    const imageId = document.getElementById("loggedInImage").textContent;
+
+    const userId = {
+        name: document.getElementById("loggedInName").textContent,
+        image: imageId ? '/images/' + imageId : '/static-images/noImage.jpg',
+        message: null,
+        date: null
+    }
+
+    const profileId = document.getElementById("profileId").textContent;
+    const storageKey = "comments_" + profileId;
+
+    const usercomment = document.querySelector(".usercomment");
+    const publishBtn = document.querySelector("#publish");
+    const comments = document.querySelector(".comments");
+
+    comments.innerHTML = localStorage.getItem(storageKey) || "";
+    let commentsNum = document.querySelectorAll(".parents").length;
+    document.getElementById("comment").textContent = commentsNum;
+
+    usercomment.addEventListener("input", checkInput);
+    usercomment.addEventListener("keyup", checkInput);
+
+    function checkInput() {
+        if (!usercomment.value.trim()) {
+            publishBtn.setAttribute("disabled", "disabled");
+            publishBtn.classList.remove("abled");
+        } else {
+            publishBtn.removeAttribute("disabled");
+            publishBtn.classList.add("abled");
+        }
+    }
+
+    function addPost() {
+        userId.message = usercomment.value;
+        userId.date = new Date().toLocaleString();
+
+        let published =
+            `<div class="parents">
+            <img src="${userId.image}">
+            <div>
+                <h1 class="commentContributer">${userId.name}</h1>
+                <p>${userId.message}</p>
+                <span class="date">${userId.date}</span>
+            </div>
+        </div>`
+
+        comments.innerHTML += published;
+        usercomment.value = "";
+        checkInput(); // knop weer disablen na versturen
+
+        localStorage.setItem(storageKey, comments.innerHTML);
+
+        commentsNum = document.querySelectorAll(".parents").length;
+        document.getElementById("comment").textContent = commentsNum;
+    }
+
+    publishBtn.addEventListener("click", addPost);
+</script>
     <footer th:replace="~{Fragments/general :: footer}"></footer>
     <div th:replace="~{Fragments/general :: scripts}"></div>
 </body>

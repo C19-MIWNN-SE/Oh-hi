@@ -2,13 +2,12 @@ package nl.miwnn.cohort._9.OHI.Controller;
 import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.*;
 import nl.miwnn.cohort._9.OHI.Repository.*;
-import nl.miwnn.cohort._9.OHI.Service.AccountTokenService;
-import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
-import nl.miwnn.cohort._9.OHI.Service.CohortService;
-import nl.miwnn.cohort._9.OHI.Service.PersonService;
+import nl.miwnn.cohort._9.OHI.Service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.validation.BindingResult;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,33 +29,26 @@ import java.util.List;
 @RequestMapping("person")
 public class PersonController {
     private static final Logger log = LoggerFactory.getLogger(PersonController.class);
-    private final PersonRepository personRepository;
     private final PersonService personService;
-    private final CohortRepository cohortRepository;
     private final CohortService cohortService;
     private final OHIUserService oHIUserService;
-    private final AccountTokenRespository accountTokenRespository;
     private final AccountTokenService accountTokenService;
+    private final InterestService interestService;
 
-    public PersonController(PersonRepository personRepository, PersonService personService,
-                            CohortRepository cohortRepository, ImageRepository imageRepository,
-                            StudentRepository studentRepository, OHIUserService oHIUserService,
-                            CohortService cohortService, AccountTokenRespository accountTokenRespository,
-                            OHIUserRepository oHIUserRepository, BCryptPasswordEncoder passwordEncoder,
-                            AccountTokenService accountTokenService) {
-        this.personRepository = personRepository;
+    public PersonController( PersonService personService, OHIUserService oHIUserService,
+                             CohortService cohortService, AccountTokenService accountTokenService,
+                             InterestService interestService) {
         this.personService = personService;
-        this.cohortRepository = cohortRepository;
         this.cohortService = cohortService;
         this.oHIUserService = oHIUserService;
-        this.accountTokenRespository = accountTokenRespository;
         this.accountTokenService = accountTokenService;
+        this.interestService = interestService;
     }
 
     @GetMapping("/overview")
     public String showPeople(Model model) {
-        List<Person> people = personRepository.findAll();
-        List<Cohort> cohorts = cohortRepository.findAll();
+        List<Person> people = personService.getAllPeople();
+        List<Cohort> cohorts = cohortService.getAllCohorts();
 
         log.debug("person overview requested");
         model.addAttribute("people", people);
@@ -117,20 +110,29 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public String showProfile(@PathVariable Long id, Model model) {
+    public String showProfile(@PathVariable Long id, Model model,
+                              @AuthenticationPrincipal OHIUser loggedInUser) {
 
         Person person = personService.getPerson(id);
         model.addAllAttributes(personService.getProfileInformation(person));
 
+        model.addAttribute("commentWriter", String.format("Schrijf een bericht als %s",
+                loggedInUser.getPerson().getFullName()));
+        model.addAttribute("loggedIn", loggedInUser.getPerson());
+
         return "person-detail";
     }
+
+
 
     @PreAuthorize("#id == authentication.principal.person.id")
     @GetMapping("/profile/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         personService.getPerson(id);
         log.info("Bewerkformulier geopend voor: {}", id);
+
         model.addAttribute("person", personService.findById(id));
+        model.addAttribute("allInterests", interestService.getAllInterests());
 
         return "person-profile-edit";
     }
@@ -139,27 +141,24 @@ public class PersonController {
 //    @PreAuthorize("#id == authentication.principal.person.id")
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
-                              @RequestParam("imageFile") MultipartFile imageFile, RedirectAttributes redirectAttributes
+                              @RequestParam("profileImageFile") MultipartFile profileImageFile, RedirectAttributes redirectAttributes
     ) throws IOException {
 
         Person profilePerson = personService.findById(aboutPerson.getId());
-        personService.updateProfileImage(aboutPerson.getId(), imageFile);
-        personService.updatePersonInformation(aboutPerson.getId(), aboutPerson);
-
-        redirectAttributes.addFlashAttribute("successMessage", "Je profiel is succesvol bijgewerkt!");
-        redirectAttributes.addFlashAttribute("errorMessage", "Je profiel kon niet bijgewerkt worden");
+        try {
+            personService.updateProfileImage(aboutPerson.getId(), profileImageFile);
+            personService.updatePersonInformation(aboutPerson.getId(), aboutPerson);
+            redirectAttributes.addFlashAttribute("successMessage", "Je profiel is succesvol bijgewerkt!");
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Je profiel kon niet bijgewerkt worden");
+        }
 
         return "redirect:/person/" + profilePerson.getId();
     }
 
     @GetMapping("/account/setup")
     public String UserSetUpAccount(@PathVariable @RequestParam("token") String token, Model model){
-        AccountToken accountToken = accountTokenRespository.findByToken(token);
-
-        if(accountToken.isUsed() || accountToken.getExpiresAt().isBefore(LocalDateTime.now())){
-            throw new IllegalArgumentException("token has expired");
-        }
-
+        AccountToken accountToken = accountTokenService.validateAndGet(token);
         OHIUser newUser = accountToken.getOhiUser();
         model.addAttribute("newUser", newUser);
         model.addAttribute("token", token);
