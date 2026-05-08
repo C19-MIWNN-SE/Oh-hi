@@ -21,7 +21,7 @@
                 <div class="CohortInfo card-name-style">
                     <div class="name-style" th:text="Docenten"></div>
                     <!-- Docenten -->
-                    <div id="teachers" class="collapse mt-3">
+                    <div id="teachers">
                         <div class="row g-3">
                             <div class="col" th:each="teacher : ${members}"
                                  th:if="${teacher.userRole.name() == 'TEACHER'}">
@@ -82,9 +82,10 @@
                         <img th:src="@{'/images/' + ${img.id}}"
                              class="d-block w-100"
                              th:alt="${img.alttxt}">
-                        <p class="img-text"
-                           th:each="member : ${img.people}"
-                           th:text="${member.firstName}">this is where I will add the names of people in this photo</p>
+                        <ul class="img-text">
+                            <li th:each="member : ${img.people}"
+                                th:text="${member.firstName} + ' ' + ${member.lastName}"></li>
+                        </ul>
                     </div>
                 </div>
                 </div>

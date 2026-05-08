@@ -20,18 +20,17 @@
         <a class="navbar-brand" href="/">Oh, hi!</a>
 
         <div class="nav nav-underline d-flex align-items-center gap-2">
-            <a th:href="@{/cohort/add}" class="nav-link nav-btn"
-               sec:authorize="hasAnyRole('DOCENT', 'ADMIN')">
-                <i class="bi bi-plus-circle me-1"></i> Cohort
-            </a>
-            <!-- todo - link to customize user's own profile -->
             <a class="nav-link nav-btn"
                sec:authorize="isAuthenticated()"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
                th:href="@{/person/profile/edit/{id}(id=${#authentication.principal.person.id})}">
-                <i class="bi bi-people"></i> Edit Profile
+                <i class="bi bi-emoji-smile"></i> Edit Profile
             </a>
-            <!-- todo - this should link to the cohort of the user -->
+            <a th:href="@{/cohort/add}" class="nav-link nav-btn"
+               sec:authorize="hasAnyRole('DOCENT', 'ADMIN')">
+                <i class="bi bi-plus-circle me-1"></i> Cohort
+            </a>
+
             <a class="nav-link nav-btn"
                sec:authorize="hasAnyRole('DOCENT', 'ADMIN')"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
