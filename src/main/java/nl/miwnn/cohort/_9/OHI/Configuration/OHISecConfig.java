@@ -30,28 +30,31 @@ public class OHISecConfig {
 //                        .requestMatchers("/person/**", "/cohort/**", "/login-redirect").hasAnyRole("DOCENT", "STUDENT")
 //                )
 //=======
-                        .requestMatchers(
-                                "/",
-                                "/person",
-                                "/person/**",
-                                "/userlogin",
-                                "/webjars/**",
-                                "/static/**",
-                                "/css/**",
-                                "/static-images/**",
-                                "/js/**",
-                                "/select2",
-                                "/select2/**",
-                                "/person/profile/save")
-                        .permitAll().requestMatchers(
-                                "/person/add",
-                                "/person/remove",
-                                "/person/save",
-                                "/cohort",
-                                        "/images/upload-group",
-                                "/cohort/**"
-                        ).hasAnyRole("DOCENT").anyRequest().authenticated()
-                        )
+                                .requestMatchers(
+                                        "/",
+                                        "/person",
+                                        "/person/**",
+                                        "/userlogin",
+                                        "/webjars/**",
+                                        "/static/**",
+                                        "/css/**",
+                                        "/static-images/**",
+                                        "/js/**",
+                                        "/select2",
+                                        "/select2/**",
+                                        "/person/profile/save",
+                                        "/cohort",
+                                        "/chorot/**")
+                                .permitAll().requestMatchers(
+                                        "/person/add",
+                                        "/person/remove",
+                                        "/person/save",
+                                        "/person/overview",
+                                        "/cohort/add",
+                                        "/cohort/save",
+                                        "/images/upload-group"
+                                ).hasAnyRole("DOCENT").anyRequest().authenticated()
+                )
 //>>>>>>> main
                 // custom form voor login
                 .formLogin((form) -> form
@@ -60,8 +63,8 @@ public class OHISecConfig {
                         .defaultSuccessUrl("/login-redirect", true)
                         .permitAll())
                 .logout(logout -> logout
-                    .logoutSuccessUrl("/")
-                    .permitAll());
+                        .logoutSuccessUrl("/")
+                        .permitAll());
         log.info("Toestemming gegeven");
         return http.build();
     }

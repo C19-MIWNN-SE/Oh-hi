@@ -22,11 +22,11 @@ public class WelcomeLoginController {
     @GetMapping("/login-redirect")
     public String loginRedirect(HttpServletRequest request, Authentication authentication) {
         OHIUser user = (OHIUser) authentication.getPrincipal();
-        if (request.isUserInRole("ROLE_ADMIN")) {
+        if (request.isUserInRole("ADMIN")) {
             return "redirect:/person/overview";
-        } else if (request.isUserInRole("ROLE_STUDENT")) {
+        } else if (request.isUserInRole("STUDENT")) {
             return "redirect:/cohort/" + user.getPerson().getCohort().getId();
-        } else if (request.isUserInRole("ROLE_DOCENT")) {
+        } else if (request.isUserInRole("DOCENT")) {
             return "redirect:/person/overview";
         } return "welcome-login";
     }

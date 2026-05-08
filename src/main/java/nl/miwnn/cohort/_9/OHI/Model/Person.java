@@ -273,4 +273,12 @@ public class Person {
             this.interests.addAll(interests);
         }
     }
+
+    public void setProfileImage(Image profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
+    }
 }

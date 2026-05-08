@@ -141,16 +141,20 @@ public class InitializeController {
             LocalDate.of(2026, 01, 01), LocalDate.of(2026, 02, 01));
             cohortRepository.save(testCohort);
             Person testUser = new Person("Hans", "Hoeven");
-            Person testUser2 = new Person("Mark", "van Dijk ");
             testUser.setCohort(testCohort);
+            Person testUser2 = new Person("Mark", "van Dijk ");
             personRepository.save(testUser);
             personRepository.save(testUser2);
             OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT", testUser2);
             OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
-            OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT");
+            OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
             ohiUserRepository.save(docent);
             ohiUserRepository.save(student);
             ohiUserRepository.save(hans);
+            testUser.setAccount(hans);
+            personRepository.save(testUser);
+
+
         }
     }
 }
