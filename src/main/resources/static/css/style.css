@@ -224,6 +224,14 @@ nav{
     color: white;
 }
 
+.nav-btn {
+    color: white;
+}
+
+.nav-btn:hover {
+    color:  rgb(255, 219, 253);
+}
+
 .ProfilePic{
     height: 400px;
     width: auto;
