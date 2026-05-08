@@ -21,7 +21,7 @@
 
         <div class="nav nav-underline d-flex align-items-center gap-2">
             <a th:href="@{/cohort/add}" class="nav-link nav-btn"
-               sec:authorize="hasRole('DOCENT')">
+               sec:authorize="hasAnyRole('DOCENT', 'ADMIN')">
                 <i class="bi bi-plus-circle me-1"></i> Cohort
             </a>
             <!-- todo - link to customize user's own profile -->
@@ -33,13 +33,13 @@
             </a>
             <!-- todo - this should link to the cohort of the user -->
             <a class="nav-link nav-btn"
-               sec:authorize="hasRole('DOCENT')"
+               sec:authorize="hasAnyRole('DOCENT', 'ADMIN')"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
                href="/person/overview">
                 <i class="bi bi-people"></i> Overzicht
             </a>
             <div class="dropdown"
-                 sec:authorize="hasRole('DOCENT')">
+                 sec:authorize="hasAnyRole('DOCENT', 'ADMIN')">
                 <button class=" search-bg dropdown-toggle nav-link nav-btn"
                         type="button"
                         data-bs-toggle="dropdown"

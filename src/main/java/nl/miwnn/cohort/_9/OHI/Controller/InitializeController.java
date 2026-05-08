@@ -161,8 +161,10 @@ public class InitializeController {
 
             OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT", testUser2);
             OHIUser student = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
+            OHIUser admin = new OHIUser("admin", passwordEncoder.encode("admin"), "ADMIN");
             ohiUserService.saveUser(docent);
             ohiUserService.saveUser(student);
+            ohiUserService.saveUser(admin);
             personService.linkAccountToPerson(testUser, student);
             personService.linkAccountToPerson(testUser2, docent);
 

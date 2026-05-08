@@ -102,8 +102,8 @@ nav{
     transition: 0.3s;
 }
 .fp-btn-colour{
-    background-color: cornflowerblue;
-    border-color: cornflowerblue;
+    background-color: rgb(160, 135, 235);
+    border-color: rgb(160, 135, 235);
     transition: 0.3s;
 }
 .fp-btn-colour:hover{
@@ -276,6 +276,7 @@ button[aria-expanded="true"] .transition-icon {
     border-color: white;
     border-style: solid;
 }
+
 .cohortCard{
     height: 100%;
     width: auto;
