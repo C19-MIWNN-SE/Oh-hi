@@ -1,4 +1,5 @@
 package nl.miwnn.cohort._9.OHI.Controller;
+
 import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.*;
 import nl.miwnn.cohort._9.OHI.Repository.*;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.validation.BindingResult;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,9 +38,9 @@ public class PersonController {
     private final AccountTokenService accountTokenService;
     private final InterestService interestService;
 
-    public PersonController( PersonService personService, OHIUserService oHIUserService,
-                             CohortService cohortService, AccountTokenService accountTokenService,
-                             InterestService interestService) {
+    public PersonController(PersonService personService, OHIUserService oHIUserService,
+                            CohortService cohortService, AccountTokenService accountTokenService,
+                            InterestService interestService) {
         this.personService = personService;
         this.cohortService = cohortService;
         this.oHIUserService = oHIUserService;
@@ -118,13 +120,12 @@ public class PersonController {
         model.addAllAttributes(personService.getProfileInformation(person));
 
         model.addAttribute("commentWriter", String.format("Schrijf een bericht als %s",
-                loggedInUser.getPerson().getFullName()));
+                oHIUserService.getNameOfPerson(loggedInUser)));
+
         model.addAttribute("loggedIn", loggedInUser.getPerson());
 
         return "person-detail";
     }
-
-
 
     @PreAuthorize("#id == authentication.principal.person.id")
     @GetMapping("/profile/edit/{id}")
@@ -158,7 +159,7 @@ public class PersonController {
     }
 
     @GetMapping("/account/setup")
-    public String UserSetUpAccount(@PathVariable @RequestParam("token") String token, Model model){
+    public String UserSetUpAccount(@PathVariable @RequestParam("token") String token, Model model) {
         AccountToken accountToken = accountTokenService.validateAndGet(token);
         OHIUser newUser = accountToken.getOhiUser();
         model.addAttribute("newUser", newUser);
@@ -169,7 +170,7 @@ public class PersonController {
     @PostMapping("account/setup")
     public String finishSetup(@RequestParam String token,
                               @RequestParam String password,
-                              @RequestParam String username){
+                              @RequestParam String username) {
 
         AccountToken accountToken = accountTokenService.validateAndGet(token);
 

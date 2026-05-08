@@ -80,7 +80,9 @@
 
                 <div class="comments"></div>
                 <div class="commentBox">
-                    <img th:src="${loggedIn.image != null} ? '/images/' + ${loggedIn.image.id} : '/static-images/noImage.jpg'">
+                    <img th:src="${loggedIn != null && loggedIn.image != null}
+? '/images/' + loggedIn.image.id
+: '/static-images/noImage.jpg'">
                     <div class="content">
                         <h2 th:text="${commentWriter}" class="commentWriter">Schrijf een bericht als</h2>
                         <div class="commentInput">
@@ -100,9 +102,9 @@
         </div>
     </div>
 
-<span id="loggedInName" th:text="${loggedIn.fullName}" style="display:none"></span>
-<span id="loggedInImage" th:text="${loggedIn.image?.id}" style="display:none"></span>
-<span id="profileId" th:text="${person.id}" style="display:none"></span>
+<!--<span id="loggedInName" th:text="${loggedIn.fullName}" style="display:none"></span>-->
+<!--<span id="loggedInImage" th:text="${loggedIn.image?.id}" style="display:none"></span>-->
+<!--<span id="profileId" th:text="${person.id}" style="display:none"></span>-->
 
 <script>
     const imageId = document.getElementById("loggedInImage").textContent;

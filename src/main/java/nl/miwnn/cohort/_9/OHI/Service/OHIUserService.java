@@ -75,4 +75,11 @@ public class OHIUserService implements UserDetailsService {
         ohiUserRepository.save(user);
     }
 
+    public String getNameOfPerson(OHIUser loggedInUser) {
+        if (loggedInUser.getPerson() != null) {
+            return loggedInUser.getPerson().getFullName();
+        } else if (loggedInUser.getRole().equals("ADMIN")) {
+            return "godmode";
+        } else return "hacker";
+    }
 }

@@ -14,21 +14,8 @@
 
 <div class="container text-center">
     <div class="container mt-4">
-        <div class="row align-items-start">
-            <div class="col-4" sec:authorize="hasRole('DOCENT')">
-                <div class="dropdown">
-
-                    <a th:href="@{/person/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour"
-                       sec:authorize="hasRole('DOCENT')">
-                        <i class="bi bi-plus-circle me-1"></i> Persoon
-                    </a>
-                </div>
-            </div>
-            <div class="col-4">
-                <div>
-                <h1 class="fw-light">Alle personen</h1>
-                </div>
-            </div>
+        <div class="text-center">
+            <h1 class="fw-light">Alle personen</h1>
         </div>
     </div>
 
@@ -48,6 +35,9 @@
                 <a th:href="@{/person/{id}(id=${person.id})}">
                     <div th:replace="~{fragments/person :: personCard(${person}, null)}"></div>
                 </a>
+            </div>
+            <div class="col">
+                <div th:replace="~{fragments/person :: addPersonCard}"></div>
             </div>
         </div>
     </div>
