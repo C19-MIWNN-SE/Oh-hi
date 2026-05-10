@@ -5,11 +5,7 @@ import nl.miwnn.cohort._9.OHI.Model.*;
 import nl.miwnn.cohort._9.OHI.Repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.*;
@@ -97,7 +93,7 @@ public class PersonService {
         information.put("location", person.getLocation());
         information.put("age", person.getAge());
         information.put("pronoun", person.getPronoun());
-        information.put("userRole", person.getEnumToLowerCase(person.getUserRole()));
+        information.put("userRole", person.getEnumToLowerCase(person.getRole()));
         information.put("employer", person.getStudent());
         information.put("interests", person.getInterests());
         information.put("person", person);

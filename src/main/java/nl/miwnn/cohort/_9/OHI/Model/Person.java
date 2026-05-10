@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import javax.management.relation.Role;
 import java.util.*;
 
 /**
@@ -69,23 +68,6 @@ public class Person {
     )
     private Set<Image> images = new HashSet<>();
 
-    //todo review this - separate enum roles from a method to format the text
-    public enum Role {
-        STUDENT("Student"),
-        TEACHER("Docent"),
-        ADMIN("Admin");
-
-        private final String displayName;
-
-        Role(String displayName) {
-            this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-    }
-
     private String location;
     private Integer age;
     private String pronoun;
@@ -94,7 +76,7 @@ public class Person {
     private Student student;
 
     @CsvBindByName(column = "userRole")
-    private Role userRole;
+    private Role role;
 
     @ManyToMany
     @JoinTable(
@@ -105,13 +87,13 @@ public class Person {
     private List<Interest> interests = new ArrayList<>();
 
     public Person(String firstName, String infix, String lastName, Image profileImage, String aboutMe, String location,
-                  Integer age, String pronoun, Role userRole) {
+                  Integer age, String pronoun, Role role) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
         this.profileImage = profileImage;
         this.aboutMe = aboutMe;
-        this.userRole = userRole;
+        this.role = role;
         this.location = location;
         this.age = age;
         this.pronoun = pronoun;
@@ -126,7 +108,7 @@ public class Person {
     }
 
     public boolean getEmployerField(){
-        return userRole == Role.STUDENT;
+        return role == Role.STUDENT;
     }
 
     public String getFullName() {
@@ -189,17 +171,17 @@ public class Person {
         this.aboutMe = aboutMe;
     }
 
-    public void setUserRole(Role value) {
-        this.userRole = value;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public Role getUserRole() {
-        return userRole;
+    public Role getRole() {
+        return role;
     }
 
     //todo - see if this alone works
     public String getEnumToLowerCase(Role role) {
-        if (userRole.toString().equals("TEACHER")) {
+        if (role.toString().equals("TEACHER")) {
             return "Docent";
         } else return "Student";
     }
