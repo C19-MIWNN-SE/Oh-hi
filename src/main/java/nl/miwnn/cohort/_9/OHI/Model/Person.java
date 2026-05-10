@@ -75,6 +75,7 @@ public class Person {
     @OneToOne(cascade = CascadeType.ALL)
     private Student student;
 
+    @Enumerated(EnumType.STRING)
     @CsvBindByName(column = "userRole")
     private Role role;
 

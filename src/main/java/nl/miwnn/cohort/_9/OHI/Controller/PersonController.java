@@ -50,11 +50,15 @@ public class PersonController {
 
     @GetMapping("/overview")
     public String showPeople(Model model) {
+        List<Person> students = personService.getPeopleByRole(Role.STUDENT);
+        List<Person> teachers = personService.getPeopleByRole(Role.TEACHER);
         List<Person> people = personService.getAllPeople();
         List<Cohort> cohorts = cohortService.getAllCohorts();
 
         log.debug("person overview requested");
         model.addAttribute("people", people);
+        model.addAttribute("students", students);
+        model.addAttribute("teachers", teachers);
         Collections.sort(cohorts);
         model.addAttribute("allCohorts", cohorts);
 

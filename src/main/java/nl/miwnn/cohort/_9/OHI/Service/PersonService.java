@@ -37,6 +37,14 @@ public class PersonService {
         return personRepository.findAll();
     }
 
+    public List<Person> getPeopleByRole(Role role){
+        return personRepository.findByRole(role);
+    }
+
+    public List<Person> getPeopleByRoleAndCohort(Role role, Long cohortId){
+        return personRepository.findByRoleAndCohort_Id(role, cohortId);
+    }
+
     public List<Person> getAllPeopleSortedByCohortAvailability() {
         return getAllPeople().stream()
                 .sorted(Comparator.comparing(p -> p.getCohort() == null))

@@ -10,14 +10,14 @@
 
 <div th:fragment="personCard(person, extraClass)">
     <div class="shadow-sm background-content-card p-3 position-relative card-background"
-         th:classappend="${(extraClass != null ? extraClass : '') + (person.userRole.name() == 'TEACHER' ? ' docent-card' : '')}">
+         th:classappend="${(extraClass != null ? extraClass : '') + (person.role.name() == 'TEACHER' ? ' docent-card' : '')}">
 
         <div th:if="${extraClass != null && extraClass.contains('background-content-card-profile')}"
              class="d-flex flex-column align-items-center text-center w-100 py-3 ">
             <img class="PersonProfile rounded-circle mb-3"
                  th:src="${person.profileImage != null} ? '/images/' + ${person.profileImage.id} : '/static-images/noImage.jpg'"
                  alt="profile image">
-            <div class="roleDisplay" th:text="${person.userRole.displayName}"></div>
+            <div class="roleDisplay" th:text="${person.role.displayName}"></div>
 
             <div class="card-name-style">
                 <div class="name-style fw-bold" th:text="${person.fullName}"></div>

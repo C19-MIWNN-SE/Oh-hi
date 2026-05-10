@@ -23,8 +23,7 @@
                     <!-- Docenten -->
                     <div id="teachers">
                         <div class="row g-3">
-                            <div class="col" th:each="teacher : ${members}"
-                                 th:if="${teacher.userRole.name() == 'TEACHER'}">
+                            <div class="col" th:each="teacher : ${teachers}">
                                 <a th:href="@{/person/{id}(id=${teacher.id})}">
                                     <div th:replace="~{fragments/person :: personCard(${teacher}, null)}"></div>
                                 </a>
@@ -103,8 +102,7 @@
                 </button>
             </div>
             <div id="students" class="row row-cols-3 mt-1 g-4">
-                <div class="col" th:each="student : ${members}"
-                     th:if="${student.userRole.name() == 'STUDENT'}">
+                <div class="col" th:each="student : ${students}">
                     <a th:href="@{/person/{id}(id=${student.id})}">
                         <div th:replace="~{fragments/person :: personCard(${student}, null)}"></div>
                     </a>
@@ -128,8 +126,7 @@
                 <div class="groep-label">Niet ingedeeld <span class="groep-count" id="count-pool"></span></div>
                 <div class="drop-zone" id="pool" data-zone="pool">
                     <!-- Studenten worden hier ingeladen via Thymeleaf + JS -->
-                    <div th:each="student : ${members}"
-                         th:if="${student.userRole.name() == 'STUDENT'}"
+                    <div th:each="student : ${students}"
                          class="student-drag-card"
                          draggable="true"
                          th:data-id="${student.id}"

@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Image;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.Role;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Service.*;
@@ -69,8 +70,9 @@ public class CohortController {
         }
         model.addAttribute("cohort", new Cohort());
         if (bindingResult.hasErrors()) {
-            log.warn("Validatiefouten bij opslaan: {}",
-                    bindingResult.getErrorCount());
+            // dit werkt nu ineens niet meer, de bindingresults validatie
+//            log.warn("Validatiefouten bij opslaan: {}",
+//                    bindingResult.getErrorCount());
             model.addAttribute("allMembers", personService.getAllPeople());
             return "cohort-add-edit";
         }
@@ -89,7 +91,11 @@ public class CohortController {
 
         Cohort cohort = cohortService.findById(id);
         model.addAttribute("cohort", cohort);
+        List<Person> students = personService.getPeopleByRoleAndCohort(Role.STUDENT, id);
+        List<Person> teachers = personService.getPeopleByRoleAndCohort(Role.TEACHER, id);
         model.addAttribute("members", cohort.getMembers());
+        model.addAttribute("students", students);
+        model.addAttribute("teachers", teachers);
         model.addAttribute("cohortName", String.format("Cohort %d - %s", cohort.getCohortNum(), cohort.getDiscipline()));
 
         List<Cohort> cohorts = cohortService.getAllCohorts();
