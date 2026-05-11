@@ -68,6 +68,7 @@ public class Person {
             name = "person_images",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "image_id")
+
     )
     private Set<Image> images = new HashSet<>();
 

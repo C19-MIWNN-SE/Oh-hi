@@ -43,7 +43,7 @@ public class Cohort implements Comparable<Cohort> {
     @CsvBindByName(column = "endDate")
     private LocalDate endDate;
 
-    @OneToMany(mappedBy = "cohort", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cohort", fetch = FetchType.EAGER)
     private List<Person> members = new ArrayList<>();
 
     public Cohort(Integer cohortNum, String discipline, LocalDate startDate, LocalDate endDate) {

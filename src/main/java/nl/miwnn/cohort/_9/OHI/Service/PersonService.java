@@ -68,22 +68,9 @@ public class PersonService {
                     person.getFirstName(), person.getInfix(), person.getLastName()).isPresent();
     }
 
-    public void deleteMemberFromCohort(Long id){
-
-        // Verwijder gerelateerde user
-//        if (person.getOhiUser() != null) {
-//            ohiUserRepository.delete(person.getOhiUser());
-//        }
-        if (person.getStudent() != null) {
-            studentRepository.delete(person.getStudent());
-        }
-
-        if (person.getProfileImage() != null) {
-            imageRepository.delete(person.getProfileImage());
-        }
-
+    @Transactional
+    public void removePerson(Long id){
         personRepository.deleteById(id);
-
     }
 
     public void savePerson(Person person) { personRepository.save(person);}
