@@ -159,14 +159,18 @@ public class InitializeController {
             testUser2.setCohort(testCohort);
             personService.savePerson(testUser2);
 
+            Person testUser3 = new Person("a", "a ");
+            personService.savePerson(testUser3);
+
             OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT", testUser2);
             OHIUser student = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
-            OHIUser admin = new OHIUser("admin", passwordEncoder.encode("admin"), "ADMIN");
+            OHIUser admin = new OHIUser("admin", passwordEncoder.encode("admin"), "ADMIN", testUser3);
             ohiUserService.saveUser(docent);
             ohiUserService.saveUser(student);
             ohiUserService.saveUser(admin);
             personService.linkAccountToPerson(testUser, student);
             personService.linkAccountToPerson(testUser2, docent);
+            personService.linkAccountToPerson(testUser3, admin);
 
 
         }
