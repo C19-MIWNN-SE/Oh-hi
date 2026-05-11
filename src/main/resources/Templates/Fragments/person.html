@@ -22,7 +22,6 @@
             <div class="card-name-style">
                 <div class="card-text">
                     <div th:text="${person.firstName}"></div>
-                    <br>
                     <div th:text="${person.infix != null && !person.infix.isEmpty()} ? ${person.infix + ' ' + person.lastName} : ${person.lastName}"></div>
                 </div>
                 <div class="d-flex align-items-center mt-1">

@@ -41,7 +41,7 @@
 
                 <div th:class="${person.personBirthday} ? 'col mx-auto info-background-content birthday-highlight' : 'col mx-auto info-background-content'">
                     <h5 class="aboutMeHeader">Geboortedatum</h5>
-                    <p class="aboutMeContent" th:text="${person.birthDate}"></p>
+                    <p class="aboutMeContent" th:text="${#temporals.format(person.birthDate, 'dd MMMM yyyy')}"></p>
                     <p class="birthdayText" th:if="${person.personBirthday}">🎂 Fijne verjaardag!</p>
                 </div>
 
