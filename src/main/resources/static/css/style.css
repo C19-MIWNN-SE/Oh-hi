@@ -204,11 +204,13 @@ button[aria-expanded="true"] .transition-icon {
     color: black;
     font-size: 13px;
 }
-.name-style{
-    font-size: 18px !important;
-    color: black;
-    padding-bottom: 5px;
+.name-style {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
+
 .roleDisplay {
     color: mediumpurple;
     text-decoration: none;
@@ -258,6 +260,7 @@ button[aria-expanded="true"] .transition-icon {
 /*--------------------------------------related to cards------------------------------------------*/
 .card-overview-page{
     min-height: 150px;
+    overflow: hidden;
 }
 .card-background{
     background-image: url("/static-images/card-background.png");
@@ -277,9 +280,16 @@ button[aria-expanded="true"] .transition-icon {
 .card-background .fw-bold {
     text-decoration: none;
 }
-.card-text{
+
+.card-text {
     color: black;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0; /* belangrijk in flexbox/grid! */
 }
+
 .docent-card {
     background-image: url("/static-images/background-card-teacher.png");
     background-repeat: no-repeat;

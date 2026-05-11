@@ -123,11 +123,10 @@ public class Person {
     }
 
     public String getFullName() {
-        if (infix == null) {
-            infix = "";
+        if (infix == null || infix.isEmpty()) {
+            return String.format("%s\n%s", firstName, lastName);
         }
-
-        return String.format("%s %s %s", firstName, infix, lastName);
+        return String.format("%s\n%s %s", firstName, infix, lastName);
     }
 
     public Long getId() {
