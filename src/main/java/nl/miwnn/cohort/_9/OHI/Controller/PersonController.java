@@ -151,8 +151,10 @@ public class PersonController {
             personService.updateProfileImage(aboutPerson.getId(), profileImageFile);
             personService.updatePersonInformation(aboutPerson.getId(), aboutPerson);
             redirectAttributes.addFlashAttribute("successMessage", "Je profiel is succesvol bijgewerkt!");
-        } catch (Exception exception) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Je profiel kon niet bijgewerkt worden");
+        } catch (IOException imageException) {
+            redirectAttributes.addFlashAttribute("errorMessage", "De afbeelding kon niet worden opgeslagen");
+        } catch (IllegalStateException profileException) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Je profiel kon niet worden bijgewerkt");
         }
 
         return "redirect:/person/" + profilePerson.getId();
