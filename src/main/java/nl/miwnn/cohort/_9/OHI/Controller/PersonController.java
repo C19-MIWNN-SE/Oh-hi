@@ -135,14 +135,17 @@ public class PersonController {
     @GetMapping("/profile/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Person person = personService.findById(id);
+        List<Cohort> cohorts = cohortService.getAllCohorts();
+        Collections.sort(cohorts);
         log.info("Bewerkformulier geopend voor: {}", id);
 
         model.addAttribute("person", person);
         model.addAttribute("allInterests", interestService.getAllInterests());
+        model.addAttribute("allCohorts", cohorts);
 
         return "person-profile-edit";
     }
-    
+
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
                               @RequestParam("profileImageFile") MultipartFile profileImageFile, RedirectAttributes redirectAttributes
