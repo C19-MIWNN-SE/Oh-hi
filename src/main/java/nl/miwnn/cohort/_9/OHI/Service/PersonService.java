@@ -115,6 +115,18 @@ public class PersonService {
         }
     }
 
+    public void updatePersonInformation(Long personId, Person aboutPerson){
+        Person profilePerson = getPerson(personId);
+        profilePerson.setAboutMe(aboutPerson.getAboutMe());
+        profilePerson.setLocation(aboutPerson.getLocation());
+        profilePerson.setBirthDate(aboutPerson.getBirthDate());
+        profilePerson.setPronoun(aboutPerson.getPronoun());
+        profilePerson.setInterests(getSelectedInterests(aboutPerson));
+        checkIfPersonIsStudent(profilePerson, aboutPerson);
+
+        personRepository.save(profilePerson);
+    }
+
     public void checkIfPersonIsStudent(Person profilePerson, Person aboutPerson){
 
         if (profilePerson.getEmployerField() && aboutPerson.getStudent() != null) {
@@ -129,17 +141,7 @@ public class PersonService {
         }
     }
 
-    public void updatePersonInformation(Long personId, Person aboutPerson){
-        Person profilePerson = getPerson(personId);
-        profilePerson.setAboutMe(aboutPerson.getAboutMe());
-        profilePerson.setLocation(aboutPerson.getLocation());
-        profilePerson.setBirthDate(aboutPerson.getBirthDate());
-        profilePerson.setPronoun(aboutPerson.getPronoun());
-        profilePerson.setInterests(getSelectedInterests(aboutPerson));
-        checkIfPersonIsStudent(profilePerson, aboutPerson);
 
-        personRepository.save(profilePerson);
-    }
 
     public List<Interest> getSelectedInterests(Person aboutPerson){
         return interestRepository.findAllById(aboutPerson.getInterests().stream()

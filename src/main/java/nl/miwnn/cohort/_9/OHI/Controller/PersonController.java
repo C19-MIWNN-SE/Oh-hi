@@ -83,7 +83,8 @@ public class PersonController {
                                      @RequestParam(value = "cohort.id", required = false) Long cohortId,
                                      RedirectAttributes redirectAttributes) {
         if (personService.personAlreadyExists(person)) {
-            bindingResult.rejectValue("firstName", "alreadyExists", "Dit persoon bestaat al");
+            bindingResult.rejectValue("firstName", "alreadyExists",
+                    "Dit persoon bestaat al");
         }
 
         if (bindingResult.hasErrors()) {
@@ -95,13 +96,15 @@ public class PersonController {
         try {
             personService.saveMemberToCohort(person);
         } catch (DataIntegrityViolationException exception) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Dit persoon kon niet worden opgeslagen");
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Dit persoon kon niet worden opgeslagen");
             return "person-add-edit";
         }
 
         String setupLink = oHIUserService.createAccount(person, Role.STUDENT);
         redirectAttributes.addFlashAttribute("setupLink", setupLink);
-        redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
+        redirectAttributes.addFlashAttribute("successMessage",
+                "Het persoon is succesvol opgeslagen!");
 
         return "redirect:/person/overview";
     }
@@ -145,18 +148,22 @@ public class PersonController {
 
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
-                              @RequestParam("profileImageFile") MultipartFile profileImageFile, RedirectAttributes redirectAttributes
+                              @RequestParam("profileImageFile") MultipartFile profileImageFile,
+                              RedirectAttributes redirectAttributes
     ) throws IOException {
 
         Person profilePerson = personService.findById(aboutPerson.getId());
         try {
             personService.updateProfileImage(aboutPerson.getId(), profileImageFile);
             personService.updatePersonInformation(aboutPerson.getId(), aboutPerson);
-            redirectAttributes.addFlashAttribute("successMessage", "Je profiel is succesvol bijgewerkt!");
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "Je profiel is succesvol bijgewerkt!");
         } catch (IOException imageException) {
-            redirectAttributes.addFlashAttribute("errorMessage", "De afbeelding kon niet worden opgeslagen");
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "De afbeelding kon niet worden opgeslagen");
         } catch (IllegalStateException profileException) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Je profiel kon niet worden bijgewerkt");
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Je profiel kon niet worden bijgewerkt");
         }
 
         return "redirect:/person/" + profilePerson.getId();
