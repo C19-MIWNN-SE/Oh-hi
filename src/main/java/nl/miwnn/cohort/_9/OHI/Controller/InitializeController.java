@@ -3,10 +3,7 @@ package nl.miwnn.cohort._9.OHI.Controller;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
-import nl.miwnn.cohort._9.OHI.Model.Cohort;
-import nl.miwnn.cohort._9.OHI.Model.Interest;
-import nl.miwnn.cohort._9.OHI.Model.OHIUser;
-import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.*;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.InterestRepository;
 import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
@@ -162,9 +159,9 @@ public class InitializeController {
             Person testUser3 = new Person("a", "a ");
             personService.savePerson(testUser3);
 
-            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT", testUser2);
-            OHIUser student = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
-            OHIUser admin = new OHIUser("admin", passwordEncoder.encode("admin"), "ADMIN", testUser3);
+            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), Role.TEACHER, testUser2);
+            OHIUser student = new OHIUser("hans", passwordEncoder.encode("hans"), Role.STUDENT, testUser);
+            OHIUser admin = new OHIUser("admin", passwordEncoder.encode("admin"), Role.ADMIN, testUser3);
             ohiUserService.saveUser(docent);
             ohiUserService.saveUser(student);
             ohiUserService.saveUser(admin);

@@ -53,7 +53,7 @@ public class OHISecConfig {
                                         "/cohort/add",
                                         "/cohort/save",
                                         "/images/upload-group"
-                                ).hasAnyRole("DOCENT", "ADMIN").anyRequest().authenticated()
+                                ).hasAnyRole("TEACHER", "ADMIN").anyRequest().authenticated()
                 )
 //>>>>>>> main
                 // custom form voor login
