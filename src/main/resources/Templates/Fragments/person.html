@@ -44,15 +44,15 @@
             </div>
         </div>
 
-        <!--        <div class="position-absolute bottom-0 end-0 p-2"-->
-        <!--             th:if="${extraClass == null || !extraClass.contains('background-content-card-profile')}"-->
-        <!--             sec:authorize="hasRole('DOCENT')">-->
-        <!--            <a th:href="@{/person/remove/{id}(id=${person.id})}"-->
-        <!--               class="btn btn-sm text-danger border-0"-->
-        <!--               onclick="return confirm('Weet je zeker?')">-->
-        <!--                <i class="bi bi-trash"></i>-->
-        <!--            </a>-->
-        <!--        </div>-->
+                <div class="position-absolute bottom-0 end-0 p-2"
+                     th:if="${extraClass == null || !extraClass.contains('background-content-card-profile')}"
+                     sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/person/remove/{id}(id=${person.id})}"
+                       class="btn btn-sm text-danger border-0"
+                       onclick="return confirm('Weet je zeker?')">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
 
     </div>
 </div>

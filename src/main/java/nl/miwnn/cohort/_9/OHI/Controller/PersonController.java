@@ -107,12 +107,12 @@ public class PersonController {
     @GetMapping("/remove/{id}")
     public String deleteMemberFromCohort(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
-        try {
+//        try {
             personService.deleteMemberFromCohort(id);
             redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol verwijderd");
-        } catch (Exception exception) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Het persoon kon niet verwijderd worden.");
-        }
+//        } catch (Exception exception) {
+//            redirectAttributes.addFlashAttribute("errorMessage", "Het persoon kon niet verwijderd worden.");
+//        }
         return "redirect:/person/overview";
     }
 
