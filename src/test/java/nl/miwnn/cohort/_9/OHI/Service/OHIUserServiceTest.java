@@ -2,6 +2,7 @@ package nl.miwnn.cohort._9.OHI.Service;
 
 import nl.miwnn.cohort._9.OHI.Model.OHIUser;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.Role;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,7 +56,7 @@ class OHIUserServiceTest {
         Person expectedPerson = new Person("Johnny", "Wiseau");
 
         // Act
-        OHIUser actualUser = new OHIUser("user1", "pw1", "STUDENT", expectedPerson);
+        OHIUser actualUser = new OHIUser("user1", "pw1", Role.STUDENT, expectedPerson);
 
         // Assert
         assertEquals(expectedPerson, actualUser.getPerson());
