@@ -146,10 +146,9 @@ public class PersonService {
         Person profilePerson = getPerson(personId);
         profilePerson.setAboutMe(aboutPerson.getAboutMe());
         profilePerson.setLocation(aboutPerson.getLocation());
-        profilePerson.setAge(aboutPerson.getAge());
+        profilePerson.setBirthDate(aboutPerson.getBirthDate());
         profilePerson.setPronoun(aboutPerson.getPronoun());
         profilePerson.setInterests(getSelectedInterests(aboutPerson));
-
         checkIfPersonIsStudent(profilePerson, aboutPerson);
 
         personRepository.save(profilePerson);

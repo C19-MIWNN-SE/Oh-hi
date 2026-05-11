@@ -4,7 +4,10 @@ import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 /**
@@ -24,7 +27,7 @@ public class Person {
 
     private static final Role DEFAULT_ROLE = Role.STUDENT;
     public static final String DEFAULT_LOCATION = null;
-    public static final Integer DEFAULT_AGE = null;
+    public static final LocalDate DEFAULT_BIRTHDATE = null;
     public static final String DEFAULT_PRONOUN = null;
 
     @Id
@@ -69,7 +72,7 @@ public class Person {
     private Set<Image> images = new HashSet<>();
 
     private String location;
-    private Integer age;
+    private LocalDate birthDate;
     private String pronoun;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -88,7 +91,7 @@ public class Person {
     private List<Interest> interests = new ArrayList<>();
 
     public Person(String firstName, String infix, String lastName, Image profileImage, String aboutMe, String location,
-                  Integer age, String pronoun, Role role) {
+                  LocalDate birthDate, String pronoun, Role role) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
@@ -96,13 +99,13 @@ public class Person {
         this.aboutMe = aboutMe;
         this.role = role;
         this.location = location;
-        this.age = age;
+        this.birthDate = birthDate;
         this.pronoun = pronoun;
     }
 
     public Person(String firstName, String lastName) {
         this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_LOCATION,
-                DEFAULT_AGE, DEFAULT_PRONOUN, DEFAULT_ROLE);
+                DEFAULT_BIRTHDATE, DEFAULT_PRONOUN, DEFAULT_ROLE);
     }
 
     public Person() {
@@ -110,6 +113,13 @@ public class Person {
 
     public boolean getEmployerField(){
         return role == Role.STUDENT;
+    }
+
+    public boolean isPersonBirthday(){
+        if (birthDate == null) return false;
+        LocalDate today = LocalDate.now();
+        return birthDate.getDayOfMonth() == today.getDayOfMonth()
+                && birthDate.getMonthValue() == today.getMonthValue();
     }
 
     public String getFullName() {
@@ -203,12 +213,17 @@ public class Person {
         this.location = location;
     }
 
-    public Integer getAge() {
-        return age;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Integer getAge() {
+        if (birthDate == null) return null;
+        return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
     public String getPronoun() {
