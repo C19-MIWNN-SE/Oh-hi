@@ -1,9 +1,6 @@
 package nl.miwnn.cohort._9.OHI.Service;
 
-import nl.miwnn.cohort._9.OHI.Model.AccountToken;
-import nl.miwnn.cohort._9.OHI.Model.Cohort;
-import nl.miwnn.cohort._9.OHI.Model.OHIUser;
-import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.*;
 
 import nl.miwnn.cohort._9.OHI.Repository.AccountTokenRespository;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +51,7 @@ class AccountTokenServiceTest {
         person2.setCohort(cohort);
         OHIUser user = new OHIUser("username",
                                    "password",
-                                       "STUDENT",
+                                       Role.STUDENT,
                                             person);
         accountToken = new AccountToken(token,user, LocalDateTime.now().plusDays(7));
     }

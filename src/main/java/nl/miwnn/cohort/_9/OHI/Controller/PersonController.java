@@ -97,7 +97,7 @@ public class PersonController {
             redirectAttributes.addFlashAttribute("Dit persoon kon niet worden opgeslagen");
         }
 
-        String setupLink = oHIUserService.createAccount(person, "STUDENT");
+        String setupLink = oHIUserService.createAccount(person, Role.STUDENT);
         redirectAttributes.addFlashAttribute("setupLink", setupLink);
         redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
 
