@@ -5,8 +5,12 @@ import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Model.Role;
 import nl.miwnn.cohort._9.OHI.Model.Student;
 import nl.miwnn.cohort._9.OHI.Service.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.CsvSources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,10 +20,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -128,6 +135,14 @@ class PersonControllerTest {
     void finishSetup() {
     }
 
+    private Person person;
+
+    @BeforeEach
+    void setUp() {
+        person = new Person("Kat", "Dusk");
+
+    }
+
     @Test
     @DisplayName("Student should see employer field on edit form")
     void studentShouldSeeEmployerFieldOnEditForm() throws Exception {
@@ -153,8 +168,33 @@ class PersonControllerTest {
                             hasProperty("employer", is("Hema")))));
         }
 
+    @ParameterizedTest
+    @CsvSource({
+            "22-11-2000",
+            "05-06-1986",
+            "11-01-1977",
+            "19-11-1999",
+            "22-08-1975"
+    })
+    void personBirthdayCheckShouldReturnTrueWhenMonthAndDayMatch(String birthDateToString) {
 
-        /*Om toegang te krijgen tot de profile edit*/
+        //arrange
+        LocalDate date = LocalDate.parse(birthDateToString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        LocalDate now = LocalDate.now();
+
+        LocalDate birthDate = date.withDayOfMonth(now.getDayOfMonth())
+                .withMonth(now.getMonthValue());
+
+        //act
+        person.setBirthDate(birthDate);
+
+        //assert
+        assertTrue(person.isPersonBirthday());
+    }
+
+
+
+    /*Om toegang te krijgen tot de profile edit*/
         static class CustomUserDetails implements UserDetails {
                 private final Person person;
 

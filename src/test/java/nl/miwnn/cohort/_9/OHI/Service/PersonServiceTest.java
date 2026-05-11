@@ -10,14 +10,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -31,7 +32,7 @@ public class PersonServiceTest {
     private PersonRepository personRepository;
 
     @Mock
-    private InterestRepository interestRepository;  // dit mist!
+    private InterestRepository interestRepository;
 
     @Mock
     private StudentRepository studentRepository;
@@ -62,10 +63,18 @@ public class PersonServiceTest {
         personService.checkIfPersonIsStudent(profilePerson, aboutPerson);
 
         // assert
-        assertNull(profilePerson.getStudent()); // teacher krijgt nooit een student object
+        assertNull(profilePerson.getStudent());
+        verify(studentRepository, never()).save(any(Student.class));
     }
 
-    private void assertNull(Student student) {
+    @Test
+    @DisplayName("getPerson should throw exception when person not found")
+    void getPersonShouldThrowExceptionWhenPersonNotFound() {
+        // arrange
+        when(personRepository.findById(99L)).thenReturn(Optional.empty());
+
+        // act & assert
+        assertThrows(IllegalStateException.class, () -> personService.getPerson(99L));
     }
 
     @Test
@@ -89,4 +98,6 @@ public class PersonServiceTest {
         assertThat(profilePerson.getLocation(), is("Groningen"));
         verify(personRepository).save(profilePerson);
     }
+
+
 }
