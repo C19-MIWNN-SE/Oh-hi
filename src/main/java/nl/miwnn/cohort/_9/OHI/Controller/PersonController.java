@@ -6,6 +6,7 @@ import nl.miwnn.cohort._9.OHI.Repository.*;
 import nl.miwnn.cohort._9.OHI.Service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -93,8 +94,9 @@ public class PersonController {
 
         try {
             personService.saveMemberToCohort(person);
-        } catch (Exception exception) {
-            redirectAttributes.addFlashAttribute("Dit persoon kon niet worden opgeslagen");
+        } catch (DataIntegrityViolationException exception) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Dit persoon kon niet worden opgeslagen");
+            return "person-add-edit";
         }
 
         String setupLink = oHIUserService.createAccount(person, Role.STUDENT);
