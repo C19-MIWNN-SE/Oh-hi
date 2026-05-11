@@ -289,6 +289,9 @@ button[aria-expanded="true"] .transition-icon {
 }
 .CohortInfo{
     background: #C9BEFF;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
 }
 /*--------------------------------------related to forms------------------------------------------*/
 .FormInfo{
