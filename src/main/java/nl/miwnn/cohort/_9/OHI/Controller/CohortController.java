@@ -85,7 +85,7 @@ public class CohortController {
         return ("redirect:/person/overview");
     }
 
-    @PreAuthorize("hasAnyRole('DOCENT', 'ADMIN') or @cohortService.isMemberOfCohort(#id, authentication)")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN') or @cohortService.isMemberOfCohort(#id, authentication)")
     @GetMapping("/{id}")
     public String showCohort(@PathVariable("id") Long id, Model model) {
 

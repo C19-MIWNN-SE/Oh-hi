@@ -27,18 +27,18 @@
                 <i class="bi bi-emoji-smile"></i> Edit Profile
             </a>
             <a th:href="@{/cohort/add}" class="nav-link nav-btn"
-               sec:authorize="hasAnyRole('DOCENT', 'ADMIN')">
+               sec:authorize="hasAnyRole('TEACHER', 'ADMIN')">
                 <i class="bi bi-plus-circle me-1"></i> Cohort
             </a>
 
             <a class="nav-link nav-btn"
-               sec:authorize="hasAnyRole('DOCENT', 'ADMIN')"
+               sec:authorize="hasAnyRole('TEACHER', 'ADMIN')"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
                href="/person/overview">
                 <i class="bi bi-people"></i> Overzicht
             </a>
             <div class="dropdown"
-                 sec:authorize="hasAnyRole('DOCENT', 'ADMIN')">
+                 sec:authorize="hasAnyRole('TEACHER', 'ADMIN')">
                 <button class=" search-bg dropdown-toggle nav-link nav-btn"
                         type="button"
                         data-bs-toggle="dropdown"
