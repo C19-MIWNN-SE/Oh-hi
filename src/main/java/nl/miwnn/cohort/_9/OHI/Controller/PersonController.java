@@ -142,9 +142,7 @@ public class PersonController {
 
         return "person-profile-edit";
     }
-
-    //todo - something is wrong with this pre authorization
-//    @PreAuthorize("#id == authentication.principal.person.id")
+    
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
                               @RequestParam("profileImageFile") MultipartFile profileImageFile, RedirectAttributes redirectAttributes

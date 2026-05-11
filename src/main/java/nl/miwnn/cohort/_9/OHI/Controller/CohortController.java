@@ -98,6 +98,9 @@ public class CohortController {
         model.addAttribute("teachers", teachers);
         model.addAttribute("cohortName", String.format("Cohort %d - %s", cohort.getCohortNum(), cohort.getDiscipline()));
 
+
+        model.addAttribute("cohortDate", cohortService.getCohortTimeline(cohort));
+
         List<Cohort> cohorts = cohortService.getAllCohorts();
         Collections.sort(cohorts);
         model.addAttribute("allCohorts", cohorts);

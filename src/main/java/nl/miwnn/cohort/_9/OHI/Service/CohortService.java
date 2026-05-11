@@ -20,7 +20,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -93,5 +96,12 @@ public class CohortService {
         return cohort.getMembers().stream()
                 .flatMap(p -> p.getImages().stream())
                 .collect(Collectors.toSet());
+    }
+
+    public String getCohortTimeline(Cohort cohort){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MMMM uuuu");
+        String cohortStart = dtf.format(cohort.getStartDate());
+        String cohortEnd = dtf.format(cohort.getEndDate());
+        return String.format("%s - %s",cohortStart, cohortEnd);
     }
 }

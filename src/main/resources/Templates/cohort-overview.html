@@ -16,14 +16,16 @@
             <div class="cohortCard shadow-sm background-content-card p-3 position-relative">
                 <div class="CohortInfo card-name-style">
                     <div class="name-style fw-bold" th:text="${cohortName}"></div>
+                    <div th:text="${cohortDate}"></div>
+                    <br />
                 </div>
                 <br />
                 <div class="CohortInfo card-name-style">
-                    <div class="name-style" th:text="Docenten"></div>
+                    <div class="name-style fw-bold" th:text="Docenten"></div>
                     <!-- Docenten -->
                     <div id="teachers">
                         <div class="row g-3">
-                            <div class="col" th:each="teacher : ${teachers}">
+                            <div th:each="teacher : ${teachers}">
                                 <a th:href="@{/person/{id}(id=${teacher.id})}">
                                     <div th:replace="~{fragments/person :: personCard(${teacher}, null)}"></div>
                                 </a>
