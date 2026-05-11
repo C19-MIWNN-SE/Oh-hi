@@ -123,12 +123,13 @@ public class CohortController {
 
     @PostMapping("/{id}/group-photos")
     public String uploadGroupImage(
+            @PathVariable Long id,
             @RequestParam("file") MultipartFile file,
             @RequestParam("personIds") List<Long> personIds) throws IOException {
 
         imageService.groupImageUpload(file, personIds);
-        //todo return the link to active cohort based on id
-        return "redirect:/person/overview";
+
+        return "redirect:/cohort/" + id;
     }
 
 }
