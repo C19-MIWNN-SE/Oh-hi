@@ -59,7 +59,8 @@
 </div>
 
 <div th:fragment="addPersonCard">
-    <div class="shadow-sm background-content-card p-3 position-relative card-background">
+    <div class="shadow-sm background-content-card p-3 position-relative card-background"
+        sec:authorize="hasAnyRole('TEACHER', 'ADMIN')">
         <div class="row align-items-center g-0 card-overview-page ">
             <div class="col-auto">
                 <img class="PersonProfile rounded-circle"
