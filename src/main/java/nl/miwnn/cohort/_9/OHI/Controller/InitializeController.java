@@ -151,14 +151,14 @@ public class InitializeController {
             testUser.setCohort(testCohort);
             personService.savePerson(testUser);
 
-            Person testUser2 = new Person("Mark", "van Dijk ");
+            Person testUser2 = new Person("Noah", "Berg");
             testUser2.setCohort(testCohort);
             personService.savePerson(testUser2);
 
             Person testUser3 = new Person("a", "a ");
             personService.savePerson(testUser3);
 
-            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), Role.TEACHER, testUser2);
+            OHIUser docent = new OHIUser("noah-berg-2", passwordEncoder.encode("docent"), Role.TEACHER, testUser2);
             OHIUser student = new OHIUser("hans", passwordEncoder.encode("hans"), Role.STUDENT, testUser);
             OHIUser admin = new OHIUser("admin", passwordEncoder.encode("admin"), Role.ADMIN, testUser3);
             ohiUserService.saveUser(docent);
