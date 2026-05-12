@@ -85,6 +85,10 @@ nav{
 }
 
 /*--------------------------------------buttons------------------------------------------*/
+.size-button{
+    width: 100px;
+}
+
 /*Deleting member*/
 .delete-button {
     text-align: center;
@@ -262,12 +266,17 @@ button[aria-expanded="true"] .transition-icon {
     min-height: 150px;
     overflow: hidden;
 }
-.card-background{
+
+.student-card{
     background-image: url("/static-images/card-background.png");
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.card-background{
     border-radius: 10px;
 }
+
 .card-background:hover{
     transition: 0.3s;
     background-color: rgba(201, 190, 255, 1);
@@ -279,6 +288,22 @@ button[aria-expanded="true"] .transition-icon {
 }
 .card-background .fw-bold {
     text-decoration: none;
+}
+
+.card-background-add{
+    border-radius: 10px;
+    background-color: rgba(201, 190, 255, 1);
+}
+
+.card-background-add:hover{
+    transition: 0.3s;
+    background-color: rgba(201, 190, 255, 1);
+    scale: 1.03;
+    border-radius: 5px;
+}
+
+.add-person-text{
+    color: white;
 }
 
 .card-text {

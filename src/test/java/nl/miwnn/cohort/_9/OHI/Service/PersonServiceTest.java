@@ -62,7 +62,7 @@ public class PersonServiceTest {
         personService.checkIfPersonIsStudent(profilePerson, aboutPerson);
 
         // assert
-        assertNull(profilePerson.getStudent()); // teacher krijgt nooit een student object
+        assertNull(profilePerson.getStudent());
     }
 
     private void assertNull(Student student) {

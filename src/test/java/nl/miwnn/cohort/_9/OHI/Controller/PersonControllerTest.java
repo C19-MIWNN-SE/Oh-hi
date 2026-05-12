@@ -154,7 +154,7 @@ class PersonControllerTest {
         }
 
 
-        /*Om toegang te krijgen tot de profile edit*/
+        /*Om toegang te krijgen tot de profile edit*/  
         static class CustomUserDetails implements UserDetails {
                 private final Person person;
 
