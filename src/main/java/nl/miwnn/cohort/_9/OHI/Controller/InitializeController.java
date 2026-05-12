@@ -3,14 +3,14 @@ package nl.miwnn.cohort._9.OHI.Controller;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
-import nl.miwnn.cohort._9.OHI.Model.Cohort;
-import nl.miwnn.cohort._9.OHI.Model.Interest;
-import nl.miwnn.cohort._9.OHI.Model.OHIUser;
-import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.*;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.InterestRepository;
 import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
+import nl.miwnn.cohort._9.OHI.Service.CohortService;
+import nl.miwnn.cohort._9.OHI.Service.OHIUserService;
+import nl.miwnn.cohort._9.OHI.Service.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -47,9 +48,16 @@ public class InitializeController {
     @Autowired
     private InterestRepository interestRepository;
 
-    public InitializeController(OHIUserRepository ohiUserRepository, BCryptPasswordEncoder passwordEncoder) {
+    private final OHIUserService ohiUserService;
+    private final PersonService personService;
+    private final CohortService cohortService;
+
+    public InitializeController(OHIUserRepository ohiUserRepository, BCryptPasswordEncoder passwordEncoder, OHIUserService ohiUserService, PersonService personService, CohortService cohortService) {
         this.ohiUserRepository = ohiUserRepository;
         this.passwordEncoder = passwordEncoder;
+        this.ohiUserService = ohiUserService;
+        this.personService = personService;
+        this.cohortService = cohortService;
     }
 
     @EventListener(ContextRefreshedEvent.class)
@@ -136,16 +144,34 @@ public class InitializeController {
     //todo
     private void seedUsers() {
         if (ohiUserRepository.count() == 0) {
+            Cohort testCohort = new Cohort(4, "Testing",
+            LocalDate.of(2026, 01, 01), LocalDate.of(2026, 02, 01));
+            cohortService.saveCohort(testCohort);
+
             Person testUser = new Person("Hans", "Hoeven");
+            testUser.setCohort(testCohort);
+            personService.savePerson(testUser);
+
             Person testUser2 = new Person("Mark", "van Dijk ");
-            personRepository.save(testUser);
-            personRepository.save(testUser2);
-            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), "DOCENT", testUser2);
-            OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
-            OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT");
-            ohiUserRepository.save(docent);
-            ohiUserRepository.save(student);
-            ohiUserRepository.save(hans);
+            testUser2.setCohort(testCohort);
+            personService.savePerson(testUser2);
+
+            Person testUser3 = new Person("a", "a ");
+            personService.savePerson(testUser3);
+
+            OHIUser docent = new OHIUser("docent", passwordEncoder.encode("docent"), Role.TEACHER, testUser2);
+            OHIUser student = new OHIUser("hans", passwordEncoder.encode("hans"), Role.STUDENT, testUser);
+            OHIUser admin = new OHIUser("admin", passwordEncoder.encode("admin"), Role.ADMIN, testUser3);
+            ohiUserService.saveUser(docent);
+            ohiUserService.saveUser(student);
+            ohiUserService.saveUser(admin);
+            personService.linkAccountToPerson(testUser, student);
+            personService.linkAccountToPerson(testUser2, docent);
+            personService.linkAccountToPerson(testUser3, admin);
+
+
         }
     }
+
+
 }

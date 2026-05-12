@@ -39,6 +39,16 @@ nav{
 .cohort-dropdown {
     width: 100%;
 }
+.nav-btn {
+    color: white;
+    border-color: white;
+    border-radius: 5px;
+    margin: 0 4px 0 4px ;
+}
+
+.nav-btn:hover {
+    color:  rgb(255, 219, 253);
+}
 
 /*--------------------------------------related to login------------------------------------------*/
 .loginBackground {
@@ -102,8 +112,9 @@ nav{
     transition: 0.3s;
 }
 .fp-btn-colour{
-    background-color: cornflowerblue;
-    border-color: cornflowerblue;
+    color: #ffffff;
+    background-color: rgb(160, 135, 235);
+    border-color: rgb(160, 135, 235);
     transition: 0.3s;
 }
 .fp-btn-colour:hover{
@@ -115,6 +126,9 @@ nav{
     border: none;
 }
 .fp-btn-content{
+    justify-items: center;
+    align-content: center;
+    margin-left: 20%;
     margin-top: 15px;
 }
 .btn-spacing {
@@ -124,10 +138,12 @@ button[aria-expanded="true"] .transition-icon {
     transform: rotate(-90deg);
 }
 
+
+
 /*--------------------------------------Profile of Person------------------------------------------*/
 .PersonProfile{
-    height: 130px;
-    width: 130px;
+    height: 100px;
+    width: 100px;
     object-fit: cover;
     border: 2px solid white;"
 }
@@ -188,11 +204,13 @@ button[aria-expanded="true"] .transition-icon {
     color: black;
     font-size: 13px;
 }
-.name-style{
-    font-size: 18px !important;
-    color: black;
-    padding-bottom: 5px;
+.name-style {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
+
 .roleDisplay {
     color: mediumpurple;
     text-decoration: none;
@@ -223,9 +241,26 @@ button[aria-expanded="true"] .transition-icon {
     margin: 4px;
 }
 
+.birthday-highlight {
+    background: linear-gradient(135deg, #fff8e1, #ffe082);
+    animation: birthdayPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes birthdayPulse {
+    0%   { box-shadow: 0 0 5px rgba(255, 200, 0, 0.4); }
+    50%  { box-shadow: 0 0 15px rgba(255, 200, 0, 0.8); }
+    100% { box-shadow: 0 0 5px rgba(255, 200, 0, 0.4); }
+}
+
+.birthdayText{
+    padding-bottom: 20px;
+    padding-left: 2px;
+}
+
 /*--------------------------------------related to cards------------------------------------------*/
 .card-overview-page{
     min-height: 150px;
+    overflow: hidden;
 }
 .card-background{
     background-image: url("/static-images/card-background.png");
@@ -245,9 +280,16 @@ button[aria-expanded="true"] .transition-icon {
 .card-background .fw-bold {
     text-decoration: none;
 }
-.card-text{
+
+.card-text {
     color: black;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0; /* belangrijk in flexbox/grid! */
 }
+
 .docent-card {
     background-image: url("/static-images/background-card-teacher.png");
     background-repeat: no-repeat;
@@ -268,6 +310,7 @@ button[aria-expanded="true"] .transition-icon {
     border-color: white;
     border-style: solid;
 }
+
 .cohortCard{
     height: 100%;
     width: auto;
@@ -275,6 +318,9 @@ button[aria-expanded="true"] .transition-icon {
 }
 .CohortInfo{
     background: #C9BEFF;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
 }
 /*--------------------------------------related to forms------------------------------------------*/
 .FormInfo{

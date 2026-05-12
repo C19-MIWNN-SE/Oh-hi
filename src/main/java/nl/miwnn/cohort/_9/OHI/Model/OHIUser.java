@@ -27,21 +27,22 @@ public class OHIUser implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToOne
     @JoinColumn(name = "person_id")
     private Person person;
 
     // Constructor voor docent en student testAccounts
-    public OHIUser(String username, String password, String role) {
+    public OHIUser(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
     // Constructor voor persoon dat wordt toegevoegd
-    public OHIUser(String username, String password, String role, Person person) {
+    public OHIUser(String username, String password, Role role, Person person) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -102,11 +103,11 @@ public class OHIUser implements UserDetails {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

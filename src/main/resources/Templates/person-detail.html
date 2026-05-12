@@ -39,24 +39,32 @@
                     <p class="aboutMeContent" th:text="${location}"></p>
                 </div>
 
+                <div th:class="${person.personBirthday} ? 'col mx-auto info-background-content birthday-highlight' : 'col mx-auto info-background-content'">
+                    <h5 class="aboutMeHeader">Geboortedatum</h5>
+                    <p class="aboutMeContent" th:text="${#temporals.format(person.birthDate, 'dd MMMM yyyy')}"></p>
+                    <p class="birthdayText" th:if="${person.personBirthday}">🎂 Fijne verjaardag!</p>
+                </div>
+
                 <div class="col mx-auto info-background-content">
                     <h5 class="aboutMeHeader">Leeftijd</h5>
-                    <p class="aboutMeContent" th:text="${age}"></p>
+                    <p class="aboutMeContent" th:text="${person.age}"></p>
                 </div>
+
                 <div class="col mx-auto info-background-content">
                     <h5 class="aboutMeHeader">Voornaamwoorden</h5>
                     <p class="aboutMeContent" th:text="${pronoun}"></p>
                 </div>
-                <div class="col mx-auto info-background-content" th:if="${person.getEmployerField()}">
-                    <h5 class="aboutMeHeader">Toekomstig werkgever</h5>
-                    <p class="aboutMeContent" th:text="${person.student?.employer}"></p>
-                </div>
+
+
             </div>
         </div>
 
         <div class="col-4">
 
-
+            <div class="col mx-auto info-background-content profile-content-large" th:if="${person.getEmployerField()}">
+                <h5 class="aboutMeHeader">Toekomstig werkgever</h5>
+                <p class="aboutMeContent" th:text="${person.student?.employer}"></p>
+            </div>
 
             <div class="col mx-auto info-background-content profile-content-large">
                 <h5 class="aboutMeHeader">Mijn interesses</h5>
@@ -80,7 +88,9 @@
 
                 <div class="comments"></div>
                 <div class="commentBox">
-                    <img th:src="${loggedIn.image != null} ? '/images/' + ${loggedIn.image.id} : '/static-images/noImage.jpg'">
+                    <img th:src="${loggedIn != null && loggedIn.image != null}
+? '/images/' + loggedIn.image.id
+: '/static-images/noImage.jpg'">
                     <div class="content">
                         <h2 th:text="${commentWriter}" class="commentWriter">Schrijf een bericht als</h2>
                         <div class="commentInput">

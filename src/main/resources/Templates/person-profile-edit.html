@@ -24,16 +24,16 @@
                         <input type="hidden" th:field="*{id}">
 
                         <div class="mb-3">
-                            <label for="age" class="form-label fw-bold">Leeftijd</label>
+                            <label for="age" class="form-label fw-bold">Geboortedatum</label>
                             <input type="text" id="age"
-                                   th:field="*{age}"
+                                   th:field="*{birthDate}"
                                    class="form-control"
-                                   th:classappend="${#fields.hasErrors('age')} ? 'is-invalid'"
-                                   placeholder="Wat is je leeftijd?">
+                                   th:classappend="${#fields.hasErrors('birthDate')} ? 'is-invalid'"
+                                   placeholder="(dd-mm-jjjj)">
 
                             <div class="invalid-feedback"
-                                 th:if="${#fields.hasErrors('age')}"
-                                 th:errors="*{age}"></div>
+                                 th:if="${#fields.hasErrors('birthDate')}"
+                                 th:errors="*{birthDate}"></div>
                         </div>
 
                         <div class="mb-3">

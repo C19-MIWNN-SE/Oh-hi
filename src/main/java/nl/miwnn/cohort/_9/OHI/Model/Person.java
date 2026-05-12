@@ -4,8 +4,10 @@ import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.cglib.core.Local;
 
-import javax.management.relation.Role;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 /**
@@ -25,7 +27,7 @@ public class Person {
 
     private static final Role DEFAULT_ROLE = Role.STUDENT;
     public static final String DEFAULT_LOCATION = null;
-    public static final Integer DEFAULT_AGE = null;
+    public static final LocalDate DEFAULT_BIRTHDATE = null;
     public static final String DEFAULT_PRONOUN = null;
 
     @Id
@@ -66,35 +68,20 @@ public class Person {
             name = "person_images",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "image_id")
+
     )
     private Set<Image> images = new HashSet<>();
 
-    //todo review this - separate enum roles from a method to format the text
-    public enum Role {
-        STUDENT("Student"),
-        TEACHER("Docent"),
-        ADMIN("Admin");
-
-        private final String displayName;
-
-        Role(String displayName) {
-            this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-    }
-
     private String location;
-    private Integer age;
+    private LocalDate birthDate;
     private String pronoun;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Student student;
 
+    @Enumerated(EnumType.STRING)
     @CsvBindByName(column = "userRole")
-    private Role userRole;
+    private Role role;
 
     @ManyToMany
     @JoinTable(
@@ -105,36 +92,42 @@ public class Person {
     private List<Interest> interests = new ArrayList<>();
 
     public Person(String firstName, String infix, String lastName, Image profileImage, String aboutMe, String location,
-                  Integer age, String pronoun, Role userRole) {
+                  LocalDate birthDate, String pronoun, Role role) {
         this.firstName = firstName;
         this.infix = infix;
         this.lastName = lastName;
         this.profileImage = profileImage;
         this.aboutMe = aboutMe;
-        this.userRole = userRole;
+        this.role = role;
         this.location = location;
-        this.age = age;
+        this.birthDate = birthDate;
         this.pronoun = pronoun;
     }
 
     public Person(String firstName, String lastName) {
         this(firstName, DEFAULT_INFIX, lastName, DEFAULT_IMAGE, DEFAULT_ABOUTME, DEFAULT_LOCATION,
-                DEFAULT_AGE, DEFAULT_PRONOUN, DEFAULT_ROLE);
+                DEFAULT_BIRTHDATE, DEFAULT_PRONOUN, DEFAULT_ROLE);
     }
 
     public Person() {
     }
 
     public boolean getEmployerField(){
-        return userRole == Role.STUDENT;
+        return role == Role.STUDENT;
+    }
+
+    public boolean isPersonBirthday(){
+        if (birthDate == null) return false;
+        LocalDate today = LocalDate.now();
+        return birthDate.getDayOfMonth() == today.getDayOfMonth()
+                && birthDate.getMonthValue() == today.getMonthValue();
     }
 
     public String getFullName() {
-        if (infix == null) {
-            infix = "";
+        if (infix == null || infix.isEmpty()) {
+            return String.format("%s\n%s", firstName, lastName);
         }
-
-        return String.format("%s %s %s", firstName, infix, lastName);
+        return String.format("%s\n%s %s", firstName, infix, lastName);
     }
 
     public Long getId() {
@@ -189,17 +182,17 @@ public class Person {
         this.aboutMe = aboutMe;
     }
 
-    public void setUserRole(Role value) {
-        this.userRole = value;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public Role getUserRole() {
-        return userRole;
+    public Role getRole() {
+        return role;
     }
 
     //todo - see if this alone works
     public String getEnumToLowerCase(Role role) {
-        if (userRole.toString().equals("TEACHER")) {
+        if (role.toString().equals("TEACHER")) {
             return "Docent";
         } else return "Student";
     }
@@ -220,12 +213,17 @@ public class Person {
         this.location = location;
     }
 
-    public Integer getAge() {
-        return age;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Integer getAge() {
+        if (birthDate == null) return null;
+        return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
     public String getPronoun() {
@@ -272,5 +270,13 @@ public class Person {
         if (interests != null) {
             this.interests.addAll(interests);
         }
+    }
+
+    public void setProfileImage(Image profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
 }

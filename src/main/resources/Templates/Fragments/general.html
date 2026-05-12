@@ -19,24 +19,27 @@
 
         <a class="navbar-brand" href="/">Oh, hi!</a>
 
-        <div class="d-flex align-items-center gap-2">
-
-            <!-- todo - link to customize user's own profile -->
-            <a class="nav-link"
+        <div class="nav nav-underline d-flex align-items-center gap-2">
+            <a class="nav-link nav-btn"
                sec:authorize="isAuthenticated()"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
-               href="/person/overview">
-                <i class="bi bi-people"></i> Edit Profile
+               th:href="@{/person/profile/edit/{id}(id=${#authentication.principal.person.id})}">
+                <i class="bi bi-emoji-smile"></i> Edit Profile
             </a>
-            <!-- todo - this should link to the cohort of the user -->
-            <a class="nav-link"
-               sec:authorize="isAuthenticated()"
+            <a th:href="@{/cohort/add}" class="nav-link nav-btn"
+               sec:authorize="hasAnyRole('TEACHER', 'ADMIN')">
+                <i class="bi bi-plus-circle me-1"></i> Cohort
+            </a>
+
+            <a class="nav-link nav-btn"
+               sec:authorize="hasAnyRole('TEACHER', 'ADMIN')"
                th:classappend="${activePage == 'userlogin'} ? 'active' : ''"
                href="/person/overview">
                 <i class="bi bi-people"></i> Overzicht
             </a>
-            <div class="dropdown">
-                <button class=" search-bg dropdown-toggle nav-link"
+            <div class="dropdown"
+                 sec:authorize="hasAnyRole('TEACHER', 'ADMIN')">
+                <button class=" search-bg dropdown-toggle nav-link nav-btn"
                         type="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -51,8 +54,8 @@
                     </li>
                 </ul>
             </div>
-            <form class="nav-link" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-                <button class="btn btn-outline-light btn-sm" type="submit">Uitloggen</button>
+            <form class="nav-link nav-btn" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button class="btn btn-outline-light btn-sm outlining" type="submit">Uitloggen</button>
             </form>
         </div>
     </div>
@@ -65,7 +68,7 @@
 </div>
 
 <div th:fragment="saveButton">
-    <button class="btn btn-primary btn-lg shadow-sm w-100"
+    <button class="btn fp-btn-colour btn-lg shadow-sm w-100"
             type="submit">
         <i class="bi bi-floppy me-2"></i>Opslaan
     </button>

@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Image;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.Role;
 import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Service.*;
@@ -69,8 +70,9 @@ public class CohortController {
         }
         model.addAttribute("cohort", new Cohort());
         if (bindingResult.hasErrors()) {
-            log.warn("Validatiefouten bij opslaan: {}",
-                    bindingResult.getErrorCount());
+            // dit werkt nu ineens niet meer, de bindingresults validatie
+//            log.warn("Validatiefouten bij opslaan: {}",
+//                    bindingResult.getErrorCount());
             model.addAttribute("allMembers", personService.getAllPeople());
             return "cohort-add-edit";
         }
@@ -83,13 +85,21 @@ public class CohortController {
         return ("redirect:/person/overview");
     }
 
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN') or @cohortService.isMemberOfCohort(#id, authentication)")
     @GetMapping("/{id}")
-    public String showCohort(@PathVariable Long id, Model model) {
+    public String showCohort(@PathVariable("id") Long id, Model model) {
 
         Cohort cohort = cohortService.findById(id);
         model.addAttribute("cohort", cohort);
+        List<Person> students = personService.getPeopleByRoleAndCohort(Role.STUDENT, id);
+        List<Person> teachers = personService.getPeopleByRoleAndCohort(Role.TEACHER, id);
         model.addAttribute("members", cohort.getMembers());
+        model.addAttribute("students", students);
+        model.addAttribute("teachers", teachers);
         model.addAttribute("cohortName", String.format("Cohort %d - %s", cohort.getCohortNum(), cohort.getDiscipline()));
+
+
+        model.addAttribute("cohortDate", cohortService.getCohortTimeline(cohort));
 
         List<Cohort> cohorts = cohortService.getAllCohorts();
         Collections.sort(cohorts);
@@ -113,12 +123,13 @@ public class CohortController {
 
     @PostMapping("/{id}/group-photos")
     public String uploadGroupImage(
+            @PathVariable Long id,
             @RequestParam("file") MultipartFile file,
             @RequestParam("personIds") List<Long> personIds) throws IOException {
 
         imageService.groupImageUpload(file, personIds);
-        //todo return the link to active cohort based on id
-        return "redirect:/person/overview";
+
+        return "redirect:/cohort/" + id;
     }
 
 }

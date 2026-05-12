@@ -16,15 +16,16 @@
             <div class="cohortCard shadow-sm background-content-card p-3 position-relative">
                 <div class="CohortInfo card-name-style">
                     <div class="name-style fw-bold" th:text="${cohortName}"></div>
+                    <div th:text="${cohortDate}"></div>
+                    <br />
                 </div>
                 <br />
                 <div class="CohortInfo card-name-style">
-                    <div class="name-style" th:text="Docenten"></div>
+                    <div class="name-style fw-bold" th:text="Docenten"></div>
                     <!-- Docenten -->
-                    <div id="teachers" class="collapse mt-3">
+                    <div id="teachers">
                         <div class="row g-3">
-                            <div class="col" th:each="teacher : ${members}"
-                                 th:if="${teacher.userRole.name() == 'TEACHER'}">
+                            <div th:each="teacher : ${teachers}">
                                 <a th:href="@{/person/{id}(id=${teacher.id})}">
                                     <div th:replace="~{fragments/person :: personCard(${teacher}, null)}"></div>
                                 </a>
@@ -82,7 +83,10 @@
                         <img th:src="@{'/images/' + ${img.id}}"
                              class="d-block w-100"
                              th:alt="${img.alttxt}">
-                        <p class="img-text">this is where I will add the names of people in this photo</p>
+                        <ul class="img-text">
+                            <li th:each="member : ${img.people}"
+                                th:text="${member.firstName} + ' ' + ${member.lastName}"></li>
+                        </ul>
                     </div>
                 </div>
                 </div>
@@ -100,11 +104,13 @@
                 </button>
             </div>
             <div id="students" class="row row-cols-3 mt-1 g-4">
-                <div class="col" th:each="student : ${members}"
-                     th:if="${student.userRole.name() == 'STUDENT'}">
+                <div class="col" th:each="student : ${students}">
                     <a th:href="@{/person/{id}(id=${student.id})}">
                         <div th:replace="~{fragments/person :: personCard(${student}, null)}"></div>
                     </a>
+                </div>
+                <div class="col">
+                    <div th:replace="~{fragments/person :: addPersonCard}"></div>
                 </div>
             </div>
         </div>
@@ -125,8 +131,7 @@
                 <div class="groep-label">Niet ingedeeld <span class="groep-count" id="count-pool"></span></div>
                 <div class="drop-zone" id="pool" data-zone="pool">
                     <!-- Studenten worden hier ingeladen via Thymeleaf + JS -->
-                    <div th:each="student : ${members}"
-                         th:if="${student.userRole.name() == 'STUDENT'}"
+                    <div th:each="student : ${students}"
                          class="student-drag-card"
                          draggable="true"
                          th:data-id="${student.id}"

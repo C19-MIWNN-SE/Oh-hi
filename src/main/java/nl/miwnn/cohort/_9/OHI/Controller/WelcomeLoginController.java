@@ -1,5 +1,9 @@
 package nl.miwnn.cohort._9.OHI.Controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import nl.miwnn.cohort._9.OHI.Model.OHIUser;
+import nl.miwnn.cohort._9.OHI.Model.Role;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -12,7 +16,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class WelcomeLoginController {
 
     @GetMapping("")
-    public String startpagina() {
+    public String welcomeLoginPAge() {
         return "welcome-login";
+    }
+
+    @GetMapping("/login-redirect")
+    public String loginRedirect(HttpServletRequest request, Authentication authentication) {
+        OHIUser user = (OHIUser) authentication.getPrincipal();
+        if (request.isUserInRole(String.valueOf(Role.ADMIN))) {
+            return "redirect:/person/overview";
+        } else if (request.isUserInRole(String.valueOf(Role.STUDENT))) {
+            return "redirect:/cohort/" + user.getPerson().getCohort().getId();
+        } else if (request.isUserInRole(String.valueOf(Role.TEACHER))) {
+            return "redirect:/person/overview";
+        } return "welcome-login";
     }
 }

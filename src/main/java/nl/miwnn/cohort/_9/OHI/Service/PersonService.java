@@ -1,18 +1,11 @@
 package nl.miwnn.cohort._9.OHI.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import nl.miwnn.cohort._9.OHI.Model.Image;
-import nl.miwnn.cohort._9.OHI.Model.Interest;
-import nl.miwnn.cohort._9.OHI.Model.Person;
-import nl.miwnn.cohort._9.OHI.Model.Student;
+import nl.miwnn.cohort._9.OHI.Model.*;
 import nl.miwnn.cohort._9.OHI.Repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.*;
@@ -44,6 +37,14 @@ public class PersonService {
         return personRepository.findAll();
     }
 
+    public List<Person> getPeopleByRole(Role role){
+        return personRepository.findByRole(role);
+    }
+
+    public List<Person> getPeopleByRoleAndCohort(Role role, Long cohortId){
+        return personRepository.findByRoleAndCohort_Id(role, cohortId);
+    }
+
     public List<Person> getAllPeopleSortedByCohortAvailability() {
         return getAllPeople().stream()
                 .sorted(Comparator.comparing(p -> p.getCohort() == null))
@@ -67,22 +68,9 @@ public class PersonService {
                     person.getFirstName(), person.getInfix(), person.getLastName()).isPresent();
     }
 
-    public void deleteMemberFromCohort(Long id){
-
-        // Verwijder gerelateerde user
-//        if (person.getOhiUser() != null) {
-//            ohiUserRepository.delete(person.getOhiUser());
-//        }
-        if (person.getStudent() != null) {
-            studentRepository.delete(person.getStudent());
-        }
-
-        if (person.getProfileImage() != null) {
-            imageRepository.delete(person.getProfileImage());
-        }
-
+    @Transactional
+    public void removePerson(Long id){
         personRepository.deleteById(id);
-
     }
 
     public void savePerson(Person person) { personRepository.save(person);}
@@ -100,7 +88,7 @@ public class PersonService {
         information.put("location", person.getLocation());
         information.put("age", person.getAge());
         information.put("pronoun", person.getPronoun());
-        information.put("userRole", person.getEnumToLowerCase(person.getUserRole()));
+        information.put("userRole", person.getEnumToLowerCase(person.getRole()));
         information.put("employer", person.getStudent());
         information.put("interests", person.getInterests());
         information.put("person", person);
@@ -145,10 +133,9 @@ public class PersonService {
         Person profilePerson = getPerson(personId);
         profilePerson.setAboutMe(aboutPerson.getAboutMe());
         profilePerson.setLocation(aboutPerson.getLocation());
-        profilePerson.setAge(aboutPerson.getAge());
+        profilePerson.setBirthDate(aboutPerson.getBirthDate());
         profilePerson.setPronoun(aboutPerson.getPronoun());
         profilePerson.setInterests(getSelectedInterests(aboutPerson));
-
         checkIfPersonIsStudent(profilePerson, aboutPerson);
 
         personRepository.save(profilePerson);
@@ -159,6 +146,11 @@ public class PersonService {
                 .map(Interest::getId)
                 .collect(Collectors.toList()));
 
+    }
+
+    public void linkAccountToPerson(Person person, OHIUser user) {
+        person.setAccount(user);
+        personRepository.save(person);
     }
 
 

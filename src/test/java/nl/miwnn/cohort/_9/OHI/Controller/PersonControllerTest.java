@@ -2,14 +2,11 @@ package nl.miwnn.cohort._9.OHI.Controller;
 
 import nl.miwnn.cohort._9.OHI.Model.Cohort;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.Role;
 import nl.miwnn.cohort._9.OHI.Model.Student;
-import nl.miwnn.cohort._9.OHI.Repository.CohortRepository;
-import nl.miwnn.cohort._9.OHI.Repository.InterestRepository;
-import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import nl.miwnn.cohort._9.OHI.Service.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,12 +16,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -142,7 +137,7 @@ class PersonControllerTest {
 
             Person person = new Person("Kat", "Dusk");
             person.setId(1L);
-            person.setUserRole(Person.Role.STUDENT);
+            person.setRole(Role.STUDENT);
             person.setStudent(student);
 
             CustomUserDetails userDetails = new CustomUserDetails(person);
