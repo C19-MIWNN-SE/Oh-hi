@@ -44,7 +44,7 @@ public class Person {
     @NotNull(message = "Achternaam kan niet leeg zijn")
     private String lastName;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "profile_image_id")
     private Image profileImage;
 

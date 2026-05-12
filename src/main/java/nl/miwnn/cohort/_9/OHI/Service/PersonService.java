@@ -23,13 +23,15 @@ public class PersonService {
     private final OHIUserRepository ohiUserRepository;
     private Person person;
     private final InterestRepository interestRepository;
+    private final ImageService imageService;
 
-    public PersonService(PersonRepository personRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserRepository ohiUserRepository, InterestRepository interestRepository) {
+    public PersonService(PersonRepository personRepository, ImageRepository imageRepository, StudentRepository studentRepository, OHIUserRepository ohiUserRepository, InterestRepository interestRepository, ImageService imageService) {
         this.personRepository = personRepository;
         this.imageRepository = imageRepository;
         this.studentRepository = studentRepository;
         this.ohiUserRepository = ohiUserRepository;
         this.interestRepository = interestRepository;
+        this.imageService = imageService;
     }
 
     @Transactional(readOnly = true)
@@ -102,20 +104,21 @@ public class PersonService {
 
     }
 
-    public void updateProfileImage(Long personId, MultipartFile imageFile) throws IOException {
+    public void updateProfileImage(Long personId, MultipartFile file) throws IOException {
 
-        Person profilePerson = getPerson(personId);
-
-        if (!imageFile.isEmpty()) {
-            Image image = new Image();
-            image.setData(imageFile.getBytes());
-            image.setContentType(imageFile.getContentType());
-            imageRepository.save(image);
-            profilePerson.setImage(image);
+        if (file == null || file.isEmpty()) {
+            return;
         }
+
+        Image savedImage = imageService.storeImage(file);
+
+        Person p = personRepository.findById(personId).orElseThrow();
+        p.setProfileImage(savedImage);
+
+        personRepository.save(p);
     }
 
-    public void checkIfPersonIsStudent(Person profilePerson, Person aboutPerson){
+        public void checkIfPersonIsStudent(Person profilePerson, Person aboutPerson){
 
         if (profilePerson.getEmployerField() && aboutPerson.getStudent() != null) {
             Student student = profilePerson.getStudent();

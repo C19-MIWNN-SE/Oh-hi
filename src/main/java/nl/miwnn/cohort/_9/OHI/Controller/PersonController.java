@@ -143,8 +143,8 @@ public class PersonController {
 
     @PostMapping("/profile/save")
     public String saveAboutMe(@ModelAttribute Person aboutPerson,
-                              @RequestParam("profileImageFile") MultipartFile profileImageFile, RedirectAttributes redirectAttributes
-    ) throws IOException {
+                              @RequestParam("profileImageFile") MultipartFile profileImageFile,
+                              RedirectAttributes redirectAttributes) throws IOException {
 
         Person profilePerson = personService.findById(aboutPerson.getId());
         try {

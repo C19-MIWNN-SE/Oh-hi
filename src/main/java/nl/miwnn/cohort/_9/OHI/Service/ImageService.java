@@ -6,7 +6,11 @@ import nl.miwnn.cohort._9.OHI.Model.Person;
 import nl.miwnn.cohort._9.OHI.Repository.ImageRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -31,32 +35,59 @@ public class ImageService {
 
     public Image storeImage(MultipartFile file) throws IOException {
 
-        Path uploadDir = Paths.get("static-images");
-        Files.createDirectories(uploadDir);
-
-        String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path path = uploadDir.resolve(filename);
-
-        Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
         Image img = new Image();
-        img.setFilename(filename);
-        img.setUrl("/images/" + filename);
+        img.setFilename(file.getOriginalFilename());
         img.setContentType(file.getContentType());
-        img.setAlttxt(filename);
-
+        img.setAlttxt(file.getOriginalFilename());
         img.setData(file.getBytes());
 
         return imageRepository.save(img);
     }
 
-    public void singleImageUpload(MultipartFile file, Long personId) throws IOException{
-        Person person = personRepository.findById(personId)
-                .orElseThrow(() -> new RuntimeException("person not found"));
-        Image img = storeImage(file);
+    public ResponseEntity<byte[]> serveImage(Long imageId) throws IOException {
+        Image image = imageRepository.findById(imageId).orElse(null);
 
-        person.getImages().add(img);
-        personRepository.save(person);
+        if (image != null) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(image.getContentType()))
+                    .body(image.getData());
+        }
+
+        return serveFallback("noImage.jpg");
+    }
+
+    public ResponseEntity<byte[]> serveProfileImage(Long personId) throws IOException {
+        Person person = personRepository.findById(personId).orElse(null);
+
+        //for when the user uploads their own image
+        if (person != null && person.getProfileImage() != null) {
+            Image img = person.getProfileImage();
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(img.getContentType()))
+                    .body(img.getData());
+        }
+
+        //based on the generated images paired to numbers for demo
+        String idBased = personId + ".jpg";
+        if (resourceExists(idBased)) {
+            return serveFallback(idBased);
+        }
+        //if number outside that of amount of generated defaults then return black profile default
+        return serveFallback("noImage.jpg");
+    }
+
+    private boolean resourceExists(String filename) {
+        return new ClassPathResource("static/static-images/defaultPics/" + filename).exists();
+    }
+
+    private ResponseEntity<byte[]> serveFallback(String filename) throws IOException {
+        ClassPathResource resource =
+                new ClassPathResource("static/static-images/defaultPics/" + filename);
+
+        byte[] bytes = StreamUtils.copyToByteArray(resource.getInputStream());
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(bytes);
     }
 
     public void groupImageUpload(MultipartFile file, List<Long> personIds) throws IOException{
@@ -70,7 +101,8 @@ public class ImageService {
     }
 
     public Image findById(Long id) {
-        return imageRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Foto %d niet gevonden", id)));
+        return imageRepository.findById(id).orElse(null);
     }
+
+
 }
