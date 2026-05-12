@@ -9,7 +9,7 @@
 <body>
 
 <div th:fragment="personCard(person, extraClass)">
-    <div class="shadow-sm background-content-card p-3 position-relative card-background"
+    <div class="shadow-sm background-content-card p-3 position-relative card-background student-card"
          th:classappend="${(extraClass != null ? extraClass : '') + (person.role.name() == 'TEACHER' ? ' docent-card' : '')}">
 
         <div th:if="${extraClass != null && extraClass.contains('background-content-card-profile')}"
@@ -60,10 +60,9 @@
 
 <div th:fragment="addPersonCard">
     <a th:href="@{/person/add}" class="">
-    <div class="shadow-sm background-content-card p-3 position-relative card-background"
-        sec:authorize="hasAnyRole('TEACHER', 'ADMIN')">
 
-    <div class="shadow-sm background-content-card p-3 position-relative card-background-add">
+    <div class="shadow-sm background-content-card p-3 position-relative card-background-add"
+         sec:authorize="hasAnyRole('TEACHER', 'ADMIN')">
         <div class="row align-items-center g-0 card-overview-page ">
             <div class="col">
 
@@ -80,9 +79,6 @@
             </div>
 
         </div>
-
-    </div>
-
 </div>
     </a>
 </div>
