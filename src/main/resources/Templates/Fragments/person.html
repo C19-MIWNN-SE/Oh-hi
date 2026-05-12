@@ -15,7 +15,11 @@
         <div th:if="${extraClass != null && extraClass.contains('background-content-card-profile')}"
              class="d-flex flex-column align-items-center text-center w-100 py-3 ">
             <img class="PersonProfile rounded-circle mb-3"
-                 th:src="${person.profileImage != null} ? '/images/' + ${person.profileImage.id} : '/static-images/noImage.jpg'"
+                 th:src="${person.profileImage != null
+                         ? '/images/' + person.profileImage.id
+                         : (person.id != null
+                         ? '/static-images/defaultPics/' + person.id + '.jpg'
+                         : '/static-images/noImage.jpg')}"
                  alt="profile image">
             <div class="roleDisplay" th:text="${person.role.displayName}"></div>
 
@@ -34,7 +38,11 @@
              class="row align-items-center g-0 card-overview-page ">
             <div class="col-auto">
                 <img class="PersonProfile rounded-circle"
-                     th:src="${person.profileImage != null} ? '/images/' + ${person.profileImage.id} : '/static-images/noImage.jpg'"
+                     th:src="${person.profileImage != null
+                         ? '/images/' + person.profileImage.id
+                         : (person.id != null
+                         ? '/static-images/defaultPics/' + person.id + '.jpg'
+                         : '/static-images/noImage.jpg')}"
                      alt="profile image">
             </div>
             <div class="ProfileLineDivider col-auto mx-3"></div>

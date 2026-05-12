@@ -141,7 +141,6 @@ public class InitializeController {
         }
     }
 
-    //todo
     private void seedUsers() {
         if (ohiUserRepository.count() == 0) {
             Cohort testCohort = new Cohort(4, "Testing",

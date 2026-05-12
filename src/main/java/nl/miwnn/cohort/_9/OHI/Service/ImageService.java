@@ -50,6 +50,15 @@ public class ImageService {
         return imageRepository.save(img);
     }
 
+    public void singleImageUpload(MultipartFile file, Long personId) throws IOException{
+        Person person = personRepository.findById(personId)
+                .orElseThrow(() -> new RuntimeException("person not found"));
+        Image img = storeImage(file);
+
+        person.getImages().add(img);
+        personRepository.save(person);
+    }
+
     public void groupImageUpload(MultipartFile file, List<Long> personIds) throws IOException{
         Image img = storeImage(file);
 
