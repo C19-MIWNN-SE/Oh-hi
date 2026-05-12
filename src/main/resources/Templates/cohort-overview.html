@@ -36,7 +36,7 @@
                 <div class="CohortButtons d-flex">
                     <a th:href="@{/person/add/{cohortId}(cohortId=${cohort.id})}"
                        class="btn btn-success shadow-sm fp-btn-colour btn-spacing"
-                       sec:authorize="hasRole('DOCENT')">
+                       sec:authorize="hasRole('TEACHER')">
                         <i class="bi bi-plus-circle me-1"></i> Lid
                     </a>
 
@@ -52,7 +52,7 @@
                        data-bs-target="#groupSection"
                        aria-expanded="false"
                        aria-controls="groupSection"
-                       sec:authorize="hasRole('DOCENT')">
+                       sec:authorize="hasRole('TEACHER')">
                         <i class="bi bi-people me-1"></i> Groepjes
                     </a>
 
@@ -120,7 +120,7 @@
 
 
 <!-- Groepjes drag and drop sectie (alleen voor docenten) -->
-<div id="groupSection" class="collapse container mt-4 groupList" sec:authorize="hasRole('DOCENT')">
+<div id="groupSection" class="collapse container mt-4 groupList" sec:authorize="hasRole('TEACHER')">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4>Studenten indelen in groepjes</h4>
         <button class="btn btn-sm btn-outline-secondary add-cohort-member-buttons" onclick="resetGroepen()">
