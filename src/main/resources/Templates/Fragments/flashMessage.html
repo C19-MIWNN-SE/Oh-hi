@@ -39,7 +39,7 @@
       <i class="bi bi-check-circle-fill me-2"></i>
       <span th:text="${successMessage}"></span>
 
-      <div sec:authorize="hasRole('DOCENT')">
+      <div sec:authorize="hasRole('TEACHER')">
         <p>Setup link single person: <span th:text="${setupLink}"></span></p>
         <p>Setup link cohort:</p>
         <ul>

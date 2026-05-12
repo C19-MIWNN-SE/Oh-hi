@@ -97,7 +97,7 @@ public class PersonController {
             redirectAttributes.addFlashAttribute("Dit persoon kon niet worden opgeslagen");
         }
 
-        String setupLink = oHIUserService.createAccount(person, "STUDENT");
+        String setupLink = oHIUserService.createAccount(person, Role.STUDENT);
         redirectAttributes.addFlashAttribute("setupLink", setupLink);
         redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol opgeslagen!");
 
@@ -106,13 +106,8 @@ public class PersonController {
 
     @GetMapping("/remove/{id}")
     public String deleteMemberFromCohort(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-
-        try {
-            personService.deleteMemberFromCohort(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Het persoon is succesvol verwijderd");
-        } catch (Exception exception) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Het persoon kon niet verwijderd worden.");
-        }
+        log.info("Verwijderverzoek ontvangen voor persoon: {}", id);
+        personService.removePerson(id);
         return "redirect:/person/overview";
     }
 

@@ -3,6 +3,7 @@ package nl.miwnn.cohort._9.OHI.Service;
 import nl.miwnn.cohort._9.OHI.Model.AccountToken;
 import nl.miwnn.cohort._9.OHI.Model.OHIUser;
 import nl.miwnn.cohort._9.OHI.Model.Person;
+import nl.miwnn.cohort._9.OHI.Model.Role;
 import nl.miwnn.cohort._9.OHI.Repository.AccountTokenRespository;
 import nl.miwnn.cohort._9.OHI.Repository.OHIUserRepository;
 import nl.miwnn.cohort._9.OHI.Repository.PersonRepository;
@@ -33,7 +34,7 @@ public class OHIUserService implements UserDetailsService {
 //    OHIUser student = new OHIUser("student", passwordEncoder.encode("student"), "STUDENT");
 //    OHIUser hans = new OHIUser("hans", passwordEncoder.encode("hans"), "STUDENT", testUser);
 
-    public String createAccount (Person person, String role) {
+    public String createAccount (Person person, Role role) {
         OHIUser user = new OHIUser(usernameCreation(person),"password", role, person);
         ohiUserRepository.save(user);
 

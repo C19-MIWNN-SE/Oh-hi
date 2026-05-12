@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static nl.miwnn.cohort._9.OHI.Model.Role.STUDENT;
+
 /**
  * @author INT Development
  * Service class for account tokens
@@ -28,7 +30,7 @@ public class AccountTokenService {
         List<String> setupLinks = new ArrayList<>();
         for (Person member : cohort.getMembers()) {
             member.setCohort(cohort);
-            String setupLink = oHIUserService.createAccount(member, "STUDENT");
+            String setupLink = oHIUserService.createAccount(member, STUDENT);
             setupLinks.add(member.getFullName() + ": " + setupLink);
         }
         return setupLinks;
