@@ -58,7 +58,7 @@
     </div>
 </div>
 
-<div th:fragment="addPersonCard">
+<div th:fragment="addPersonCard(cohortId)">
     <div class="shadow-sm background-content-card p-3 position-relative card-background"
         sec:authorize="hasAnyRole('TEACHER', 'ADMIN')">
         <div class="row align-items-center g-0 card-overview-page ">
@@ -70,7 +70,10 @@
             <div class="ProfileLineDivider col-auto mx-1"></div>
 
             <div class="col">
-                <a th:href="@{/person/add}" class="btn shadow-sm fp-btn-colour">
+                <a th:href="${cohortId != null}
+                  ? @{/person/add/{cohortId}(cohortId=${cohortId})}
+                  : @{/person/add}"
+                   class="btn shadow-sm fp-btn-colour">
                     <i class="bi bi-plus-circle me-1"></i>Persoon toevoegen
                 </a>
             </div>

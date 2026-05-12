@@ -85,21 +85,21 @@
 <div th:fragment="scripts">
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const teachersDiv = document.getElementById("teachers");
-            if (localStorage.getItem("teachersOpen") === "true") {
-                teachersDiv.classList.add("show");
-                teachersDiv.classList.remove("collapsing");
-            }
-            teachersDiv.addEventListener("shown.bs.collapse", function () {
-                localStorage.setItem("teachersOpen", "true");
-            });
-            teachersDiv.addEventListener("hidden.bs.collapse", function () {
-                localStorage.setItem("teachersOpen", "false");
-            });
-        });
-    </script>
+<!--    <script>-->
+<!--        document.addEventListener("DOMContentLoaded", function () {-->
+<!--            const teachersDiv = document.getElementById("teachers");-->
+<!--            if (localStorage.getItem("teachersOpen") === "true") {-->
+<!--                teachersDiv.classList.add("show");-->
+<!--                teachersDiv.classList.remove("collapsing");-->
+<!--            }-->
+<!--            teachersDiv.addEventListener("shown.bs.collapse", function () {-->
+<!--                localStorage.setItem("teachersOpen", "true");-->
+<!--            });-->
+<!--            teachersDiv.addEventListener("hidden.bs.collapse", function () {-->
+<!--                localStorage.setItem("teachersOpen", "false");-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
 </div>
 
 
