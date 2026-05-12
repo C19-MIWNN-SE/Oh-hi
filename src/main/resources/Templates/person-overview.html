@@ -31,7 +31,7 @@
 
         <div class="row row-cols-4 mt-1 g-4">
             <div class="col">
-                <div th:replace="~{fragments/person :: addPersonCard}"></div>
+                <div th:replace="~{fragments/person :: addPersonCard(null)}"></div>
             </div>
             <div class="col" th:each="student : ${students}">
 <!--                 th:if="${person.role.equals(T(nl.miwnn.cohort._9.OHI.Model.Role).STUDENT)}">-->

@@ -9,7 +9,7 @@
 <body>
 
 <div th:fragment="personCard(person, extraClass)">
-    <div class="shadow-sm background-content-card p-3 position-relative card-background"
+    <div class="shadow-sm background-content-card p-3 position-relative card-background student-card"
          th:classappend="${(extraClass != null ? extraClass : '') + (person.role.name() == 'TEACHER' ? ' docent-card' : '')}">
 
         <div th:if="${extraClass != null && extraClass.contains('background-content-card-profile')}"
@@ -53,37 +53,40 @@
             </div>
         </div>
 
-                <div class="position-absolute bottom-0 end-0 p-2"
-                     th:if="${extraClass == null || !extraClass.contains('background-content-card-profile')}"
-                     sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/person/remove/{id}(id=${person.id})}"
-                       class="btn btn-sm text-danger border-0"
-                       onclick="return confirm('Weet je zeker?')">
-                        <i class="bi bi-trash"></i>
-                    </a>
-                </div>
+        <div class="position-absolute bottom-0 end-0 p-2"
+             th:if="${extraClass == null || !extraClass.contains('background-content-card-profile')}"
+             sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/person/remove/{id}(id=${person.id})}"
+               class="btn btn-sm text-danger border-0"
+               onclick="return confirm('Weet je zeker?')">
+                <i class="bi bi-trash"></i>
+            </a>
+        </div>
 
     </div>
 </div>
 
-<div th:fragment="addPersonCard">
-    <div class="shadow-sm background-content-card p-3 position-relative card-background">
-        <div class="row align-items-center g-0 card-overview-page ">
-            <div class="col-auto">
-                <img class="PersonProfile rounded-circle"
-                     src="/static-images/noImage.jpg"
-                     alt="profile image">
-            </div>
-            <div class="ProfileLineDivider col-auto mx-1"></div>
-
-            <div class="col">
-                <a th:href="@{/person/add}" class="btn shadow-sm fp-btn-colour">
-                    <i class="bi bi-plus-circle me-1"></i>Persoon toevoegen
-                </a>
+<div th:fragment="addPersonCard(cohortId)">
+    <a th:href="${cohortId != null} ? @{/person/add/{cohortId}(cohortId=${cohortId})} : @{/person/add}">
+        <div class="shadow-sm background-content-card p-3 position-relative card-background-add" style="height: 100%;"
+             sec:authorize="hasAnyRole('TEACHER', 'ADMIN')">
+            <div class="row align-items-center g-0 card-overview-page ">
+                <div class="person-add" style="color: white">
+                    <i class="bi bi-plus-circle me-1 size-button"
+                       style="width: 500px; color: white; text-align: center"></i>Student of docent toevoegen
+                    <div class="col-auto">
+                        <img class="PersonProfile rounded-circle"
+                             th:src="@{/static-images/noImage.jpg}"
+                             alt="profile image"
+                             style="width: 80px; height: 80px; margin-top: 5%">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 </div>
+
+
 <!--<div th:fragment="addPersonCard">-->
 <!--    <a th:href="@{/person/add}" class="btn btn-success shadow-sm search-bg fp-btn-colour">-->
 <!--        <i class="bi bi-plus-circle me-1"></i> Persoon-->
