@@ -112,10 +112,10 @@ public class PersonService {
 
         Image savedImage = imageService.storeImage(file);
 
-        Person p = personRepository.findById(personId).orElseThrow();
-        p.setProfileImage(savedImage);
+        Person personUpdating = personRepository.findById(personId).orElseThrow();
+        personUpdating.setProfileImage(savedImage);
 
-        personRepository.save(p);
+        personRepository.save(personUpdating);
     }
 
         public void checkIfPersonIsStudent(Person profilePerson, Person aboutPerson){
